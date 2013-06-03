@@ -30,7 +30,10 @@ Bundle 'mattn/zencoding-vim'
 Bundle 'scrooloose/syntastic'
 Bundle 'kien/ctrlp.vim'
 Bundle 'tpope/vim-surround'
+Bundle 'tpope/vim-fugitive'
 Bundle 'bkad/CamelCaseMotion'
+Bundle 'msanders/snipmate'
+Bundle 'terryma/vim-multiple-cursors'
 
 " end Vundle settings
 "--------------------
