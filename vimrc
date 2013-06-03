@@ -32,8 +32,10 @@ Bundle 'kien/ctrlp.vim'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-fugitive'
 Bundle 'bkad/CamelCaseMotion'
-Bundle 'msanders/snipmate'
 Bundle 'terryma/vim-multiple-cursors'
+Bundle 'MarcWeber/vim-addon-mw-utils'
+Bundle 'tomtom/tlib_vim'
+Bundle 'garbas/vim-snipmate'
 
 " end Vundle settings
 "--------------------
