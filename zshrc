@@ -13,7 +13,7 @@ alias l="ls -la"
 
 # Plugins:
 # --------
-plugins=(git vundle)
+plugins=(git vundle osx gem coffee brew npm)
 
 
 # Settings:

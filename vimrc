@@ -36,6 +36,7 @@ Bundle 'terryma/vim-multiple-cursors'
 Bundle 'MarcWeber/vim-addon-mw-utils'
 Bundle 'tomtom/tlib_vim'
 Bundle 'garbas/vim-snipmate'
+Bundle 'altercation/vim-colors-solarized'
 
 " end Vundle settings
 "--------------------
