@@ -11,6 +11,8 @@ if [ -d "$dotfiles_dir" ]; then
 fi
 
 for file in $files; do
+  if [ -f "$file" ]; then
+  fi
   echo "Creating symlinks for dotfiles"
   ln -s $dotfiles_dir/$file ~/.$file
 done
