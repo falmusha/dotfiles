@@ -49,7 +49,7 @@ Bundle 'altercation/vim-colors-solarized'
 
 
 " Font
-set guifont=Menlo:h13
+set guifont=Menlo:h18
 
 " Color
 color Tomorrow-Night
@@ -197,17 +197,3 @@ if exists(":Tabularize")
   vnoremap <leader>a: :Tab /:<CR>
   vnoremap <leader>as: :Tab /:\zs<CR>
 endif
-
-
-
-
-
-
-
-
-
-
-
-
-
-
