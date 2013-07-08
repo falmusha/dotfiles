@@ -1,20 +1,36 @@
 #!/bin/bash
 
 files="vimrc zshrc oh-my-zsh"
-dotfiles_dir=~/dotfiles
-dotfiles_backup_dir=~/dotfiles_backup
+dotfiles_dir="$HOME/.dotfiles"
+dotfiles_backup_dir="$HOME/.dotfiles_backup"
 
-cd
 
-if [ -d "$dotfiles_dir" ]; then
-  #mkdir $dotfiles_backup_dir
-  echo "true"
-  #cp -r $dotfiles_dir $dotfiles_backup_dir
+if [ ! -d "$dotfiles_dir" ]; then
+  mkdir $dotfiles_dir
+else
+  if [  ! -d "$dotfiles_backup_dir" ]; then
+    mkdir $dotfiles_backup_dir
+  else
+    i="0"
+    while [ -d "$dotfiles_backup_dir" ]
+    do
+      echo "Found backup number $dotfiles_backup_dir"
+      dotfiles_backup_dir="$HOME/.dotfiles_backup_$i"
+      i=$[$i+1]
+      echo "Creating backup number $dotfiles_backup_dir"
+    done
+    mkdir $dotfiles_backup_dir
+  fi
+  for file in $files; do
+    echo "Copying .$file to $dotfiles_backup_dir"
+    cp -r $HOME/.$file $dotfiles_backup_dir
+  done
 fi
 
+
 for file in $files; do
-  if [ ! -e ".$file" ]; then
-    echo "Creating symlinks for dotfiles"
-    ln -s $dotfiles_dir/$file ~/.$file
+  if [ ! -e "$HOME/.$file" ]; then
+    echo "Creating symlinks $HOME/.$file -> $dotfiles_dir/$file"
+    ln -s $dotfiles_dir/$file $HOME/.$file
   fi
 done
