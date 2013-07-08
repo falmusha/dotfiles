@@ -9,6 +9,11 @@ ZSH_THEME="robbyrussell"
 alias zshconfig="mvim ~/.zshrc"
 alias ohmyzsh="mvim ~/.oh-my-zsh"
 alias l="ls -la"
+alias drpx="cd ~/Dropbox"
+
+# Git
+alias gs="git status"
+alias glg="git log"
 
 
 # Plugins:
