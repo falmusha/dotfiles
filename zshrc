@@ -30,3 +30,4 @@ CASE_SENSITIVE="true"
 
 
 source $ZSH/oh-my-zsh.sh
+[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" 
