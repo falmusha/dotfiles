@@ -29,5 +29,15 @@ plugins=(git vundle osx gem coffee brew npm)
 CASE_SENSITIVE="true"
 
 
+unalias run-help
+autoload run-help
+HELPDIR=/usr/local/share/zsh/helpfiles
+
 source $ZSH/oh-my-zsh.sh
+
+export PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin
+
+# RVM
+# ---
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" 
+export PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting

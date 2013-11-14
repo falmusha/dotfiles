@@ -49,7 +49,7 @@ Bundle 'altercation/vim-colors-solarized'
 
 
 " Font
-set guifont=Menlo:h18
+set guifont=Menlo:h14
 
 " Color
 color Tomorrow-Night
