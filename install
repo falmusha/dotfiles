@@ -32,12 +32,11 @@ for SYMLINK in $SYMLINKS; do
       cp $HOME/.$SYMLINK $HOME/$SYMLINK.$BACKUP_SUFFIX
     fi
 
-  else
-
-    echo "Creating symlinks $HOME/.$SYMLINK -> $DOTFILES_DIR/$SYMLINK"
-    ln -s $DOTFILES_DIR/$SYMLINK $HOME/.$SYMLINK
-
   fi
+
+  echo "Creating symlinks $HOME/.$SYMLINK -> $DOTFILES_DIR/$SYMLINK"
+  ln -s $DOTFILES_DIR/$SYMLINK $HOME/.$SYMLINK
+
 
 done
 
