@@ -11,6 +11,7 @@ alias ohmyzsh="mvim ~/.oh-my-zsh"
 alias l="ls -la"
 alias drpx="cd ~/Dropbox"
 alias uw="ssh falmusha@ecelinux.uwaterloo.ca"
+alias py="python3.2"
 
 # Git
 alias gs="git status"
@@ -35,7 +36,7 @@ HELPDIR=/usr/local/share/zsh/helpfiles
 
 source $ZSH/oh-my-zsh.sh
 
-export PATH=/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/usr/local/sbin
+export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin
 
 # RVM
 # ---

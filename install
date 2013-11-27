@@ -1,36 +1,48 @@
 #!/bin/bash
 
-files="vimrc zshrc oh-my-zsh"
-dotfiles_dir="$HOME/.dotfiles"
-dotfiles_backup_dir="$HOME/.dotfiles_backup"
+SYMLINKS="vimrc zshrc oh-my-zsh vim"
+DOTFILES_DIR=$(dirname $0)
+BACKUP_SUFFIX="orig"
 
+for SYMLINK in $SYMLINKS; do
 
-if [ ! -d "$dotfiles_dir" ]; then
-  mkdir $dotfiles_dir
-else
-  if [  ! -d "$dotfiles_backup_dir" ]; then
-    mkdir $dotfiles_backup_dir
-  else
+  if [ -e "$HOME/.$SYMLINK" ]; then
+
     i="0"
-    while [ -d "$dotfiles_backup_dir" ]
+    while [ -e "$HOME/$SYMLINK.$BACKUP_SUFFIX" ] 
     do
-      echo "Found backup number $dotfiles_backup_dir"
-      dotfiles_backup_dir="$HOME/.dotfiles_backup_$i"
       i=$[$i+1]
-      echo "Creating backup number $dotfiles_backup_dir"
+      BACKUP_SUFFIX="orig$i"
     done
-    mkdir $dotfiles_backup_dir
+
+    echo "Oh ... You have $SYMLINK, I'll back it up for you!!"
+    echo -e "Copying symlink $HOME/.$SYMLINK -> $HOME/$SYMLINK.$BACKUP_SUFFIX\n"
+
+    if [ -d $HOME/.$SYMLINK ]; then
+      cp -r $HOME/.$SYMLINK $HOME/$SYMLINK.$BACKUP_SUFFIX
+    else
+      cp $HOME/.$SYMLINK $HOME/$SYMLINK.$BACKUP_SUFFIX
+    fi
+
+  else
+
+    echo "Creating symlinks $HOME/.$SYMLINK -> $DOTFILES_DIR/$SYMLINK"
+    ln -s $DOTFILES_DIR/$SYMLINK $HOME/.$SYMLINK
+
   fi
-  for file in $files; do
-    echo "Copying .$file to $dotfiles_backup_dir"
-    cp -r $HOME/.$file $dotfiles_backup_dir
-  done
+
+done
+
+# make zsh your default shell
+chsh -s /bin/zsh
+
+# copy vundle
+if [ ! -e "$HOME/.vim/bundle/vundle" ]; then
+  git clone https://github.com/gmarik/vundle.git $HOME/.vim/bundle/vundle
 fi
 
+# install vim plugins
+vim +BundleInstall +qal
 
-for file in $files; do
-  if [ ! -e "$HOME/.$file" ]; then
-    echo "Creating symlinks $HOME/.$file -> $dotfiles_dir/$file"
-    ln -s $dotfiles_dir/$file $HOME/.$file
-  fi
-done
+#run zsh
+zsh
