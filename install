@@ -1,5 +1,8 @@
 #!/bin/bash
 
+git submodule init
+git update
+
 SYMLINKS="vimrc zshrc oh-my-zsh vim"
 DOTFILES_DIR=$(dirname $0)
 BACKUP_SUFFIX="orig"
@@ -46,3 +49,4 @@ vim +BundleInstall +qal
 
 #run zsh
 zsh
+
