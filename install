@@ -8,6 +8,10 @@ DOTFILES_DIR="$HOME/dotfiles"
 BACKUP_SUFFIX="orig"
 OHMYZSH_THEME="ifahad7.zsh-theme"
 
+echo "This script makes ZSH your default shell"
+# make zsh your default shell
+chsh -s /bin/zsh
+
 for SYMLINK in $SYMLINKS; do
 
   if [ -e "$HOME/.$SYMLINK" ]; then
@@ -37,8 +41,6 @@ for SYMLINK in $SYMLINKS; do
 
 done
 
-# make zsh your default shell
-chsh -s /bin/zsh
 
 # copy vundle
 if [ ! -e "$HOME/.vim/bundle/vundle" ]; then
