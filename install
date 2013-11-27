@@ -27,9 +27,9 @@ for SYMLINK in $SYMLINKS; do
     echo -e "Copying symlink $HOME/.$SYMLINK -> $HOME/$SYMLINK.$BACKUP_SUFFIX\n"
 
     if [ -d $HOME/.$SYMLINK ]; then
-      cp -r $HOME/.$SYMLINK $HOME/$SYMLINK.$BACKUP_SUFFIX
+      mv -r $HOME/.$SYMLINK $HOME/$SYMLINK.$BACKUP_SUFFIX
     else
-      cp $HOME/.$SYMLINK $HOME/$SYMLINK.$BACKUP_SUFFIX
+      mv $HOME/.$SYMLINK $HOME/$SYMLINK.$BACKUP_SUFFIX
     fi
 
   fi
