@@ -4,7 +4,7 @@ git submodule init
 git submodule update
 
 SYMLINKS="vimrc zshrc oh-my-zsh vim"
-DOTFILES_DIR=$(dirname $0)
+DOTFILES_DIR="$HOME/dotfiles"
 BACKUP_SUFFIX="orig"
 OHMYZSH_THEME="ifahad7.zsh-theme"
 
