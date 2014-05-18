@@ -52,7 +52,7 @@ Bundle 'altercation/vim-colors-solarized'
 set guifont=Menlo:h14
 
 " Color
-color Tomorrow-Night
+"color Tomorrow-Night
 
 " Syntax highliting 
 syntax enable
