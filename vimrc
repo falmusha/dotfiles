@@ -26,7 +26,7 @@ Bundle 'vim-scripts/python.vim'
 Bundle 'vim-ruby/vim-ruby'
 Bundle 'slim-template/vim-slim'
 Bundle 'godlygeek/tabular'
-Bundle 'mattn/zencoding-vim'
+Bundle 'mattn/emmet-vim'
 Bundle 'scrooloose/syntastic'
 Bundle 'kien/ctrlp.vim'
 Bundle 'tpope/vim-surround'
@@ -52,7 +52,7 @@ Bundle 'altercation/vim-colors-solarized'
 set guifont=Menlo:h14
 
 " Color
-"color Tomorrow-Night
+color Tomorrow-Night
 
 " Syntax highliting 
 syntax enable

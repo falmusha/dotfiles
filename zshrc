@@ -6,12 +6,9 @@ ZSH_THEME="ifahad7"
 
 # Aliases: 
 # --------
-alias zshconfig="vim ~/.zshrc"
-alias ohmyzsh="vim ~/.oh-my-zsh"
 alias l="ls -la"
 alias drpx="cd ~/Dropbox"
 alias uw="ssh falmusha@ecelinux.uwaterloo.ca"
-alias py="python3.2"
 
 # Git
 alias gs="git status"
@@ -36,10 +33,14 @@ HELPDIR=/usr/local/share/zsh/helpfiles
 
 source $ZSH/oh-my-zsh.sh
 
-#export PATH=/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/sbin
-#export PATH=$PATH:/usr/local/mysql/bin
-
 # RVM
 # ---
-#[[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" 
-#export PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+if type rvm &> /dev/null ; then
+  echo "NO RVM"
+else
+  [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" 
+fi
+
+# Preferred editor
+# ----------------
+export EDITOR='vim'
