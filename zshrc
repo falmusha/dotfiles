@@ -47,4 +47,4 @@ export EDITOR='vim'
 
 # PYTHON
 # ------
-PYTHONPATH=$PYTHONPATH:/usr/local/Cellar/opencv/2.4.9/lib/python2.7/site-packages
+export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH

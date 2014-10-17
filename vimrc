@@ -6,8 +6,8 @@ set nocompatible
 " required from Vundle
 filetype off
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
 " let Vundle manage Vundle
 " required! 
@@ -16,27 +16,14 @@ Bundle 'gmarik/vundle'
 " My Bundles here ( original repos on github ):
 "----------------------------------------------
 
-Bundle 'gregsexton/MatchTag'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/nerdcommenter'
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'skammer/vim-css-color'
-Bundle 'groenewege/vim-less'
-Bundle 'vim-scripts/python.vim'
-Bundle 'vim-ruby/vim-ruby'
-Bundle 'slim-template/vim-slim'
-Bundle 'godlygeek/tabular'
-Bundle 'mattn/emmet-vim'
 Bundle 'scrooloose/syntastic'
+Bundle 'skammer/vim-css-color'
+Bundle 'godlygeek/tabular'
 Bundle 'kien/ctrlp.vim'
-Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-fugitive'
-Bundle 'bkad/CamelCaseMotion'
-Bundle 'terryma/vim-multiple-cursors'
-Bundle 'MarcWeber/vim-addon-mw-utils'
-Bundle 'tomtom/tlib_vim'
-Bundle 'garbas/vim-snipmate'
-Bundle 'altercation/vim-colors-solarized'
+
+call vundle#end()
 
 " end Vundle settings
 "--------------------
@@ -183,17 +170,8 @@ nnoremap <silent> <down>  :res +5 <CR>
 nnoremap <silent> <right> :vertical resize +5 <CR>
 nnoremap <silent> <left>  :vertical resize -5 <CR>
 
-" NERDTree plugin: Show directory explorer
+" NERDTree plugin
+" Show directory explorer
+let NERDTreeHighlightCursorline=1
 noremap <leader>n :NERDTreeToggle<CR>
 
-" Tabular plugin: Mapping
-if exists(":Tabularize")
-  nnoremap <leader>a= :Tab /=<CR>
-  nnoremap <leader>as= :Tab /=\zs<CR>
-  vnoremap <leader>a= :Tab /=<CR>
-  vnoremap <leader>as= :Tab /=\zs<CR>
-  nnoremap <leader>a: :Tab /:<CR>
-  nnoremap <leader>as: :Tab /:\zs<CR>
-  vnoremap <leader>a: :Tab /:<CR>
-  vnoremap <leader>as: :Tab /:\zs<CR>
-endif
