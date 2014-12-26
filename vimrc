@@ -16,12 +16,14 @@ Bundle 'gmarik/vundle'
 " My Bundles here ( original repos on github ):
 "----------------------------------------------
 
-Bundle 'scrooloose/nerdtree'
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'scrooloose/syntastic'
-Bundle 'skammer/vim-css-color'
-Bundle 'godlygeek/tabular'
-Bundle 'kien/ctrlp.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/syntastic'
+Plugin 'skammer/vim-css-color'
+Plugin 'godlygeek/tabular'
+Plugin 'kien/ctrlp.vim'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'mustache/vim-mustache-handlebars'
 
 call vundle#end()
 
@@ -175,3 +177,5 @@ nnoremap <silent> <left>  :vertical resize -5 <CR>
 let NERDTreeHighlightCursorline=1
 noremap <leader>n :NERDTreeToggle<CR>
 
+highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+match OverLength /\%81v.\+/
