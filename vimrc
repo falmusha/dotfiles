@@ -10,9 +10,8 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 " let Vundle manage Vundle
-" required! 
-Bundle 'gmarik/vundle'
-
+" required!
+Plugin 'gmarik/Vundle.vim'
 " My Bundles here ( original repos on github ):
 "----------------------------------------------
 
@@ -24,8 +23,22 @@ Plugin 'godlygeek/tabular'
 Plugin 'kien/ctrlp.vim'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'mustache/vim-mustache-handlebars'
+Plugin 'bling/vim-airline'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'tpope/vim-fugitive'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-endwise'
+Plugin 'mileszs/ack.vim'
+Plugin 'Valloric/YouCompleteMe'
+Plugin 'haya14busa/incsearch.vim'
+Plugin 'Raimondi/delimitMate'
+Plugin 'mattn/webapi-vim'
+Plugin 'mattn/gist-vim'
 
 call vundle#end()
+
+" Enable filtype plugins
+filetype plugin indent on
 
 " end Vundle settings
 "--------------------
@@ -70,8 +83,6 @@ set scrolloff=4
 "----------
 
 
-" Enable filtype plugins
-filetype plugin indent on
 
 " Automatically read the file again when it is changed outside of Vim
 set autoread
@@ -172,10 +183,35 @@ nnoremap <silent> <down>  :res +5 <CR>
 nnoremap <silent> <right> :vertical resize +5 <CR>
 nnoremap <silent> <left>  :vertical resize -5 <CR>
 
+" Highlight lines over 80 chars
+highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+match OverLength /\%81v.\+/
+
 " NERDTree plugin
 " Show directory explorer
 let NERDTreeHighlightCursorline=1
 noremap <leader>n :NERDTreeToggle<CR>
 
-highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-match OverLength /\%81v.\+/
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+" syntastic plugin recommendation
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+" ctrlp
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+
+" airline
+let g:airline#extensions#branch#enabled = 1
+let g:airline#extensions#syntastic#enabled = 1
+let g:airline#extensions#hunks#enabled = 1
+let g:airline#extensions#ctrlp#show_adjacent_modes = 1
+let g:airline#extensions#whitespace#enabled = 1
+let g:airline#extensions#whitespace#checks = [ 'indent', 'trailing' ]
+
+" incsearch
+let g:incsearch#auto_nohlsearch=1

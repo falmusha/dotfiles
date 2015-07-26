@@ -1,0 +1,19 @@
+#!/bin/bash
+
+PLUGINS_DIR="$HOME/.vim/bundle"
+
+PLUGINS_DIRS=""
+
+for dir in $(ls $PLUGINS_DIR) ; do
+  PLUGINS_DIRS="$PLUGINS_DIRS $PLUGINS_DIR/$dir"
+done
+
+for dir in $PLUGINS_DIRS ; do
+  if [ $dir = "." ] || [ $dir = ".." ]; then
+    continue
+  fi
+  if [[ -d $dir && ! -L $dir ]]; then
+    echo "Updating $dir"
+    cd $dir && git pull
+  fi; 
+done

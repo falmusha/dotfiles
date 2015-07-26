@@ -7,7 +7,7 @@ ZSH_THEME="ifahad7"
 # Aliases: 
 # --------
 alias l="ls -la"
-alias drpx="cd ~/Dropbox"
+alias ll="ls -l"
 alias uw="ssh falmusha@ecelinux.uwaterloo.ca"
 
 # Git
@@ -44,9 +44,3 @@ fi
 # Preferred editor
 # ----------------
 export EDITOR='vim'
-
-# PYTHON
-# ------
-export PYTHONPATH=/usr/local/lib/python2.7/site-packages:$PYTHONPATH
-### Added by the Heroku Toolbelt
-export PATH="/usr/local/heroku/bin:$PATH"

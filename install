@@ -4,7 +4,7 @@ git submodule init
 git submodule update
 
 SYMLINKS="vimrc zshrc oh-my-zsh vim"
-DOTFILES_DIR="$HOME/dotfiles"
+DOTFILES_DIR="$HOME/dotfiles"   
 BACKUP_SUFFIX="orig"
 OHMYZSH_THEME="ifahad7.zsh-theme"
 
@@ -38,19 +38,23 @@ done
 
 
 # copy vundle
-if [ ! -e "$HOME/.vim/bundle/vundle" ]; then
-  git clone https://github.com/gmarik/vundle.git $HOME/.vim/bundle/vundle
+if [ ! -e "$HOME/.vim/bundle/Vundle" ]; then
+  git clone https://github.com/gmarik/Vundle.vim.git $HOME/.vim/bundle/Vundle.vim
 fi
 
 # install vim plugins
-vim +BundleInstall +qal
+vim +PluginInstall +qal
 
+# Complie YouCompleteMe vim plugin
+if [ -d "$HOME/.vim/bundle/YouCompleteMe" ]; then
+  if type cmake > /dev/null; then
+    cd "$HOME/.vim/bundle/YouCompleteMe" && ./install.sh --clang-completer
+  fi
+fi
+
+# Congifure vim-gist
+git config --global github.user "ifahad7"
 
 if [ $DOTFILES_DIR/$OHMYZSH_THEME ]; then
   cp $DOTFILES_DIR/$OHMYZSH_THEME $DOTFILES_DIR/oh-my-zsh/themes/
 fi
-
-#run zsh
-zsh
-
-
