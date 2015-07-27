@@ -4,7 +4,7 @@ ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="ifahad7"
 
 
-# Aliases: 
+# Aliases:
 # --------
 alias l="ls -la"
 alias ll="ls -l"
@@ -38,7 +38,7 @@ source $ZSH/oh-my-zsh.sh
 if type rvm &> /dev/null ; then
   echo "NO RVM"
 else
-  [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm" 
+  [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
 fi
 
 # Preferred editor

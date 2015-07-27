@@ -34,6 +34,8 @@ Plugin 'haya14busa/incsearch.vim'
 Plugin 'Raimondi/delimitMate'
 Plugin 'mattn/webapi-vim'
 Plugin 'mattn/gist-vim'
+Plugin 'tfnico/vim-gradle'
+Plugin 'ntpeters/vim-better-whitespace'
 
 call vundle#end()
 
@@ -46,7 +48,7 @@ filetype plugin indent on
 " Vim Customization:
 "-------------------
 
-" LOOKS: 
+" LOOKS:
 "-------
 
 
@@ -56,7 +58,7 @@ set guifont=Menlo:h14
 " Color
 color Tomorrow-Night
 
-" Syntax highliting 
+" Syntax highliting
 syntax enable
 
 " Show line numbers
@@ -83,7 +85,6 @@ set scrolloff=4
 "----------
 
 
-
 " Automatically read the file again when it is changed outside of Vim
 set autoread
 
@@ -96,7 +97,7 @@ set hidden
 
 " Remove files backup
 set nobackup
-set nowritebackup 
+set nowritebackup
 
 " Remove swap files
 set noswapfile
@@ -192,9 +193,6 @@ match OverLength /\%81v.\+/
 let NERDTreeHighlightCursorline=1
 noremap <leader>n :NERDTreeToggle<CR>
 
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
 
 " syntastic plugin recommendation
 let g:syntastic_always_populate_loc_list = 1
@@ -215,3 +213,9 @@ let g:airline#extensions#whitespace#checks = [ 'indent', 'trailing' ]
 
 " incsearch
 let g:incsearch#auto_nohlsearch=1
+
+set laststatus=2
+
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
