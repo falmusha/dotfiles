@@ -44,3 +44,6 @@ fi
 # Preferred editor
 # ----------------
 export EDITOR='vim'
+
+# Load local machine setting
+source ~/local.zshrc

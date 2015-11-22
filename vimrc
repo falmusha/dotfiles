@@ -34,8 +34,8 @@ Plugin 'haya14busa/incsearch.vim'
 Plugin 'Raimondi/delimitMate'
 Plugin 'mattn/webapi-vim'
 Plugin 'mattn/gist-vim'
-Plugin 'tfnico/vim-gradle'
 Plugin 'ntpeters/vim-better-whitespace'
+Plugin 'rust-lang/rust.vim'
 
 call vundle#end()
 
