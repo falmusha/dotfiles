@@ -201,7 +201,9 @@ let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 
 " ctrlp
+let g:ctrlp_working_path_mode = 'c'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+set wildignore+=*/bower_components,*/node_modules
 
 " airline
 let g:airline#extensions#branch#enabled = 1
