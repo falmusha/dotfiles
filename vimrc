@@ -12,9 +12,9 @@ call vundle#begin()
 " let Vundle manage Vundle
 " required!
 Plugin 'gmarik/Vundle.vim'
+
 " My Bundles here ( original repos on github ):
 "----------------------------------------------
-
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/syntastic'
@@ -30,12 +30,12 @@ Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-endwise'
 Plugin 'mileszs/ack.vim'
 Plugin 'Valloric/YouCompleteMe'
-Plugin 'haya14busa/incsearch.vim'
 Plugin 'Raimondi/delimitMate'
-Plugin 'mattn/webapi-vim'
 Plugin 'mattn/gist-vim'
 Plugin 'ntpeters/vim-better-whitespace'
 Plugin 'rust-lang/rust.vim'
+Plugin 'pbrisbin/vim-mkdir'
+Plugin 'vim-scripts/tComment'
 
 call vundle#end()
 
@@ -80,17 +80,26 @@ set ruler
 " Cursor offset from bottom of page
 set scrolloff=4
 
+" Display extra whitespace
+set list listchars=tab:»·,trail:·,nbsp:·
+
+" Highlight lines over 80 chars
+set textwidth=80
+set colorcolumn=+1
+
+" Open new split panes to right and bottom, which feels more natural
+set splitbelow
+set splitright
 
 " end LOOKS
 "----------
 
 
+" Set Leader Key
+let mapleader = " "
+
 " Automatically read the file again when it is changed outside of Vim
 set autoread
-
-" Set Leader Key
-let mapleader = ","
-
 
 " Edit a file without losing modifications to the current file
 set hidden
@@ -102,10 +111,12 @@ set nowritebackup
 " Remove swap files
 set noswapfile
 
+" Backspace deletes like most programs in insert mode
+set backspace=2
+
+
 " Searching:
 "-----------
-
-
 " Disable case sensitive
 set ignorecase
 
@@ -124,6 +135,17 @@ nmap <leader>q :nohlsearch<CR>
 " RegEx in Search
 set magic
 
+" Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
+if executable('ag')
+  " Use Ag over Grep
+  set grepprg=ag\ --nogroup\ --nocolor
+
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
 
 " end Searching
 "--------------
@@ -150,13 +172,11 @@ nmap <c-l> <c-w>l
 set showmatch
 set mat=2
 
-
 " Remove Err bells
 set noerrorbells
 set novisualbell
 set t_vb=
 set tm=500
-
 
 " Spaces instead of tabs
 set expandtab
@@ -178,15 +198,13 @@ set smartindent
 " Round indent to multiple of 'shiftwidth'
 set shiftround
 
+
 " Resize window size with arrow keys
 nnoremap <silent> <up>    :res -5 <CR>
 nnoremap <silent> <down>  :res +5 <CR>
 nnoremap <silent> <right> :vertical resize +5 <CR>
 nnoremap <silent> <left>  :vertical resize -5 <CR>
 
-" Highlight lines over 80 chars
-highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-match OverLength /\%81v.\+/
 
 " NERDTree plugin
 " Show directory explorer
@@ -202,7 +220,7 @@ let g:syntastic_check_on_wq = 0
 
 " ctrlp
 let g:ctrlp_working_path_mode = 'c'
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 set wildignore+=*/bower_components,*/node_modules
 
 " airline
@@ -217,7 +235,6 @@ let g:airline#extensions#whitespace#checks = [ 'indent', 'trailing' ]
 let g:incsearch#auto_nohlsearch=1
 
 set laststatus=2
-
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
