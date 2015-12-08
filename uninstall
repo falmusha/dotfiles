@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SYMLINKS="vimrc zshrc oh-my-zsh vim"
+SYMLINKS="vimrc zshrc gitconfig oh-my-zsh vim"
 for SYMLINK in $SYMLINKS; do
   if [ -h "$HOME/.$SYMLINK" ]; then
     echo "Deleting $HOME/.$SYMLINK"

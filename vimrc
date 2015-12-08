@@ -3,41 +3,69 @@
 "be iMproved
 set nocompatible
 
-" required from Vundle
-filetype off
+let s:darwin = has('mac')
 
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+call plug#begin('~/.vim/plugged')
 
-" let Vundle manage Vundle
-" required!
-Plugin 'gmarik/Vundle.vim'
+" Colors
+Plug 'chriskempson/vim-tomorrow-theme'
 
-" My Bundles here ( original repos on github ):
-"----------------------------------------------
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'scrooloose/syntastic'
-Plugin 'skammer/vim-css-color'
-Plugin 'godlygeek/tabular'
-Plugin 'kien/ctrlp.vim'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'mustache/vim-mustache-handlebars'
-Plugin 'bling/vim-airline'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'tpope/vim-fugitive'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-endwise'
-Plugin 'mileszs/ack.vim'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'Raimondi/delimitMate'
-Plugin 'mattn/gist-vim'
-Plugin 'ntpeters/vim-better-whitespace'
-Plugin 'rust-lang/rust.vim'
-Plugin 'pbrisbin/vim-mkdir'
-Plugin 'vim-scripts/tComment'
+" Edit
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-commentary'
+Plug 'AndrewRadev/splitjoin.vim'
+Plug 'tpope/vim-sensible'
+Plug 'junegunn/vim-easy-align',       { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
+Plug 'junegunn/goyo.vim'
+Plug 'ntpeters/vim-better-whitespace'
 
-call vundle#end()
+" Status
+Plug 'bling/vim-airline'
+
+" Tmux
+Plug 'tpope/vim-tbone'
+
+" Browsing
+Plug 'scrooloose/nerdtree'
+Plug 'kien/ctrlp.vim'
+Plug 'pbrisbin/vim-mkdir'
+Plug 'justinmk/vim-gtfo'
+
+" Git
+Plug 'tpope/vim-fugitive'
+Plug 'gregsexton/gitv', { 'on': 'Gitv' }
+Plug 'mattn/gist-vim', { 'on': 'Gist' }
+Plug 'airblade/vim-gitgutter'
+
+" Lang
+if v:version >= 703
+  Plug 'vim-ruby/vim-ruby'
+endif
+Plug 'fatih/vim-go'
+Plug 'groenewege/vim-less'
+Plug 'pangloss/vim-javascript'
+Plug 'kchmck/vim-coffee-script'
+Plug 'plasticboy/vim-markdown'
+Plug 'slim-template/vim-slim'
+Plug 'tpope/vim-rails',      { 'for': []      }
+Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
+Plug 'honza/dockerfile.vim'
+Plug 'skammer/vim-css-color'
+Plug 'mustache/vim-mustache-handlebars'
+Plug 'rust-lang/rust.vim'
+if s:darwin
+  Plug 'Keithbsmiley/investigate.vim'
+  Plug 'rizzatti/dash.vim',  { 'on': 'Dash' }
+endif
+Plug 'chrisbra/unicode.vim', { 'for': 'journal' }
+
+" Lint
+Plug 'scrooloose/syntastic'
+
+call plug#end()
+
 
 " Enable filtype plugins
 filetype plugin indent on
@@ -56,7 +84,7 @@ filetype plugin indent on
 set guifont=Menlo:h14
 
 " Color
-color Tomorrow-Night
+colorscheme Tomorrow-Night
 
 " Syntax highliting
 syntax enable
@@ -90,6 +118,8 @@ set colorcolumn=+1
 " Open new split panes to right and bottom, which feels more natural
 set splitbelow
 set splitright
+
+set laststatus=2
 
 " end LOOKS
 "----------
@@ -198,13 +228,15 @@ set smartindent
 " Round indent to multiple of 'shiftwidth'
 set shiftround
 
-
 " Resize window size with arrow keys
 nnoremap <silent> <up>    :res -5 <CR>
 nnoremap <silent> <down>  :res +5 <CR>
 nnoremap <silent> <right> :vertical resize +5 <CR>
 nnoremap <silent> <left>  :vertical resize -5 <CR>
 
+" ----------------------------------------------------------------------------
+" Plugin Confs
+" ----------------------------------------------------------------------------
 
 " NERDTree plugin
 " Show directory explorer
@@ -212,29 +244,24 @@ let NERDTreeHighlightCursorline=1
 noremap <leader>n :NERDTreeToggle<CR>
 
 
-" syntastic plugin recommendation
+" syntastic plugin
 let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 1
+let g:syntastic_auto_loc_list = 0
 let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
+let g:syntastic_check_on_wq = 1
+let g:syntastic_ignore_files = []
+let g:syntastic_html_tidy_exec = 'tidy5'
 
-" ctrlp
+
+" ctrlp plugin
 let g:ctrlp_working_path_mode = 'c'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 set wildignore+=*/bower_components,*/node_modules
 
-" airline
+" airline plugin
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#syntastic#enabled = 1
 let g:airline#extensions#hunks#enabled = 1
 let g:airline#extensions#ctrlp#show_adjacent_modes = 1
 let g:airline#extensions#whitespace#enabled = 1
 let g:airline#extensions#whitespace#checks = [ 'indent', 'trailing' ]
-
-" incsearch
-let g:incsearch#auto_nohlsearch=1
-
-set laststatus=2
-set statusline+=%#warningmsg#
-set statusline+=%{SyntasticStatuslineFlag()}
-set statusline+=%*
