@@ -5,10 +5,15 @@ set nocompatible
 
 let s:darwin = has('mac')
 
-call plug#begin('~/.vim/plugged')
+if has('nvim')
+  call plug#begin('~/.vim/plugged')
+else
+  call plug#begin('~/.vim/plugged')
+endif
 
 " Colors
 Plug 'chriskempson/vim-tomorrow-theme'
+Plug 'joshdick/onedark.vim'
 
 " Edit
 Plug 'tpope/vim-repeat'
@@ -29,7 +34,7 @@ Plug 'tpope/vim-tbone'
 
 " Browsing
 Plug 'scrooloose/nerdtree'
-Plug 'kien/ctrlp.vim'
+Plug 'ctrlpvim/ctrlp.vim'
 Plug 'pbrisbin/vim-mkdir'
 Plug 'justinmk/vim-gtfo'
 
@@ -83,11 +88,11 @@ filetype plugin indent on
 " Font
 set guifont=Menlo:h14
 
-" Color
-colorscheme Tomorrow-Night
-
 " Syntax highliting
 syntax enable
+
+" Color
+silent! colorscheme Tomorrow-Night
 
 " Show line numbers
 set number
@@ -165,17 +170,6 @@ nmap <leader>q :nohlsearch<CR>
 " RegEx in Search
 set magic
 
-" Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
-if executable('ag')
-  " Use Ag over Grep
-  set grepprg=ag\ --nogroup\ --nocolor
-
-  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
-  let g:ctrlp_user_command = 'ag %s -l --nocolor --hidden -g ""'
-
-  " ag is fast enough that CtrlP doesn't need to cache
-  let g:ctrlp_use_caching = 0
-endif
 
 " end Searching
 "--------------
@@ -254,9 +248,19 @@ let g:syntastic_html_tidy_exec = 'tidy5'
 
 
 " ctrlp plugin
-let g:ctrlp_working_path_mode = 'c'
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_root_markers = ['pom.xml']
+let g:ctrlp_show_hidden = 1
+let g:ctrlp_use_caching = 1
+let g:ctrlp_clear_cache_on_exit = 0
+let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.class
 set wildignore+=*/bower_components,*/node_modules
+let g:ctrlp_custom_ignore = {
+           \ 'dir':  '\v[\/]\.(git|hg|svn)$',
+           \ 'file': '\v\.(exe|so|dll)$',
+           \ 'link': 'some_bad_symbolic_links',
+           \ }
 
 " airline plugin
 let g:airline#extensions#branch#enabled = 1

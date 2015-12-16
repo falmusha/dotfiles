@@ -1,19 +1,11 @@
 #!/bin/bash
 
-SYMLINKS="vimrc zshrc gitconfig oh-my-zsh vim"
+SYMLINKS="zshrc gitconfig oh-my-zsh vimrc vim config/nvim"
 for SYMLINK in $SYMLINKS; do
-  if [ -h "$HOME/.$SYMLINK" ]; then
-    echo "Deleting $HOME/.$SYMLINK"
+  if [ -e "$HOME/.$SYMLINK" ]; then
+    echo "---- Deleting $HOME/.$SYMLINK"
     rm -rf "$HOME/.$SYMLINK"
+  else
+    echo "---- $HOME/.$SYMLINK already removed"
   fi
 done
-
-if [ ! -d "./vim" ]; then
-  echo "Re-run install script within dotfiles directory"
-  exit
-fi
-
-if [ -d "./vim/bundle" ]; then
-  echo "Deleting installed plugins in ./vim/bundle"
-  rm -rf "./vim/bundle"
-fi
