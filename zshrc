@@ -33,17 +33,6 @@ HELPDIR=/usr/local/share/zsh/helpfiles
 
 source $ZSH/oh-my-zsh.sh
 
-# RVM
-# ---
-if type rvm &> /dev/null ; then
-  echo "NO RVM"
-else
-  [[ -s "$HOME/.rvm/scripts/rvm" ]] && . "$HOME/.rvm/scripts/rvm"
-fi
-
 # Preferred editor
 # ----------------
 export EDITOR='vim'
-
-# Load local machine setting
-source ~/local.zshrc

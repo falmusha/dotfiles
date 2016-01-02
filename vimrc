@@ -5,11 +5,7 @@ set nocompatible
 
 let s:darwin = has('mac')
 
-if has('nvim')
-  call plug#begin('~/.vim/plugged')
-else
-  call plug#begin('~/.vim/plugged')
-endif
+call plug#begin('~/.vim/plugged')
 
 " Colors
 Plug 'chriskempson/vim-tomorrow-theme'
@@ -25,6 +21,8 @@ Plug 'tpope/vim-sensible'
 Plug 'junegunn/vim-easy-align',       { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 Plug 'junegunn/goyo.vim'
 Plug 'ntpeters/vim-better-whitespace'
+Plug 'jszakmeister/vim-togglecursor'
+Plug 'jiangmiao/auto-pairs'
 
 " Status
 Plug 'bling/vim-airline'
@@ -32,11 +30,11 @@ Plug 'bling/vim-airline'
 " Tmux
 Plug 'tpope/vim-tbone'
 
-" Browsing
-Plug 'scrooloose/nerdtree'
+" Browsing/Navigation
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'pbrisbin/vim-mkdir'
 Plug 'justinmk/vim-gtfo'
+Plug 'christoomey/vim-tmux-navigator'
 
 " Git
 Plug 'tpope/vim-fugitive'
@@ -44,20 +42,22 @@ Plug 'gregsexton/gitv', { 'on': 'Gitv' }
 Plug 'mattn/gist-vim', { 'on': 'Gist' }
 Plug 'airblade/vim-gitgutter'
 
+" Lint
+Plug 'scrooloose/syntastic'
+
 " Lang
 if v:version >= 703
   Plug 'vim-ruby/vim-ruby'
 endif
 Plug 'fatih/vim-go'
-Plug 'groenewege/vim-less'
-Plug 'pangloss/vim-javascript'
+Plug 'jelera/vim-javascript-syntax'
 Plug 'kchmck/vim-coffee-script'
 Plug 'plasticboy/vim-markdown'
 Plug 'slim-template/vim-slim'
 Plug 'tpope/vim-rails',      { 'for': []      }
 Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
 Plug 'honza/dockerfile.vim'
-Plug 'skammer/vim-css-color'
+Plug 'ap/vim-css-color'
 Plug 'mustache/vim-mustache-handlebars'
 Plug 'rust-lang/rust.vim'
 if s:darwin
@@ -65,9 +65,7 @@ if s:darwin
   Plug 'rizzatti/dash.vim',  { 'on': 'Dash' }
 endif
 Plug 'chrisbra/unicode.vim', { 'for': 'journal' }
-
-" Lint
-Plug 'scrooloose/syntastic'
+Plug 'darthmall/vim-vue'
 
 call plug#end()
 
@@ -125,6 +123,10 @@ set splitbelow
 set splitright
 
 set laststatus=2
+
+" Only highlight the current line
+set cursorline
+
 
 " end LOOKS
 "----------
@@ -228,15 +230,13 @@ nnoremap <silent> <down>  :res +5 <CR>
 nnoremap <silent> <right> :vertical resize +5 <CR>
 nnoremap <silent> <left>  :vertical resize -5 <CR>
 
+" let netrw/Expolrer
+let g:netrw_liststyle=3
+noremap <leader>n :Explore<CR>
+
 " ----------------------------------------------------------------------------
 " Plugin Confs
 " ----------------------------------------------------------------------------
-
-" NERDTree plugin
-" Show directory explorer
-let NERDTreeHighlightCursorline=1
-noremap <leader>n :NERDTreeToggle<CR>
-
 
 " syntastic plugin
 let g:syntastic_always_populate_loc_list = 1
@@ -269,3 +269,8 @@ let g:airline#extensions#hunks#enabled = 1
 let g:airline#extensions#ctrlp#show_adjacent_modes = 1
 let g:airline#extensions#whitespace#enabled = 1
 let g:airline#extensions#whitespace#checks = [ 'indent', 'trailing' ]
+
+
+" vim-markdown
+let g:vim_markdown_folding_disabled=1
+
