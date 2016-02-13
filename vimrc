@@ -8,8 +8,7 @@ let s:darwin = has('mac')
 call plug#begin('~/.vim/plugged')
 
 " Colors
-Plug 'chriskempson/vim-tomorrow-theme'
-Plug 'joshdick/onedark.vim'
+Plug 'flazz/vim-colorschemes'
 
 " Edit
 Plug 'tpope/vim-repeat'
@@ -18,7 +17,7 @@ Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-commentary'
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'tpope/vim-sensible'
-Plug 'junegunn/vim-easy-align',       { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
+Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 Plug 'junegunn/goyo.vim'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'jszakmeister/vim-togglecursor'
@@ -35,11 +34,12 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'pbrisbin/vim-mkdir'
 Plug 'justinmk/vim-gtfo'
 Plug 'christoomey/vim-tmux-navigator'
+Plug 'blueyed/vim-diminactive'
 
 " Git
 Plug 'tpope/vim-fugitive'
-Plug 'gregsexton/gitv', { 'on': 'Gitv' }
-Plug 'mattn/gist-vim', { 'on': 'Gist' }
+Plug 'gregsexton/gitv', {'on': 'Gitv'}
+Plug 'mattn/gist-vim', {'on': 'Gist'}
 Plug 'airblade/vim-gitgutter'
 
 " Lint
@@ -47,25 +47,21 @@ Plug 'scrooloose/syntastic'
 
 " Lang
 if v:version >= 703
-  Plug 'vim-ruby/vim-ruby'
+  Plug 'vim-ruby/vim-ruby', {'for': 'ruby'}
 endif
-Plug 'fatih/vim-go'
-Plug 'jelera/vim-javascript-syntax'
+Plug 'tpope/vim-fireplace', {'for': 'clojure'}
+Plug 'pangloss/vim-javascript', {'for': 'javascript'}
 Plug 'kchmck/vim-coffee-script'
 Plug 'plasticboy/vim-markdown'
-Plug 'slim-template/vim-slim'
-Plug 'tpope/vim-rails',      { 'for': []      }
-Plug 'derekwyatt/vim-scala', { 'for': 'scala' }
-Plug 'honza/dockerfile.vim'
+Plug 'tpope/vim-rails', {'for': []}
 Plug 'ap/vim-css-color'
-Plug 'mustache/vim-mustache-handlebars'
-Plug 'rust-lang/rust.vim'
+Plug 'rust-lang/rust.vim', {'for': 'rust'}
 if s:darwin
-  Plug 'Keithbsmiley/investigate.vim'
-  Plug 'rizzatti/dash.vim',  { 'on': 'Dash' }
+  Plug 'rizzatti/dash.vim',  {'on': 'Dash'}
 endif
-Plug 'chrisbra/unicode.vim', { 'for': 'journal' }
-Plug 'darthmall/vim-vue'
+Plug 'chrisbra/unicode.vim', {'for': 'journal'}
+Plug 'posva/vim-vue'
+Plug 'leafgarland/typescript-vim', {'for': 'typescript'}
 
 call plug#end()
 
@@ -90,7 +86,12 @@ set guifont=Menlo:h14
 syntax enable
 
 " Color
-silent! colorscheme Tomorrow-Night
+
+" Switch color schemes for different file types
+silent! :autocmd BufEnter,FileType *
+\   if &ft ==# 'markdown' || &ft ==# 'md' | colorscheme Tomorrow |
+\   else | colorscheme Tomorrow-Night |
+\   endif
 
 " Show line numbers
 set number
@@ -234,6 +235,9 @@ nnoremap <silent> <left>  :vertical resize -5 <CR>
 let g:netrw_liststyle=3
 noremap <leader>n :Explore<CR>
 
+" Enable spelling for some files
+autocmd BufRead,BufNewFile *.md,*.markdown setlocal spell spelllang=en_us
+
 " ----------------------------------------------------------------------------
 " Plugin Confs
 " ----------------------------------------------------------------------------
@@ -241,21 +245,20 @@ noremap <leader>n :Explore<CR>
 " syntastic plugin
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_open = 0
 let g:syntastic_check_on_wq = 1
-let g:syntastic_ignore_files = []
-let g:syntastic_html_tidy_exec = 'tidy5'
+let g:syntastic_typescript_checkers = []
 
 
 " ctrlp plugin
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_root_markers = ['pom.xml']
 let g:ctrlp_show_hidden = 1
-let g:ctrlp_use_caching = 1
-let g:ctrlp_clear_cache_on_exit = 0
+" let g:ctrlp_use_caching = 1
+" let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.class
-set wildignore+=*/bower_components,*/node_modules
+set wildignore+=*/bower_components,*/node_modules,*/build
 let g:ctrlp_custom_ignore = {
            \ 'dir':  '\v[\/]\.(git|hg|svn)$',
            \ 'file': '\v\.(exe|so|dll)$',
@@ -270,7 +273,8 @@ let g:airline#extensions#ctrlp#show_adjacent_modes = 1
 let g:airline#extensions#whitespace#enabled = 1
 let g:airline#extensions#whitespace#checks = [ 'indent', 'trailing' ]
 
-
 " vim-markdown
 let g:vim_markdown_folding_disabled=1
 
+" rust.vim
+let g:rustfmt_autosave = 1
