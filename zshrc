@@ -36,3 +36,5 @@ source $ZSH/oh-my-zsh.sh
 # Preferred editor
 # ----------------
 export EDITOR='vim'
+
+source $HOME/.zshrc.local
