@@ -38,3 +38,5 @@ source $ZSH/oh-my-zsh.sh
 export EDITOR='vim'
 
 source $HOME/.zshrc.local
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
