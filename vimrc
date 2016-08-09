@@ -9,6 +9,7 @@ call plug#begin('~/.vim/plugged')
 
 " Colors
 Plug 'flazz/vim-colorschemes'
+Plug 'chriskempson/base16-vim'
 
 " Edit
 Plug 'tpope/vim-repeat'
@@ -260,7 +261,7 @@ let g:ctrlp_show_hidden = 1
 " let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_cache_dir = $HOME.'/.cache/ctrlp'
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.class
-set wildignore+=*/bower_components,*/node_modules,*/build
+set wildignore+=*/bower_components,*/node_modules,*/build,*/deps,*/_build
 let g:ctrlp_custom_ignore = {
            \ 'dir':  '\v[\/]\.(git|hg|svn)$',
            \ 'file': '\v\.(exe|so|dll)$',
