@@ -23,6 +23,7 @@ Plug 'junegunn/goyo.vim'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'jszakmeister/vim-togglecursor'
 Plug 'jiangmiao/auto-pairs'
+Plug 'craigemery/vim-autotag'
 
 " Status
 Plug 'bling/vim-airline'

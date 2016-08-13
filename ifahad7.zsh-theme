@@ -8,10 +8,17 @@ function get_pwd() {
 }
 
 PROMPT='
-%{$fg[red]%}%n %{$fg[white]%}@ %{$fg[blue]%}%m$(git_prompt_info)%{$fg[white]%}: %{$fg[yellow]%}$(get_pwd) $reset_color%}
-%{$fg[green]%}$ $reset_color%}'
+%{$fg[red]%}%n \
+%{$fg[white]%}@ \
+%{$fg[blue]%}%m \
+$(git_prompt_info)\
+%{$fg[white]%}: %{$fg[yellow]%}$(get_pwd) %{$reset_color%}
+%{$fg[green]%}$ %{$reset_color%}'
 
-ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[grey]%} ["
+
+RPROMPT="[%{$fg_no_bold[yellow]%}%?%{$reset_color%}]"
+
+ZSH_THEME_GIT_PROMPT_PREFIX="%{$fg[grey]%}["
 ZSH_THEME_GIT_PROMPT_SUFFIX="%{$fg[grey]%}]%{$reset_color%}"
 ZSH_THEME_GIT_PROMPT_DIRTY="%{$fg[red]%}git:+"
 ZSH_THEME_GIT_PROMPT_CLEAN="%{$fg[green]%}git:"

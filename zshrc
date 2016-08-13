@@ -17,7 +17,7 @@ alias glg="git log --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgre
 
 # Plugins:
 # --------
-plugins=(git vundle osx gem coffee brew npm vundle)
+plugins=(git gitfast osx gem brew npm)
 
 
 # Settings:

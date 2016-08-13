@@ -16,3 +16,5 @@
 	conflictstyle = diff3
 [mergetool]
 	prompt = false
+[core]
+	excludesfile = /Users/fahad/.global_ignore
