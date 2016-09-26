@@ -94,6 +94,7 @@ syntax enable
 " Switch color schemes for different file types
 silent! :autocmd BufEnter,FileType *
 \   if &ft ==# 'markdown' || &ft ==# 'md' | colorscheme Tomorrow |
+\   elseif strftime("%H") >= 5 && strftime("%H") <= 17 | colorscheme Tomorrow |
 \   else | colorscheme Tomorrow-Night |
 \   endif
 
@@ -281,4 +282,4 @@ let g:airline#extensions#whitespace#checks = [ 'indent', 'trailing' ]
 let g:vim_markdown_folding_disabled=1
 
 " rust.vim
-let g:rustfmt_autosave = 1
+let g:rustfmt_autosave = 0
