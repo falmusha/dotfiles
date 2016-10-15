@@ -65,6 +65,7 @@ Plug 'chrisbra/unicode.vim', {'for': 'journal'}
 Plug 'posva/vim-vue'
 Plug 'leafgarland/typescript-vim', {'for': 'typescript'}
 Plug 'elixir-lang/vim-elixir'
+Plug 'lervag/vimtex'
 
 
 call plug#end()
