@@ -66,6 +66,7 @@ Plug 'posva/vim-vue'
 Plug 'leafgarland/typescript-vim', {'for': 'typescript'}
 Plug 'elixir-lang/vim-elixir'
 Plug 'lervag/vimtex'
+Plug 'ElmCast/elm-vim'
 
 
 call plug#end()
@@ -141,6 +142,9 @@ set cursorline
 
 " Set Leader Key
 let mapleader = " "
+
+" Set Local Leader Key
+let maplocalleader = ","
 
 " Automatically read the file again when it is changed outside of Vim
 set autoread
