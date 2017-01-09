@@ -8,22 +8,27 @@ let s:darwin = has('mac')
 call plug#begin('~/.vim/plugged')
 
 " Colors
-Plug 'flazz/vim-colorschemes'
 Plug 'chriskempson/base16-vim'
+Plug 'flazz/vim-colorschemes'
 
-" Edit
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-endwise'
-Plug 'tpope/vim-commentary'
+" Editing
 Plug 'AndrewRadev/splitjoin.vim'
-Plug 'tpope/vim-sensible'
-Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
-Plug 'junegunn/goyo.vim'
-Plug 'ntpeters/vim-better-whitespace'
-Plug 'jszakmeister/vim-togglecursor'
-Plug 'jiangmiao/auto-pairs'
+Plug 'Shougo/vimproc.vim', {'do' : 'make'}
 Plug 'craigemery/vim-autotag'
+Plug 'jiangmiao/auto-pairs'
+Plug 'jszakmeister/vim-togglecursor'
+Plug 'junegunn/goyo.vim'
+Plug 'junegunn/vim-easy-align', {'on': ['<Plug>(EasyAlign)', 'EasyAlign']}
+Plug 'ntpeters/vim-better-whitespace'
+Plug 'sjl/vitality.vim'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-repeat'
+if !has('nvim')
+  Plug 'tpope/vim-sensible'
+endif
+Plug 'tpope/vim-surround'
+Plug 'xuhdev/vim-latex-live-preview'
 
 " Status
 Plug 'bling/vim-airline'
@@ -32,41 +37,40 @@ Plug 'bling/vim-airline'
 Plug 'tpope/vim-tbone'
 
 " Browsing/Navigation
-Plug 'ctrlpvim/ctrlp.vim'
-Plug 'pbrisbin/vim-mkdir'
-Plug 'justinmk/vim-gtfo'
-Plug 'christoomey/vim-tmux-navigator'
 Plug 'blueyed/vim-diminactive'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'justinmk/vim-gtfo'
+Plug 'pbrisbin/vim-mkdir'
 
 " Git
-Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 Plug 'gregsexton/gitv', {'on': 'Gitv'}
 Plug 'mattn/gist-vim', {'on': 'Gist'}
-Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
 
 " Lint
+Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
+Plug 'davidhalter/jedi-vim', {'for': 'python'}
 Plug 'scrooloose/syntastic'
 
 " Lang
-if v:version >= 703
-  Plug 'vim-ruby/vim-ruby', {'for': 'ruby'}
-endif
-Plug 'tpope/vim-fireplace', {'for': 'clojure'}
-Plug 'pangloss/vim-javascript', {'for': 'javascript'}
-Plug 'kchmck/vim-coffee-script'
-Plug 'plasticboy/vim-markdown'
-Plug 'tpope/vim-rails', {'for': []}
+Plug 'ElmCast/elm-vim', {'for': 'elm'}
+Plug 'Quramy/tsuquyomi', {'for': 'typescript'}
 Plug 'ap/vim-css-color'
-Plug 'rust-lang/rust.vim', {'for': 'rust'}
-if s:darwin
-  Plug 'rizzatti/dash.vim',  {'on': 'Dash'}
-endif
 Plug 'chrisbra/unicode.vim', {'for': 'journal'}
-Plug 'posva/vim-vue'
+Plug 'elixir-lang/vim-elixir', {'for': 'elixir'}
+Plug 'kchmck/vim-coffee-script'
 Plug 'leafgarland/typescript-vim', {'for': 'typescript'}
-Plug 'elixir-lang/vim-elixir'
 Plug 'lervag/vimtex'
-Plug 'ElmCast/elm-vim'
+Plug 'pangloss/vim-javascript', {'for': 'javascript'}
+Plug 'plasticboy/vim-markdown'
+Plug 'posva/vim-vue'
+Plug 'racer-rust/vim-racer', {'for': 'rust'}
+Plug 'rust-lang/rust.vim', {'for': 'rust'}
+Plug 'tpope/vim-fireplace', {'for': 'clojure'}
+Plug 'tpope/vim-rails', {'for': []}
+Plug 'vim-ruby/vim-ruby', {'for': 'ruby'}
 
 
 call plug#end()
@@ -288,3 +292,23 @@ let g:vim_markdown_folding_disabled=1
 
 " rust.vim
 let g:rustfmt_autosave = 0
+
+" deoplete.vim
+let g:deoplete#enable_at_startup = 1
+
+" jedi.vim
+let g:jedi#use_splits_not_buffers = 'bottom'
+
+" vim-latex-live-preview
+let g:livepreview_previewer = 'open -a Preview'
+
+" tsuquyomi
+let g:tsuquyomi_disable_quickfix = 1
+let g:syntastic_typescript_checkers = ['tsuquyomi']
+" rename symobols
+autocmd FileType typescript nmap <buffer> <Leader>e <Plug>(TsuquyomiRenameSymbol)
+" symbols hints
+autocmd FileType typescript nmap <buffer> <Leader>t : <C-u>echo tsuquyomi#hint()<CR>
+
+" NEOVIM
+let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
