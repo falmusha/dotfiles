@@ -79,6 +79,11 @@ function link_vim() {
 }
 
 function link_zshrc() {
+  echo "---- Linking tmux.conf"
+  link $DOTFILES_DIR/tmux.conf $HOME/.tmux.conf
+}
+
+function link_zshrc() {
   echo "---- Linking zshrc"
   link $DOTFILES_DIR/zshrc $HOME/.zshrc
 }
@@ -145,6 +150,7 @@ if [ "$USE_ZSH" = true ] ; then
     # Linking zsh dotfiles
     link_ohmyzsh
     link_zshrc
+    link_tmux
   else
     echo "---- You do not have zsh on your machine :("
   fi
