@@ -14,12 +14,11 @@ Plug 'flazz/vim-colorschemes'
 " Editing
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'Shougo/vimproc.vim', {'do' : 'make'}
-Plug 'craigemery/vim-autotag'
 Plug 'jiangmiao/auto-pairs'
 Plug 'jszakmeister/vim-togglecursor'
 Plug 'junegunn/goyo.vim'
-Plug 'junegunn/vim-easy-align', {'on': ['<Plug>(EasyAlign)', 'EasyAlign']}
 Plug 'ntpeters/vim-better-whitespace'
+Plug 'junegunn/vim-easy-align', {'on': ['<Plug>(EasyAlign)', 'EasyAlign']}
 Plug 'sjl/vitality.vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
@@ -50,9 +49,11 @@ Plug 'mattn/gist-vim', {'on': 'Gist'}
 Plug 'tpope/vim-fugitive'
 
 " Lint
-Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
+if !has('nvim')
+  Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
+endif
 Plug 'davidhalter/jedi-vim', {'for': 'python'}
-Plug 'scrooloose/syntastic'
+Plug 'w0rp/ale'
 
 " Lang
 Plug 'ElmCast/elm-vim', {'for': 'elm'}
@@ -66,8 +67,8 @@ Plug 'lervag/vimtex'
 Plug 'pangloss/vim-javascript', {'for': 'javascript'}
 Plug 'plasticboy/vim-markdown'
 Plug 'posva/vim-vue'
-Plug 'racer-rust/vim-racer', {'for': 'rust'}
-Plug 'rust-lang/rust.vim', {'for': 'rust'}
+Plug 'racer-rust/vim-racer'
+Plug 'rust-lang/rust.vim'
 Plug 'tpope/vim-fireplace', {'for': 'clojure'}
 Plug 'tpope/vim-rails', {'for': []}
 Plug 'vim-ruby/vim-ruby', {'for': 'ruby'}
@@ -77,7 +78,11 @@ call plug#end()
 
 
 " Enable filtype plugins
-filetype plugin indent on
+filetype off
+
+let &runtimepath.=',~/.vim/plugged/ale'
+
+filetype plugin on
 
 " end Vundle settings
 "--------------------
@@ -96,13 +101,7 @@ set guifont=Menlo:h14
 syntax enable
 
 " Color
-
-" Switch color schemes for different file types
-silent! :autocmd BufEnter,FileType *
-\   if &ft ==# 'markdown' || &ft ==# 'md' | colorscheme Tomorrow |
-\   elseif strftime("%H") >= 5 && strftime("%H") <= 17 | colorscheme Tomorrow |
-\   else | colorscheme Tomorrow-Night |
-\   endif
+colorscheme Tomorrow
 
 " Show line numbers
 set number
@@ -123,8 +122,8 @@ set ruler
 " Cursor offset from bottom of page
 set scrolloff=4
 
-" Display extra whitespace
-set list listchars=tab:»·,trail:·,nbsp:·
+" " Display extra whitespace
+set list listchars=tab:»·
 
 " Highlight lines over 80 chars
 set textwidth=80
