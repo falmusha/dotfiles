@@ -1,9 +1,27 @@
-" Vundle settings:
-"-----------------
+"-------------------------------------------------------------------------------
+" Vim Customization:
+"-------------------------------------------------------------------------------
+
 "be iMproved
 set nocompatible
 
-let s:darwin = has('mac')
+filetype plugin on
+
+" Custom file types
+au! BufNewFile, BufRead *.rs setf rust
+au! BufNewFile, BufRead *.elm setf elm
+au! BufNewFile, BufRead *.ts setf typescript
+au! BufNewFile, BufRead *.ex,*.exs setf elixir
+
+" Set Leader Key
+let mapleader = " "
+
+" Set Local Leader Key
+let maplocalleader = ","
+
+"-------------------------------------------------------------------------------
+" Plugins
+"-------------------------------------------------------------------------------
 
 call plug#begin('~/.vim/plugged')
 
@@ -48,7 +66,7 @@ Plug 'gregsexton/gitv', {'on': 'Gitv'}
 Plug 'mattn/gist-vim', {'on': 'Gist'}
 Plug 'tpope/vim-fugitive'
 
-" Lint
+" Linting and autocompletion
 if !has('nvim')
   Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
 endif
@@ -56,48 +74,33 @@ Plug 'davidhalter/jedi-vim', {'for': 'python'}
 Plug 'w0rp/ale'
 
 " Lang
-Plug 'ElmCast/elm-vim', {'for': 'elm'}
-Plug 'Quramy/tsuquyomi', {'for': 'typescript'}
 Plug 'ap/vim-css-color'
-Plug 'chrisbra/unicode.vim', {'for': 'journal'}
-Plug 'elixir-lang/vim-elixir', {'for': 'elixir'}
-Plug 'kchmck/vim-coffee-script'
-Plug 'leafgarland/typescript-vim', {'for': 'typescript'}
-Plug 'lervag/vimtex'
-Plug 'pangloss/vim-javascript', {'for': 'javascript'}
 Plug 'plasticboy/vim-markdown'
 Plug 'posva/vim-vue'
-Plug 'racer-rust/vim-racer'
-Plug 'rust-lang/rust.vim'
+Plug 'ElmCast/elm-vim', {'for': 'elm'}
+Plug 'Quramy/tsuquyomi', {'for': 'typescript'}
+Plug 'leafgarland/typescript-vim', {'for': 'typescript'}
+Plug 'lervag/vimtex', {'for': 'latex'}
+Plug 'pangloss/vim-javascript', {'for': 'javascript'}
+Plug 'racer-rust/vim-racer', {'for': 'rust'}
+Plug 'rust-lang/rust.vim', {'for': 'rust'}
 Plug 'tpope/vim-fireplace', {'for': 'clojure'}
-Plug 'tpope/vim-rails', {'for': []}
+Plug 'tpope/vim-rails', {'for': 'ruby'}
 Plug 'vim-ruby/vim-ruby', {'for': 'ruby'}
+Plug 'elixir-lang/vim-elixir', {'for': 'elixir'}
+Plug 'slashmili/alchemist.vim', {'for': 'elixir'}
 
 
 call plug#end()
 
-
-" Enable filtype plugins
-filetype off
-
-let &runtimepath.=',~/.vim/plugged/ale'
-
-filetype plugin on
-
-" end Vundle settings
-"--------------------
-
-" Vim Customization:
-"-------------------
-
-" LOOKS:
-"-------
-
+"-------------------------------------------------------------------------------
+" Vim Looks:
+"-------------------------------------------------------------------------------
 
 " Font
 set guifont=Menlo:h14
 
-" Syntax highliting
+" Syntax highlighting
 syntax enable
 
 " Color
@@ -122,7 +125,7 @@ set ruler
 " Cursor offset from bottom of page
 set scrolloff=4
 
-" " Display extra whitespace
+" Display extra whitespace
 set list listchars=tab:»·
 
 " Highlight lines over 80 chars
@@ -138,36 +141,20 @@ set laststatus=2
 " Only highlight the current line
 set cursorline
 
+" Resize window size with arrow keys
+nnoremap <silent> <up>    :res -5 <CR>
+nnoremap <silent> <down>  :res +5 <CR>
+nnoremap <silent> <right> :vertical resize +5 <CR>
+nnoremap <silent> <left>  :vertical resize -5 <CR>
 
-" end LOOKS
-"----------
+" let netrw/Expolrer
+let g:netrw_liststyle=3
+noremap <leader>n :Explore<CR>
 
+"-------------------------------------------------------------------------------
+" Vim Search:
+"-------------------------------------------------------------------------------
 
-" Set Leader Key
-let mapleader = " "
-
-" Set Local Leader Key
-let maplocalleader = ","
-
-" Automatically read the file again when it is changed outside of Vim
-set autoread
-
-" Edit a file without losing modifications to the current file
-set hidden
-
-" Remove files backup
-set nobackup
-set nowritebackup
-
-" Remove swap files
-set noswapfile
-
-" Backspace deletes like most programs in insert mode
-set backspace=2
-
-
-" Searching:
-"-----------
 " Disable case sensitive
 set ignorecase
 
@@ -186,12 +173,9 @@ nmap <leader>q :nohlsearch<CR>
 " RegEx in Search
 set magic
 
-
-" end Searching
-"--------------
-
-" Movement:
-"-----------
+"-------------------------------------------------------------------------------
+" Vim Movement:
+"-------------------------------------------------------------------------------
 
 " Move better between lines
 map j gj
@@ -203,16 +187,33 @@ nmap <c-k> <c-w>k
 nmap <c-h> <c-w>h
 nmap <c-l> <c-w>l
 
+"-------------------------------------------------------------------------------
+" Vim Other:
+"-------------------------------------------------------------------------------
 
 
-" end Movement
-"--------------
+" Automatically read the file again when it is changed outside of Vim
+set autoread
+
+" Edit a file without losing modifications to the current file
+set hidden
+
+" Remove files backup
+set nobackup
+set nowritebackup
+
+" Remove swap files
+set noswapfile
+
+" Backspace deletes like most programs in insert mode
+set backspace=2
+
 
 " Show matching brackets when on them
 set showmatch
 set mat=2
 
-" Remove Err bells
+" Remove Error bells
 set noerrorbells
 set novisualbell
 set t_vb=
@@ -238,32 +239,15 @@ set smartindent
 " Round indent to multiple of 'shiftwidth'
 set shiftround
 
-" Resize window size with arrow keys
-nnoremap <silent> <up>    :res -5 <CR>
-nnoremap <silent> <down>  :res +5 <CR>
-nnoremap <silent> <right> :vertical resize +5 <CR>
-nnoremap <silent> <left>  :vertical resize -5 <CR>
-
-" let netrw/Expolrer
-let g:netrw_liststyle=3
-noremap <leader>n :Explore<CR>
 
 " Enable spelling for some files
-autocmd BufRead,BufNewFile *.md,*.markdown setlocal spell spelllang=en_us
+autocmd BufRead, BufNewFile *.md, *.markdown, *.tex setlocal spell spelllang=en_ca
 
 " ----------------------------------------------------------------------------
-" Plugin Confs
+" Plugin Configurations:
 " ----------------------------------------------------------------------------
 
-" syntastic plugin
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_auto_loc_list = 0
-let g:syntastic_check_on_open = 0
-let g:syntastic_check_on_wq = 1
-let g:syntastic_typescript_checkers = []
-
-
-" ctrlp plugin
+" ctrlp.vim
 let g:ctrlp_working_path_mode = 'ra'
 let g:ctrlp_root_markers = ['pom.xml']
 let g:ctrlp_show_hidden = 1
@@ -278,7 +262,7 @@ let g:ctrlp_custom_ignore = {
            \ 'link': 'some_bad_symbolic_links',
            \ }
 
-" airline plugin
+" vim-airline
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#syntastic#enabled = 1
 let g:airline#extensions#hunks#enabled = 1
@@ -292,10 +276,10 @@ let g:vim_markdown_folding_disabled=1
 " rust.vim
 let g:rustfmt_autosave = 0
 
-" deoplete.vim
+" deoplete.nvim
 let g:deoplete#enable_at_startup = 1
 
-" jedi.vim
+" jedi-vim
 let g:jedi#use_splits_not_buffers = 'bottom'
 
 " vim-latex-live-preview
@@ -309,5 +293,10 @@ autocmd FileType typescript nmap <buffer> <Leader>e <Plug>(TsuquyomiRenameSymbol
 " symbols hints
 autocmd FileType typescript nmap <buffer> <Leader>t : <C-u>echo tsuquyomi#hint()<CR>
 
-" NEOVIM
+" vim-commentry
+autocmd FileType matlab setlocal commentstring=%\ %s
+
+" ----------------------------------------------------------------------------
+" NEOVIM Configurations:
+" ----------------------------------------------------------------------------
 let $NVIM_TUI_ENABLE_CURSOR_SHAPE=1
