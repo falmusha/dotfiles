@@ -248,7 +248,7 @@ autocmd BufRead, BufNewFile *.md, *.markdown, *.tex setlocal spell spelllang=en_
 " ----------------------------------------------------------------------------
 
 " ctrlp.vim
-let g:ctrlp_working_path_mode = 'ra'
+let g:ctrlp_working_path_mode = 'a'
 let g:ctrlp_root_markers = ['pom.xml']
 let g:ctrlp_show_hidden = 1
 " let g:ctrlp_use_caching = 1
