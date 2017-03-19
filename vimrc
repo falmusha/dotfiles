@@ -80,7 +80,7 @@ Plug 'posva/vim-vue'
 Plug 'ElmCast/elm-vim', {'for': 'elm'}
 Plug 'Quramy/tsuquyomi', {'for': 'typescript'}
 Plug 'leafgarland/typescript-vim', {'for': 'typescript'}
-Plug 'lervag/vimtex', {'for': 'latex'}
+Plug 'lervag/vimtex', {'for': 'tex'}
 Plug 'pangloss/vim-javascript', {'for': 'javascript'}
 Plug 'racer-rust/vim-racer', {'for': 'rust'}
 Plug 'rust-lang/rust.vim', {'for': 'rust'}
