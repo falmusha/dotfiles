@@ -67,9 +67,7 @@ Plug 'mattn/gist-vim', {'on': 'Gist'}
 Plug 'tpope/vim-fugitive'
 
 " Linting and autocompletion
-if !has('nvim')
-  Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
-endif
+Plug 'Shougo/deoplete.nvim', {'do': ':UpdateRemotePlugins'}
 Plug 'davidhalter/jedi-vim', {'for': 'python'}
 Plug 'w0rp/ale'
 
@@ -104,7 +102,7 @@ set guifont=Menlo:h14
 syntax enable
 
 " Color
-colorscheme Tomorrow
+colorscheme Tomorrow-Night
 
 " Show line numbers
 set number
