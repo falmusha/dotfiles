@@ -5,8 +5,13 @@
 	email = ifahad7@gmail.com
 [push]
 	default = matching
+	followTags = true
 [diff]
 	tool = vimdiff
+	renames = copies
+	indentHeuristic = true
+[diff "bin"]
+	textconv = hexdump -v -C
 [difftool]
 	prompt = false
 [alias]
@@ -14,7 +19,49 @@
 [merge]
 	tool = vimdiff
 	conflictstyle = diff3
+	log = true
 [mergetool]
 	prompt = false
 [core]
-	excludesfile = /Users/fahad/.global_ignore
+	excludesfile = ~/.global_ignore
+[alias]
+	l = log --pretty=oneline --graph --abbrev-commit
+	s = status -s
+	tags = tag -l
+	branches = branch -a
+	remotes = remote -v
+	amend = commit --amend --reuse-message=HEAD
+	dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
+	ppl = shortlog --summary --numbered
+[color]
+	ui = auto
+[color "branch"]
+	current = yellow reverse
+	local = yellow
+	remote = green
+[color "diff"]
+	meta = yellow bold
+	frag = magenta bold # line info
+	old = red # deletions
+	new = green # additions
+[color "status"]
+	added = yellow
+	changed = green
+	untracked = cyan
+	# Enable an experimental heuristic that shifts the hunk boundary in an
+	# attempt to make the resulting patch easier to read.
+[help]
+	# Automatically correct and execute mistyped commands
+	autocorrect = 1
+[url "git@github.com:"]
+	insteadOf = "gh:"
+	pushInsteadOf = "github:"
+	pushInsteadOf = "git://github.com/"
+[url "git://github.com/"]
+	insteadOf = "github:"
+[url "git@gist.github.com:"]
+	insteadOf = "gst:"
+	pushInsteadOf = "gist:"
+	pushInsteadOf = "git://gist.github.com/"
+[url "git://gist.github.com/"]
+	insteadOf = "gist:"
