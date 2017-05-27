@@ -140,6 +140,8 @@ def parse_args():
             help='Use zsh as the default shell with oh-my-zsh')
     parser.add_argument('--nvim', '-n', action='store_true',
             help='Use Neovim instead of stock Vim')
+    parser.add_argument('--link', '-l', action='store_true',
+            help='Just symlink')
 
     return parser.parse_args()
 
@@ -148,6 +150,11 @@ def main():
 
     if args.nope:
         uninstall(args.dry)
+        return
+
+    # update symlinks
+    if args.link:
+        link_dotfiles(args.dry, args.nvim)
         return
 
     # Install oh-my-zhs
