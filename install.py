@@ -7,7 +7,7 @@ import shutil
 import subprocess
 
 DOTFILES_DIR   = os.path.abspath('.')
-DOTFILES       = ['vimrc', 'zshrc', 'tmux.conf', 'gitconfig', 'gitignore_global']
+DOTFILES       = ['vimrc', 'zshrc', 'tmux.conf', 'gitconfig', 'global_ignore']
 HOME           = os.environ['HOME']
 NVIMRC_DST     = os.path.join(HOME, '.config/nvim/init.vim')
 VIMRC_DST      = os.path.join(HOME, '.vimrc')
