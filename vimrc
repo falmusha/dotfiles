@@ -104,7 +104,7 @@ set guifont=Menlo:h14
 syntax enable
 
 " Color
-colorscheme Tomorrow-Night
+colorscheme base16-ocean
 
 " Show line numbers
 set number
