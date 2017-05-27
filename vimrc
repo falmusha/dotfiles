@@ -31,12 +31,12 @@ Plug 'powerman/vim-plugin-AnsiEsc'
 
 " Editing
 Plug 'AndrewRadev/splitjoin.vim'
-Plug 'Shougo/vimproc.vim',      { 'do' : 'make'}
+Plug 'Shougo/vimproc.vim',      { 'do' : 'make' }
 Plug 'jiangmiao/auto-pairs'
 Plug 'jszakmeister/vim-togglecursor'
 Plug 'junegunn/goyo.vim'
 Plug 'ntpeters/vim-better-whitespace'
-Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign']}
+Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 Plug 'sjl/vitality.vim'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-endwise'
@@ -48,7 +48,9 @@ Plug 'tpope/vim-surround'
 Plug 'xuhdev/vim-latex-live-preview'
 
 " Status
-Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
 
 " Tmux
 Plug 'tpope/vim-tbone'
@@ -62,33 +64,33 @@ Plug 'pbrisbin/vim-mkdir'
 
 " Git
 Plug 'airblade/vim-gitgutter'
-Plug 'gregsexton/gitv', { 'on': 'Gitv'}
-Plug 'mattn/gist-vim',  { 'on': 'Gist'}
+Plug 'gregsexton/gitv', { 'on': 'Gitv' }
+Plug 'mattn/gist-vim',  { 'on': 'Gist' }
 Plug 'tpope/vim-fugitive'
 
 " Linting and autocompletion
 if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins'}
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 endif
-Plug 'davidhalter/jedi-vim',   { 'for': 'python'}
+Plug 'davidhalter/jedi-vim',   { 'for': 'python' }
 Plug 'w0rp/ale'
 
 " Lang
 Plug 'ap/vim-css-color'
 Plug 'plasticboy/vim-markdown'
 Plug 'posva/vim-vue'
-Plug 'ElmCast/elm-vim',            { 'for': 'elm'}
-Plug 'Quramy/tsuquyomi',           { 'for': 'typescript'}
-Plug 'leafgarland/typescript-vim', { 'for': 'typescript'}
-Plug 'lervag/vimtex',              { 'for': 'tex'}
-Plug 'pangloss/vim-javascript',    { 'for': 'javascript'}
-Plug 'racer-rust/vim-racer',       { 'for': 'rust'}
-Plug 'rust-lang/rust.vim',         { 'for': 'rust'}
-Plug 'tpope/vim-fireplace',        { 'for': 'clojure'}
-Plug 'tpope/vim-rails',            { 'for': 'ruby'}
-Plug 'vim-ruby/vim-ruby',          { 'for': 'ruby'}
-Plug 'elixir-lang/vim-elixir',     { 'for': ['elixir', 'eelixir']}
-Plug 'slashmili/alchemist.vim',    { 'for': ['elixir', 'eelixir']}
+Plug 'ElmCast/elm-vim',            { 'for': 'elm' }
+Plug 'Quramy/tsuquyomi',           { 'for': 'typescript' }
+Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
+Plug 'lervag/vimtex',              { 'for': 'tex' }
+Plug 'pangloss/vim-javascript',    { 'for': 'javascript' }
+Plug 'racer-rust/vim-racer',       { 'for': 'rust' }
+Plug 'rust-lang/rust.vim',         { 'for': 'rust' }
+Plug 'tpope/vim-fireplace',        { 'for': 'clojure' }
+Plug 'tpope/vim-rails',            { 'for': 'ruby' }
+Plug 'vim-ruby/vim-ruby',          { 'for': 'ruby' }
+Plug 'elixir-lang/vim-elixir',     { 'for': ['elixir', 'eelixir'] }
+Plug 'slashmili/alchemist.vim',    { 'for': ['elixir', 'eelixir'] }
 
 
 call plug#end()
@@ -263,6 +265,7 @@ let g:ctrlp_custom_ignore = {
            \ }
 
 " vim-airline
+let g:airline_theme='base16'
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#syntastic#enabled = 1
 let g:airline#extensions#hunks#enabled = 1
