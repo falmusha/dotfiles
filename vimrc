@@ -91,6 +91,7 @@ Plug 'tpope/vim-rails',            { 'for': 'ruby' }
 Plug 'vim-ruby/vim-ruby',          { 'for': 'ruby' }
 Plug 'elixir-lang/vim-elixir',     { 'for': ['elixir', 'eelixir'] }
 Plug 'slashmili/alchemist.vim',    { 'for': ['elixir', 'eelixir'] }
+Plug 'dart-lang/dart-vim-plugin',  { 'for': 'dart' }
 
 
 call plug#end()
