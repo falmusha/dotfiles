@@ -4,6 +4,7 @@ brew install \
   git \
   vim \
   neovim \
+  tmux \
   htop \
   tree \
   fzf \
@@ -12,5 +13,3 @@ brew install \
   python \
   python3 \
   elixir \
-
-

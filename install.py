@@ -7,8 +7,10 @@ import shutil
 import subprocess
 
 DOTFILES_DIR   = os.path.abspath('.')
-DOTFILES       = ['vimrc', 'zshrc', 'tmux.conf', 'gitconfig', 'global_ignore']
+DOTFILES       = ['vimrc', 'zshrc', 'tmux.conf', 'gitconfig', 'global_ignore',
+                  'settings.json']
 HOME           = os.environ['HOME']
+VSCODE_DST     = os.path.join(HOME, 'Library/Application Support/Code/User/settings.json')
 NVIMRC_DST     = os.path.join(HOME, '.config/nvim/init.vim')
 VIMRC_DST      = os.path.join(HOME, '.vimrc')
 VIM_PLUG_PATH  = os.path.join(HOME, '.vim/autoload/plug.vim')
@@ -89,6 +91,8 @@ def link_dotfiles(dry_run, use_nvim):
         src = os.path.join(DOTFILES_DIR, dotfile)
         if dotfile == 'vimrc':
             dst = NVIMRC_DST if use_nvim else VIMRC_DST
+        elif dotfile == 'settings.json':
+            dst = VSCODE_DST
         else:
             dst = os.path.join(HOME, '.%s' % dotfile)
 
