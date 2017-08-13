@@ -6,18 +6,19 @@ import re
 import shutil
 import subprocess
 
-DOTFILES_DIR   = os.path.abspath('.')
-DOTFILES       = ['vimrc', 'zshrc', 'tmux.conf', 'gitconfig', 'global_ignore',
-                  'settings.json']
-HOME           = os.environ['HOME']
-VSCODE_DST     = os.path.join(HOME, 'Library/Application Support/Code/User/settings.json')
-NVIMRC_DST     = os.path.join(HOME, '.config/nvim/init.vim')
-VIMRC_DST      = os.path.join(HOME, '.vimrc')
-VIM_PLUG_PATH  = os.path.join(HOME, '.vim/autoload/plug.vim')
-NVIM_PLUG_PATH = os.path.join(HOME, '.local/share/nvim/site/autoload/plug.vim')
-OHMYZSH_PATH   = os.path.join(HOME, '.oh-my-zsh')
-CLONE_OHMYZSH  = 'git clone git://github.com/robbyrussell/oh-my-zsh.git ' \
-                 + OHMYZSH_PATH
+DOTFILES_DIR           = os.path.abspath('.')
+DOTFILES               = ['vimrc', 'zshrc', 'tmux.conf', 'gitconfig', 'global_ignore',
+                          'settings.json', 'keybindings.json']
+HOME                   = os.environ['HOME']
+VSCODE_SETTINGS_DST    = os.path.join(HOME, 'Library/Application Support/Code/User/settings.json')
+VSCODE_KEYBINDINGS_DST = os.path.join(HOME, 'Library/Application Support/Code/User/keybindings.json')
+NVIMRC_DST             = os.path.join(HOME, '.config/nvim/init.vim')
+VIMRC_DST              = os.path.join(HOME, '.vimrc')
+VIM_PLUG_PATH          = os.path.join(HOME, '.vim/autoload/plug.vim')
+NVIM_PLUG_PATH         = os.path.join(HOME, '.local/share/nvim/site/autoload/plug.vim')
+OHMYZSH_PATH           = os.path.join(HOME, '.oh-my-zsh')
+CLONE_OHMYZSH          = 'git clone git://github.com/robbyrussell/oh-my-zsh.git ' \
+                + OHMYZSH_PATH
 
 
 def output(out, err=False):
@@ -92,7 +93,9 @@ def link_dotfiles(dry_run, use_nvim):
         if dotfile == 'vimrc':
             dst = NVIMRC_DST if use_nvim else VIMRC_DST
         elif dotfile == 'settings.json':
-            dst = VSCODE_DST
+            dst = VSCODE_SETTINGS_DST
+        elif dotfile == 'keybindings.json':
+            dst = VSCODE_KEYBINDINGS_DST
         else:
             dst = os.path.join(HOME, '.%s' % dotfile)
 

@@ -74,6 +74,8 @@ if has('nvim')
 endif
 Plug 'davidhalter/jedi-vim',   { 'for': 'python' }
 Plug 'w0rp/ale'
+Plug 'prettier/vim-prettier', { 'do': 'npm install', 'for': ['javascript',
+      \  'typescript', 'css', 'less', 'scss', 'json', 'graphql'] }
 
 " Lang
 Plug 'ap/vim-css-color'
@@ -189,6 +191,9 @@ nmap <c-j> <c-w>j
 nmap <c-k> <c-w>k
 nmap <c-h> <c-w>h
 nmap <c-l> <c-w>l
+
+" jj in insert mode to exit insert mode
+imap jj <Esc>
 
 "-------------------------------------------------------------------------------
 " Vim Other:
