@@ -1,9 +1,10 @@
 {
   "vim.disableAnnoyingNeovimMessage": true,
   "editor.formatOnSave": true,
-  "workbench.colorTheme": "Base16 Dark Ocean",
+  "workbench.colorTheme": "Ocean Dark Extended",
   "editor.rulers": ["80"],
   "editor.minimap.enabled": false,
   "editor.tabSize": 2,
-  "extensions.ignoreRecommendations": false
+  "extensions.ignoreRecommendations": false,
+  "window.zoomLevel": 0
 }
