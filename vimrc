@@ -46,6 +46,8 @@ if !has('nvim')
 endif
 Plug 'tpope/vim-surround'
 Plug 'xuhdev/vim-latex-live-preview'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 
 " Status
 Plug 'vim-airline/vim-airline'

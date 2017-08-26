@@ -3,7 +3,7 @@ ZSH=$HOME/.oh-my-zsh
 ZSH_THEME="avit"
 
 # Plugins:
-plugins=(git gitfast osx gem npm)
+plugins=(git gitfast osx gem npm docker docker-compose)
 
 # Set to this to use case-sensitive completion
 CASE_SENSITIVE="true"

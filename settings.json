@@ -1,10 +1,43 @@
 {
   "vim.disableAnnoyingNeovimMessage": true,
+  "vim.enableNeovim": true,
+  "vim.neovimPath": "nvim",
+  "vim.statusBarColorControl": true,
+  "vim.insertModeKeyBindings": [
+    {
+      "before": ["j", "j"],
+      "after": ["<Esc>"]
+    }
+  ],
+  "vim.otherModesKeyBindingsNonRecursive": [
+    {
+      "before": ["<C-n>"],
+      "after": [],
+      "commands": [
+        {
+          "command": ":nohl",
+          "args": []
+        }
+      ]
+    },
+    {
+      "before": ["leader", "q"],
+      "after": [],
+      "commands": [
+        {
+          "command": ":noh",
+          "args": []
+        }
+      ]
+    }
+  ],
+  "vim.hlsearch": true,
+  "vim.leader": "<Space>",
   "editor.formatOnSave": true,
   "workbench.colorTheme": "Ocean Dark Extended",
   "editor.rulers": ["80"],
   "editor.minimap.enabled": false,
   "editor.tabSize": 2,
   "extensions.ignoreRecommendations": false,
-  "window.zoomLevel": 0
+  "window.zoomLevel": 1
 }
