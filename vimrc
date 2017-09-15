@@ -34,7 +34,6 @@ Plug 'AndrewRadev/splitjoin.vim'
 Plug 'Shougo/vimproc.vim',      { 'do' : 'make' }
 Plug 'jiangmiao/auto-pairs'
 Plug 'jszakmeister/vim-togglecursor'
-Plug 'junegunn/goyo.vim'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] }
 Plug 'sjl/vitality.vim'
@@ -79,9 +78,15 @@ Plug 'w0rp/ale'
 Plug 'prettier/vim-prettier', { 'do': 'npm install', 'for': ['javascript',
       \  'typescript', 'css', 'less', 'scss', 'json', 'graphql'] }
 
+" Writing
+Plug 'reedes/vim-pencil'
+Plug 'reedes/vim-lexical'
+Plug 'junegunn/limelight.vim'
+Plug 'junegunn/goyo.vim'
+Plug 'bilalq/lite-dfm'
+
 " Lang
 Plug 'ap/vim-css-color'
-Plug 'plasticboy/vim-markdown'
 Plug 'posva/vim-vue'
 Plug 'ElmCast/elm-vim',            { 'for': 'elm' }
 Plug 'Quramy/tsuquyomi',           { 'for': 'typescript' }
@@ -249,11 +254,15 @@ set smartindent
 " Round indent to multiple of 'shiftwidth'
 set shiftround
 
+" Writing settings
+au FileType * if &filetype =~ 'mkd\|markdown' | call WritingMode() | endif
 
-" Enable spelling for some files
-autocmd BufRead, BufNewFile *.md, *.markdown, *.tex setlocal spell spelllang=en_ca
+function! WritingMode()
+  set spell spelllang=en_ca
+  setlocal guifont=Menlo:h18
+  Goyo
+endfunction
 
-" ----------------------------------------------------------------------------
 " Plugin Configurations:
 " ----------------------------------------------------------------------------
 
@@ -281,9 +290,6 @@ let g:airline#extensions#ctrlp#show_adjacent_modes = 1
 let g:airline#extensions#whitespace#enabled = 1
 let g:airline#extensions#whitespace#checks = [ 'indent', 'trailing' ]
 
-" vim-markdown
-let g:vim_markdown_folding_disabled=1
-
 " rust.vim
 let g:rustfmt_autosave = 0
 
@@ -306,6 +312,44 @@ autocmd FileType typescript nmap <buffer> <Leader>t : <C-u>echo tsuquyomi#hint()
 
 " vim-commentry
 autocmd FileType matlab setlocal commentstring=%\ %s
+
+" vim-pencil
+let g:pencil#wrapModeDefault = 'soft'
+let g:pencil#autoformat = 0
+let g:pencil#textwidth = 110
+
+augroup pencil
+  autocmd!
+  autocmd FileType markdown,mkd call pencil#init()
+  autocmd FileType text         call pencil#init()
+augroup END
+
+" goyo
+let g:goyo_width = 120
+let g:goyo_height = '100%'
+
+function! s:goyo_enter()
+  let b:quitting = 0
+  let b:quitting_bang = 0
+  autocmd QuitPre <buffer> let b:quitting = 1
+  cabbrev <buffer> q! let b:quitting_bang = 1 <bar> q!
+  Limelight
+endfunction
+
+function! s:goyo_leave()
+  Limelight!
+  " Quit Vim if this is the only remaining buffer
+  if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
+    if b:quitting_bang
+      qa!
+    else
+      qa
+    endif
+  endif
+endfunction
+
+autocmd! User GoyoEnter call <SID>goyo_enter()
+autocmd! User GoyoLeave call <SID>goyo_leave()
 
 " ----------------------------------------------------------------------------
 " NEOVIM Configurations:

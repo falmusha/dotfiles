@@ -35,9 +35,20 @@
   "vim.leader": "<Space>",
   "editor.formatOnSave": true,
   "workbench.colorTheme": "Ocean Dark Extended",
-  "editor.rulers": ["80"],
+  "editor.rulers": [80],
   "editor.minimap.enabled": false,
   "editor.tabSize": 2,
-  "extensions.ignoreRecommendations": false,
-  "window.zoomLevel": 1
+  "extensions.ignoreRecommendations": true,
+  "window.zoomLevel": 1,
+  "python.pythonPath": "/usr/local/bin/python3",
+  "python.formatting.formatOnSave": false,
+  "[python]": {
+    "editor.formatOnSave": false
+  },
+  "[markdown]": {
+    "editor.wordWrap": "on",
+    "editor.quickSuggestions": false,
+    "editor.wordWrapColumn": 120,
+    "editor.rulers": [120]
+  }
 }
