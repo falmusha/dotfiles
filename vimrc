@@ -259,7 +259,7 @@ au FileType * if &filetype =~ 'mkd\|markdown' | call WritingMode() | endif
 
 function! WritingMode()
   set spell spelllang=en_ca
-  setlocal guifont=Menlo:h18
+  setlocal guifont=Menlo:h16
   Goyo
 endfunction
 
