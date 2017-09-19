@@ -5,6 +5,8 @@
 "be iMproved
 set nocompatible
 
+set t_Co=256
+
 filetype plugin on
 
 " Custom file types
@@ -17,6 +19,8 @@ let mapleader = " "
 
 " Set Local Leader Key
 let maplocalleader = ","
+
+let base16colorspace=256
 
 "-------------------------------------------------------------------------------
 " Plugins
@@ -84,6 +88,7 @@ Plug 'reedes/vim-lexical'
 Plug 'junegunn/limelight.vim'
 Plug 'junegunn/goyo.vim'
 Plug 'bilalq/lite-dfm'
+Plug 'tpope/vim-markdown'
 
 " Lang
 Plug 'ap/vim-css-color'
@@ -256,6 +261,7 @@ set shiftround
 
 " Writing settings
 au FileType * if &filetype =~ 'mkd\|markdown' | call WritingMode() | endif
+noremap <leader>w :call WritingMode()<CR>
 
 function! WritingMode()
   set spell spelllang=en_ca
@@ -325,7 +331,7 @@ augroup pencil
 augroup END
 
 " goyo
-let g:goyo_width = 120
+let g:goyo_width = 100
 let g:goyo_height = '100%'
 
 function! s:goyo_enter()
