@@ -31,12 +31,14 @@
   {
     "key": "ctrl+h",
     "command": "-extension.vim_ctrl+h",
-    "when": "editorTextFocus && vim.active && vim.use<C-h> && !inDebugRepl && vim.mode == 'Insert'"
+    "when":
+      "editorTextFocus && vim.active && vim.use<C-h> && !inDebugRepl && vim.mode == 'Insert'"
   },
   {
     "key": "ctrl+j",
     "command": "-extension.vim_ctrl+j",
-    "when": "editorTextFocus && vim.active && vim.use<C-j> && !inDebugRepl && vim.mode != 'Insert'"
+    "when":
+      "editorTextFocus && vim.active && vim.use<C-j> && !inDebugRepl && vim.mode != 'Insert'"
   },
   {
     "key": "ctrl+j",
@@ -56,7 +58,8 @@
   {
     "key": "ctrl+k",
     "command": "-extension.vim_ctrl+k",
-    "when": "editorTextFocus && vim.active && vim.use<C-k> && !inDebugRepl && vim.mode != 'Insert'"
+    "when":
+      "editorTextFocus && vim.active && vim.use<C-k> && !inDebugRepl && vim.mode != 'Insert'"
   },
   {
     "key": "ctrl+k",
@@ -72,5 +75,13 @@
     "key": "ctrl+w k",
     "command": "-extension.vim_navigateUp",
     "when": "vim.active && vim.use<C-w> && !editorTextFocus"
+  },
+  {
+    "key": "ctrl+\\",
+    "command": "workbench.action.terminal.toggleTerminal"
+  },
+  {
+    "key": "ctrl+shift+\\",
+    "command": "workbench.action.terminal.new"
   }
 ]

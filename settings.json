@@ -43,12 +43,28 @@
   "python.pythonPath": "/usr/local/bin/python3",
   "python.formatting.formatOnSave": false,
   "[python]": {
-    "editor.formatOnSave": false
+    "editor.formatOnSave": true,
+    "editor.tabSize": 4
   },
   "[markdown]": {
     "editor.wordWrap": "on",
     "editor.quickSuggestions": false,
     "editor.wordWrapColumn": 120,
     "editor.rulers": [120]
+  },
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "**/node_modules": true,
+    "**/deps/": true,
+    "**/_build/": true,
+    "**/.sass-cache": true
+  },
+  "cSpell.userWords": ["typestyle"],
+  "ruby.lint": {
+    "rubocop": true
   }
 }
