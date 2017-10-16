@@ -50,7 +50,10 @@
     "editor.wordWrap": "on",
     "editor.quickSuggestions": false,
     "editor.wordWrapColumn": 120,
-    "editor.rulers": [120]
+    "editor.rulers": [120],
+    "vim.textwidth": 120,
+    "gitlens.codeLens.enabled": false,
+    "gitlens.codeLens.recentChange.enabled": false
   },
   "files.exclude": {
     "**/.git": true,
@@ -66,5 +69,7 @@
   "cSpell.userWords": ["typestyle"],
   "ruby.lint": {
     "rubocop": true
-  }
+  },
+  "window.nativeTabs": true,
+  "explorer.openEditors.visible": 0
 }
