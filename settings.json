@@ -39,7 +39,7 @@
   "editor.minimap.enabled": false,
   "editor.tabSize": 2,
   "extensions.ignoreRecommendations": true,
-  "window.zoomLevel": 1,
+  "window.zoomLevel": 0,
   "python.pythonPath": "/usr/local/bin/python3",
   "python.formatting.formatOnSave": false,
   "[python]": {
@@ -51,9 +51,17 @@
     "editor.quickSuggestions": false,
     "editor.wordWrapColumn": 120,
     "editor.rulers": [120],
+    "prettier.printWidth": 120,
     "vim.textwidth": 120,
     "gitlens.codeLens.enabled": false,
     "gitlens.codeLens.recentChange.enabled": false
+  },
+  "[json]": {
+    "editor.rulers": [120],
+    "editor.formatOnSave": false,
+  },
+  "[elixir]": {
+    "editor.rulers": [98]
   },
   "files.exclude": {
     "**/.git": true,
@@ -71,5 +79,8 @@
     "rubocop": true
   },
   "window.nativeTabs": true,
-  "explorer.openEditors.visible": 0
+  "explorer.openEditors.visible": 0,
+  "files.trimTrailingWhitespace": true,
+  "editor.tabCompletion": true,
+  "workbench.panel.location": "bottom"
 }
