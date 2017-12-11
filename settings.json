@@ -47,14 +47,20 @@
     "editor.tabSize": 4
   },
   "[markdown]": {
+    "editor.formatOnSave": false,
     "editor.wordWrap": "on",
     "editor.quickSuggestions": false,
     "editor.wordWrapColumn": 120,
     "editor.rulers": [120],
     "prettier.printWidth": 120,
     "vim.textwidth": 120,
-    "gitlens.codeLens.enabled": false,
-    "gitlens.codeLens.recentChange.enabled": false
+    "editor.tabSize": 4
+  },
+  "[json]": {
+    "editor.formatOnSave": false
+  },
+  "[elixir]": {
+    "editor.rulers": [98]
   },
   "[json]": {
     "editor.rulers": [120],
@@ -74,13 +80,14 @@
     "**/_build/": true,
     "**/.sass-cache": true
   },
-  "cSpell.userWords": ["typestyle"],
+  "cSpell.userWords": ["chatbot", "typestyle"],
   "ruby.lint": {
     "rubocop": true
   },
-  "window.nativeTabs": true,
+  "editor.renderWhitespace": "boundary",
+  "editor.tabCompletion": true,
   "explorer.openEditors.visible": 0,
   "files.trimTrailingWhitespace": true,
-  "editor.tabCompletion": true,
+  "window.nativeTabs": false,
   "workbench.panel.location": "bottom"
 }
