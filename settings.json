@@ -47,6 +47,7 @@
     "editor.tabSize": 4
   },
   "[markdown]": {
+    "editor.formatOnSave": false,
     "editor.wordWrap": "on",
     "editor.quickSuggestions": false,
     "editor.wordWrapColumn": 120,
@@ -73,7 +74,7 @@
   "ruby.lint": {
     "rubocop": true
   },
-  "window.nativeTabs": true,
+  "window.nativeTabs": false,
   "explorer.openEditors.visible": 0,
   "editor.renderWhitespace": "boundary",
   "files.trimTrailingWhitespace": true
