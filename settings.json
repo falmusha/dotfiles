@@ -64,7 +64,7 @@
   },
   "[json]": {
     "editor.rulers": [120],
-    "editor.formatOnSave": false,
+    "editor.formatOnSave": false
   },
   "[elixir]": {
     "editor.rulers": [98]
