@@ -1,74 +1,13 @@
 {
-  "vim.disableAnnoyingNeovimMessage": true,
-  "vim.enableNeovim": true,
-  "vim.neovimPath": "nvim",
-  "vim.statusBarColorControl": true,
-  "vim.insertModeKeyBindings": [
-    {
-      "before": ["j", "j"],
-      "after": ["<Esc>"]
-    }
-  ],
-  "vim.otherModesKeyBindingsNonRecursive": [
-    {
-      "before": ["<C-n>"],
-      "after": [],
-      "commands": [
-        {
-          "command": ":nohl",
-          "args": []
-        }
-      ]
-    },
-    {
-      "before": ["leader", "q"],
-      "after": [],
-      "commands": [
-        {
-          "command": ":noh",
-          "args": []
-        }
-      ]
-    }
-  ],
-  "vim.hlsearch": true,
-  "vim.leader": "<Space>",
-  "editor.formatOnSave": true,
-  "workbench.colorTheme": "Ocean Dark Extended",
-  "editor.rulers": [80],
+  "editor.formatOnSave": false,
   "editor.minimap.enabled": false,
+  "editor.renderWhitespace": "boundary",
+  "editor.rulers": [80],
+  "editor.tabCompletion": true,
   "editor.tabSize": 2,
+  "explorer.openEditors.visible": 0,
   "extensions.ignoreRecommendations": true,
-  "window.zoomLevel": 0,
-  "python.pythonPath": "/usr/local/bin/python3",
-  "python.formatting.formatOnSave": false,
-  "[python]": {
-    "editor.formatOnSave": true,
-    "editor.tabSize": 4
-  },
-  "[markdown]": {
-    "editor.formatOnSave": false,
-    "editor.wordWrap": "on",
-    "editor.quickSuggestions": false,
-    "editor.wordWrapColumn": 120,
-    "editor.rulers": [120],
-    "prettier.printWidth": 120,
-    "vim.textwidth": 120,
-    "editor.tabSize": 4
-  },
-  "[json]": {
-    "editor.formatOnSave": false
-  },
-  "[elixir]": {
-    "editor.rulers": [98]
-  },
-  "[json]": {
-    "editor.rulers": [120],
-    "editor.formatOnSave": false
-  },
-  "[elixir]": {
-    "editor.rulers": [98]
-  },
+  "files.trimTrailingWhitespace": true,
   "files.exclude": {
     "**/.git": true,
     "**/.svn": true,
@@ -80,14 +19,65 @@
     "**/_build/": true,
     "**/.sass-cache": true
   },
-  "cSpell.userWords": ["chatbot", "typestyle"],
-  "ruby.lint": {
-    "rubocop": true
-  },
-  "editor.renderWhitespace": "boundary",
-  "editor.tabCompletion": true,
-  "explorer.openEditors.visible": 0,
-  "files.trimTrailingWhitespace": true,
   "window.nativeTabs": false,
-  "workbench.panel.location": "bottom"
+  "window.zoomLevel": 0,
+  "workbench.colorTheme": "Ocean Dark Extended",
+  "[elixir]": {
+    "editor.rulers": [98]
+  },
+  "[json]": {
+    "editor.rulers": [120]
+  },
+  "[markdown]": {
+    "editor.quickSuggestions": false,
+    "editor.rulers": [120],
+    "editor.tabSize": 4,
+    "editor.wordWrap": "on",
+    "editor.wordWrapColumn": 120
+  },
+  "[python]": {
+    "editor.formatOnSave": true,
+    "editor.tabSize": 4
+  },
+  "[typescript]": {
+    "editor.formatOnSave": true
+  },
+  "[typescriptreact]": {
+    "editor.formatOnSave": true
+  },
+  // ---------------------------------------------------------------------------
+  // Vim plugin
+  // ---------------------------------------------------------------------------
+  "vim.enableNeovim": true,
+  "vim.hlsearch": true,
+  "vim.insertModeKeyBindings": [
+    {"before": ["j", "j"], "after": ["<Esc>"]}
+  ],
+  "vim.leader": "<Space>",
+  "vim.neovimPath": "nvim",
+  "vim.otherModesKeyBindingsNonRecursive": [
+    {
+      "before": ["<C-n>"],
+      "after": [],
+      "commands": [
+        {"command": ":nohl", "args": []}
+      ]
+    },
+    {
+      "before": ["leader", "q"],
+      "after": [],
+      "commands": [
+        {"command": ":noh", "args": []}
+      ]
+    }
+  ],
+  "vim.statusBarColorControl": true,
+  // ---------------------------------------------------------------------------
+  // Python plugin
+  // ---------------------------------------------------------------------------
+  "python.pythonPath": "/usr/local/bin/python3",
+  // ---------------------------------------------------------------------------
+  // Ruby plugin
+  // ---------------------------------------------------------------------------
+  "ruby.lint": {"rubocop": true},
 }
