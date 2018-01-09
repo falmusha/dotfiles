@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import argparse
 import os
@@ -17,14 +17,11 @@ VIMRC_DST              = os.path.join(HOME, '.vimrc')
 VIM_PLUG_PATH          = os.path.join(HOME, '.vim/autoload/plug.vim')
 NVIM_PLUG_PATH         = os.path.join(HOME, '.local/share/nvim/site/autoload/plug.vim')
 OHMYZSH_PATH           = os.path.join(HOME, '.oh-my-zsh')
-CLONE_OHMYZSH          = 'git clone git://github.com/robbyrussell/oh-my-zsh.git ' \
-                + OHMYZSH_PATH
-
+CLONE_OHMYZSH          = f'git clone git://github.com/robbyrussell/oh-my-zsh.git {OHMYZSH_PATH}'
 
 def output(out, err=False):
     if not err:
         print(out)
-
 
 def run(command, dry_run):
     if dry_run:
