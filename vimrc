@@ -30,7 +30,7 @@ if !has('nvim')
 endif
 
 syntax enable " syntax highlighting
-filetype on " enable file type detection
+filetype plugin on " enable file type detection
 
 "-------------------------------------------------------------------------------
 " Options
@@ -72,3 +72,19 @@ nnoremap <leader>sv :source $MYVIMRC<cr>
 
 " delete line when CTRL+d and enter insert mode at end of prev line
 inoremap <c-d> <esc>ddA
+
+
+
+"-------------------------------------------------------------------------------
+" FileType specific
+"-------------------------------------------------------------------------------
+
+augroup correct_filetype
+  autocmd!
+  autocmd BufNewFile, BufRead *.ex set filetype=elixir
+augroup END
+
+augroup filetype_elixir
+    autocmd!
+    autocmd FileType elixir setlocal textwidth=98
+augroup END

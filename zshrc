@@ -17,9 +17,9 @@ alias gsl="git status"
 alias glog="git l"
 
 # ENV Vars
-export PATH="$PATH:$HOME/.rvm/bin" # For RVM
+export PATH="$HOME/.rvm/bin:$PATH" # For RVM
 export TERM=xterm-256color
-export EDITOR='vim'
+export EDITOR='nvim'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
