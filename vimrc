@@ -33,6 +33,16 @@ syntax enable " syntax highlighting
 filetype plugin on " enable file type detection
 
 "-------------------------------------------------------------------------------
+" Plugins
+"-------------------------------------------------------------------------------
+
+call plug#begin('~/.vim/plugged')
+
+Plug 'elixir-editors/vim-elixir'
+
+call plug#end()
+
+"-------------------------------------------------------------------------------
 " Options
 "-------------------------------------------------------------------------------
 
@@ -43,8 +53,8 @@ set number " show line numbers
 set shiftwidth=2 | set tabstop=2 " 1 tab = 2 spaces
 set splitbelow " open new split panes to bottom
 set splitright " open new split panes to right
-set textwidth=80
 set statusline=[%n]%f%m%r%w%=%y[%p%%][%l\/%L,%v]
+set textwidth=80
   
 "-------------------------------------------------------------------------------
 " Key Mappings 
@@ -56,11 +66,11 @@ let maplocalleader = ","
 " Modal Mappings ---------------------------------------------------------------
 
 " disable highlights after search
-noremap <leader>q :nohlsearch<CR>
+nnoremap <leader>q :nohlsearch<CR>
 
 " use - and | for horizontal or vertical splits
-noremap \| :vsplit<CR>
-noremap - :split<CR>
+nnoremap \| :vsplit<CR>
+nnoremap - :split<CR>
 
 " open vimrc file to edit it
 nnoremap <leader>ev :vsplit $MYVIMRC<cr>
@@ -73,16 +83,9 @@ nnoremap <leader>sv :source $MYVIMRC<cr>
 " delete line when CTRL+d and enter insert mode at end of prev line
 inoremap <c-d> <esc>ddA
 
-
-
 "-------------------------------------------------------------------------------
 " FileType specific
 "-------------------------------------------------------------------------------
-
-augroup correct_filetype
-  autocmd!
-  autocmd BufNewFile, BufRead *.ex set filetype=elixir
-augroup END
 
 augroup filetype_elixir
     autocmd!
