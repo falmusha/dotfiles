@@ -37,8 +37,15 @@ let s:plugged = !empty(glob('~/.vim/plugged'))
 if s:plugged
   call plug#begin('~/.vim/plugged')
 
+  " colors
   Plug 'chriskempson/base16-vim'
+
+  " editing
+  Plug 'tpope/vim-commentary'
+
+  " languages support
   Plug 'elixir-editors/vim-elixir'
+  Plug 'slashmili/alchemist.vim'
 
   call plug#end()
 endif
@@ -66,6 +73,9 @@ set splitbelow " open new split panes to bottom
 set splitright " open new split panes to right
 set statusline=[%n]%f%m%r%w%=%y[%p%%][%l\/%L,%v]
 set textwidth=80
+set wildignore+=*bower_components/**,*node_modules/**,*build/**,*dist/** " JS
+set wildignore+=*deps/**,*_build/** " elixir
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.class,*DS_Store* " general
 
 
 "-------------------------------------------------------------------------------
