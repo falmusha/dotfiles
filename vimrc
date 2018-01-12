@@ -40,6 +40,12 @@ if s:plugged
   " editing
   Plug 'tpope/vim-commentary'
 
+  " tmux
+  Plug 'christoomey/vim-tmux-navigator'
+
+  " version control
+  Plug 'airblade/vim-gitgutter'
+
   " languages support
   Plug 'elixir-editors/vim-elixir'
   Plug 'slashmili/alchemist.vim'
@@ -88,6 +94,12 @@ let mapleader = " "
 let maplocalleader = ","
 
 " normal -----------------------------------------------------------------------
+
+" move between splits with CTRL + hjkl
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
 
 " repeat last commnad
 nnoremap lc @:
