@@ -89,6 +89,9 @@ let maplocalleader = ","
 
 " normal -----------------------------------------------------------------------
 
+" repeat last commnad
+nnoremap lc @:
+
 " remove trailing white spaces
 nnoremap <leader>s :call StripTrailingWhitespace()<CR><Paste>
 
