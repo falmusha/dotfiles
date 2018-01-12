@@ -15,16 +15,13 @@ if !has('nvim')
   set incsearch
   set langnoremap
   set laststatus=2
-  set nocompatible
   set nrformats=bin,hex
   set ruler
   set sessionoptions-=options
   set showcmd
   set smarttab
-  set t_Co=256
   set tabpagemax=50
   set tags=./tags;,tags
-  set ttyfast
   set wildmenu
 endif
 
@@ -54,7 +51,7 @@ endif
 " Looks
 "-------------------------------------------------------------------------------
 
-syntax enable " syntax highlighting
+syntax manual " manual syntax highlighting (only enable in active buffers)
 filetype plugin on " enable file type detection
 
 let base16colorspace = 256 | colorscheme base16-ocean
@@ -73,10 +70,15 @@ set splitbelow " open new split panes to bottom
 set splitright " open new split panes to right
 set statusline=[%n]%f%m%r%w%=%y[%p%%][%l\/%L,%v]
 set textwidth=80
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.class,*DS_Store* " general
 set wildignore+=*bower_components/**,*node_modules/**,*build/**,*dist/** " JS
 set wildignore+=*deps/**,*_build/** " elixir
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.class,*DS_Store* " general
 
+augroup active_window
+    autocmd!
+    autocmd BufEnter * setlocal syntax=ON
+    autocmd BufLeave * setlocal syntax=OFF
+augroup END
 
 "-------------------------------------------------------------------------------
 " key mappings
