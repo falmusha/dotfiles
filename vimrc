@@ -39,12 +39,17 @@ if s:plugged
 
   " editing
   Plug 'tpope/vim-commentary'
+  Plug 'tpope/vim-surround'
 
   " tmux
   Plug 'christoomey/vim-tmux-navigator'
 
   " version control
   Plug 'airblade/vim-gitgutter'
+  Plug 'tpope/vim-fugitive'
+
+  " error checking and linting
+  Plug 'w0rp/ale'
 
   " languages support
   Plug 'elixir-editors/vim-elixir'
@@ -74,7 +79,7 @@ set number " show line numbers
 set shiftwidth=2 | set tabstop=2 " 1 tab = 2 spaces
 set splitbelow " open new split panes to bottom
 set splitright " open new split panes to right
-set statusline=[%n]%f%m%r%w%=%y[%p%%][%l\/%L,%v]
+set statusline=[%n]%f%m%r%w%=[%{fugitive#head()}]%y[%p%%][%l\/%L,%v]
 set textwidth=80
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.class,*DS_Store* " general
 set wildignore+=*bower_components/**,*node_modules/**,*build/**,*dist/** " JS
@@ -101,8 +106,15 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 
+" move up and down a wrapped line
+nnoremap j gj
+nnoremap k gk
+
+" format current paragraph
+nnoremap F gqap
+
 " repeat last commnad
-nnoremap lc @:
+nnoremap <leader>lc @:
 
 " remove trailing white spaces
 nnoremap <leader>s :call StripTrailingWhitespace()<CR><Paste>
@@ -142,6 +154,24 @@ nnoremap <leader>sv :source $MYVIMRC<CR>
 
 " delete line when CTRL+d and enter insert mode at end of prev line
 inoremap <C-d> <ESC>ddA
+
+" disable ESC in insert mode
+inoremap <ESC> <NOP>
+
+" leave insert mode
+inoremap jj <ESC>
+
+
+" disable arrow keys in insert mode
+inoremap <UP> <NOP>
+inoremap <DOWN> <NOP>
+inoremap <LEFT> <NOP>
+inoremap <RIGHT> <NOP>
+
+" visual -----------------------------------------------------------------------
+
+" format visual selection
+vnoremap F gq
 
 "-------------------------------------------------------------------------------
 " helper functions
