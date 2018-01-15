@@ -52,8 +52,9 @@ if s:plugged
   Plug 'w0rp/ale'
 
   " languages support
-  Plug 'elixir-editors/vim-elixir'
-  Plug 'slashmili/alchemist.vim'
+  Plug 'elixir-editors/vim-elixir' " elixir
+  Plug 'slashmili/alchemist.vim' " elixir
+  Plug 'leafgarland/typescript-vim' " typescript
 
   call plug#end()
 endif
