@@ -36,6 +36,7 @@ if s:plugged
 
   " colors
   Plug 'chriskempson/base16-vim'
+  Plug 'flazz/vim-colorschemes'
 
   " editing
   Plug 'tpope/vim-commentary'
