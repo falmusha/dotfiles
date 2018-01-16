@@ -197,3 +197,9 @@ augroup filetype_elixir
     autocmd!
     autocmd FileType elixir setlocal textwidth=98
 augroup END
+
+augroup filetype_markdown
+    autocmd!
+    autocmd FileType markdown setlocal textwidth=100
+    autocmd FileType markdown setlocal spell spelllang=en_ca
+augroup END
