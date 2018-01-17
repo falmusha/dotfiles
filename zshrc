@@ -12,20 +12,30 @@ unalias run-help
 autoload run-help
 source $ZSH/oh-my-zsh.sh
 
+# command aliases
+alias g="git"
+alias gl="git l"
 alias gs="git s"
-alias gsl="git status"
-alias glog="git l"
+alias mr="cd ~/Dropbox/School/Research/git"
 
 # ENV Vars
-export PATH="$HOME/.rvm/bin:$PATH" # For RVM
-export TERM=xterm-256color
 export EDITOR='nvim'
+export ERL_AFLAGS="-kernel shell_history enabled"
+export PATH="$HOME/.rvm/bin:$PATH" # For RVM
+export RACK_ENV="development"
+export TERM=xterm-256color
 
+# FZF
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export FZF_DEFAULT_COMMAND=$(cat <<EOF
+  rg --files --hidden --follow --glob "!.git/*"
+EOF
+)
+export FZF_DEFAULT_OPTS=$(cat <<EOF
+  --bind up:preview-up,down:preview-down
+EOF
+)
 
 # Machine specific zsh profile
 source $HOME/.zshrc.local
 
-# Base16 Shell--configure term colors to be 256
-BASE16_SHELL=$HOME/.config/base16-shell/
-[ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"

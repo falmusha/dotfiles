@@ -34,28 +34,22 @@ let s:plugged = !empty(glob('~/.vim/plugged'))
 if s:plugged
   call plug#begin('~/.vim/plugged')
 
-  " colors
-  Plug 'chriskempson/base16-vim'
-  Plug 'flazz/vim-colorschemes'
-
-  " editing
-  Plug 'tpope/vim-commentary'
-  Plug 'tpope/vim-surround'
-
-  " tmux
-  Plug 'christoomey/vim-tmux-navigator'
-
-  " version control
   Plug 'airblade/vim-gitgutter'
+  Plug 'chriskempson/base16-vim'
+  Plug 'christoomey/vim-tmux-navigator'
+  Plug 'elixir-editors/vim-elixir'
+  Plug 'flazz/vim-colorschemes'
+  Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+  Plug 'junegunn/fzf.vim'
+  Plug 'junegunn/goyo.vim'
+  Plug 'junegunn/limelight.vim'
+  Plug 'leafgarland/typescript-vim'
+  Plug 'prettier/vim-prettier', { 'do': 'npm install' }
+  Plug 'slashmili/alchemist.vim'
+  Plug 'tpope/vim-commentary'
   Plug 'tpope/vim-fugitive'
-
-  " error checking and linting
+  Plug 'tpope/vim-surround'
   Plug 'w0rp/ale'
-
-  " languages support
-  Plug 'elixir-editors/vim-elixir' " elixir
-  Plug 'slashmili/alchemist.vim' " elixir
-  Plug 'leafgarland/typescript-vim' " typescript
 
   call plug#end()
 endif
@@ -112,15 +106,6 @@ nnoremap <C-l> <C-w>l
 nnoremap j gj
 nnoremap k gk
 
-" format current paragraph
-nnoremap F gqap
-
-" repeat last commnad
-nnoremap <leader>lc @:
-
-" remove trailing white spaces
-nnoremap <leader>s :call StripTrailingWhitespace()<CR><Paste>
-
 " increase height by 5 columns
 nnoremap <silent> <DOWN> :resize -2 <CR>
 
@@ -133,24 +118,42 @@ nnoremap <silent> <RIGHT> :vertical resize +5 <CR>
 " decrease width by 5 columns
 nnoremap <silent> <LEFT>  :vertical resize -5 <CR>
 
+" repeat last commnad
+nnoremap <leader>lc @:
+
+" got to last buffer
+nnoremap <leader>lb :b#<CR>
+
+" remove trailing white spaces
+nnoremap <leader>s :call StripTrailingWhitespace()<CR><Paste>
+
+" start rgrep find command
+nnoremap <leader>f :Rg<SPACE>
+
 " quick fuzzy-ish edit
 nnoremap <leader>e :edit **/
 
-" qq to record, Q to replay
-nnoremap Q @q
-
 " disable highlights after search
 nnoremap <leader>q :nohlsearch<CR>
-
-" use - and | for horizontal or vertical splits
-nnoremap \| :vsplit<CR>
-nnoremap - :split<CR>
 
 " open vimrc file to edit it
 nnoremap <leader>ev :vsplit $MYVIMRC<CR>
 
 " reload vimrc file
 nnoremap <leader>sv :source $MYVIMRC<CR>
+
+" use - and | for horizontal or vertical splits
+nnoremap \| :vsplit<CR>
+nnoremap - :split<CR>
+
+" format current paragraph
+nnoremap F gqap
+
+" qq to record, Q to replay
+nnoremap Q @q
+
+" open FZF fuzzy file finder
+nnoremap <C-p> :Files<CR>
 
 " insert -----------------------------------------------------------------------
 
@@ -162,7 +165,6 @@ inoremap <ESC> <NOP>
 
 " leave insert mode
 inoremap jj <ESC>
-
 
 " disable arrow keys in insert mode
 inoremap <UP> <NOP>
@@ -194,12 +196,57 @@ endfunction
 "-------------------------------------------------------------------------------
 
 augroup filetype_elixir
-    autocmd!
-    autocmd FileType elixir setlocal textwidth=98
+  autocmd!
+  autocmd FileType elixir,eelixir setlocal textwidth=98
 augroup END
 
 augroup filetype_markdown
-    autocmd!
-    autocmd FileType markdown setlocal textwidth=100
-    autocmd FileType markdown setlocal spell spelllang=en_ca
+  autocmd!
+  autocmd FileType markdown setlocal textwidth=120
+  autocmd FileType markdown setlocal spell spelllang=en_ca
+  autocmd FileType markdown :Goyo 121
 augroup END
+
+"-------------------------------------------------------------------------------
+" plugins customization
+"-------------------------------------------------------------------------------
+
+" fzf.vim ----------------------------------------------------------------------
+
+let g:fzf_layout = { 'down': '~20%' }
+
+" customize fzf colors to match color scheme
+let g:fzf_colors =
+\ { 'fg':      ['fg', 'Normal'],
+  \ 'bg':      ['bg', 'Normal'],
+  \ 'hl':      ['fg', 'Comment'],
+  \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+  \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+  \ 'hl+':     ['fg', 'Statement'],
+  \ 'info':    ['fg', 'PreProc'],
+  \ 'border':  ['fg', 'Ignore'],
+  \ 'prompt':  ['fg', 'Conditional'],
+  \ 'pointer': ['fg', 'Exception'],
+  \ 'marker':  ['fg', 'Keyword'],
+  \ 'spinner': ['fg', 'Label'],
+  \ 'header':  ['fg', 'Comment'] }
+
+" [Buffers] Jump to the existing window if possible
+let g:fzf_buffers_jump = 1
+
+" use ripgrep instead of ag:
+command! -bang -nargs=* Rg
+  \ call fzf#vim#grep(
+  \   'rg --column --line-number --no-heading --color=always '.shellescape(<q-args>), 1,
+  \   <bang>0 ? fzf#vim#with_preview('up:80%')
+  \           : fzf#vim#with_preview('right:50%'),
+  \   <bang>0)
+
+" preview :Files
+command! -bang -nargs=? -complete=dir Files
+  \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+
+" limelight.vim ----------------------------------------------------------------
+
+autocmd! User GoyoEnter Limelight
+autocmd! User GoyoLeave Limelight!
