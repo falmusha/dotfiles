@@ -44,6 +44,7 @@ if s:plugged
   Plug 'junegunn/goyo.vim'
   Plug 'junegunn/limelight.vim'
   Plug 'leafgarland/typescript-vim'
+  Plug 'mhinz/vim-mix-format'
   Plug 'prettier/vim-prettier', { 'do': 'npm install' }
   Plug 'slashmili/alchemist.vim'
   Plug 'tpope/vim-commentary'
@@ -140,14 +141,14 @@ nnoremap <leader>sv :source $MYVIMRC<CR>
 nnoremap \| :vsplit<CR>
 nnoremap - :split<CR>
 
-" format current paragraph
-nnoremap F gqap
-
 " qq to record, Q to replay
 nnoremap Q @q
 
 " open FZF fuzzy file finder
 nnoremap <C-p> :Files<CR>
+
+" open FZF fuzzy file finder
+nnoremap F :call FormatCode()<CR>
 
 " insert -----------------------------------------------------------------------
 
@@ -166,11 +167,6 @@ inoremap <DOWN> <NOP>
 inoremap <LEFT> <NOP>
 inoremap <RIGHT> <NOP>
 
-" visual -----------------------------------------------------------------------
-
-" format visual selection
-vnoremap F gq
-
 "-------------------------------------------------------------------------------
 " helper functions
 "-------------------------------------------------------------------------------
@@ -182,6 +178,14 @@ function! StripTrailingWhitespace()
     %s/\s\+$//e
     normal 'yz<CR>
     normal `z
+  endif
+endfunction
+
+function! FormatCode()
+  if &filetype =~ 'typescript\|javascript'
+    :PrettierAsync
+  elseif &filetype == 'elixir'
+    :MixFormat
   endif
 endfunction
 
