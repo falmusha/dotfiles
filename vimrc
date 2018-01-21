@@ -71,7 +71,7 @@ set colorcolumn=+1 " highlight lines over that 1 column after 'textwidth'
 set expandtab " spaces instead of tabs
 set list listchars=tab:»·,precedes:-,trail:·,nbsp:+
 set noswapfile " remove swap files
-set number " show line numbers
+set number relativenumber " show line numbers
 set shiftwidth=2 | set tabstop=2 " 1 tab = 2 spaces
 set splitbelow " open new split panes to bottom
 set splitright " open new split panes to right
@@ -80,12 +80,6 @@ set textwidth=80
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.class,*DS_Store* " general
 set wildignore+=*bower_components/**,*node_modules/**,*build/**,*dist/** " JS
 set wildignore+=*deps/**,*_build/** " elixir
-
-augroup active_window
-    autocmd!
-    autocmd BufEnter * setlocal syntax=ON
-    autocmd BufLeave * setlocal syntax=OFF
-augroup END
 
 "-------------------------------------------------------------------------------
 " key mappings
@@ -192,8 +186,22 @@ function! StripTrailingWhitespace()
 endfunction
 
 "-------------------------------------------------------------------------------
-" FileType specific
+" auto commands
 "-------------------------------------------------------------------------------
+
+augroup active_window
+    autocmd!
+    autocmd BufEnter * setlocal syntax=ON
+    autocmd BufLeave * setlocal syntax=OFF
+augroup END
+
+augroup line_number
+    autocmd!
+    autocmd BufEnter,InsertLeave * setlocal relativenumber
+    autocmd BufLeave,InsertEnter * setlocal norelativenumber
+augroup END
+
+" FileType specific ------------------------------------------------------------
 
 augroup filetype_elixir
   autocmd!
@@ -250,3 +258,8 @@ command! -bang -nargs=? -complete=dir Files
 
 autocmd! User GoyoEnter Limelight
 autocmd! User GoyoLeave Limelight!
+
+" source local machine specific vimrc
+if !empty(glob('~/.vimrc.local'))
+  source ~/.vimrc.local
+endif
