@@ -125,6 +125,9 @@ nnoremap <leader>s :call StripTrailingWhitespace()<CR><Paste>
 " start rgrep find command
 nnoremap <leader>f :Rg<SPACE>
 
+" open FZF fuzzy file finder
+nnoremap F :call FormatCode()<CR>
+
 " quick fuzzy-ish edit
 nnoremap <leader>e :edit **/
 
@@ -146,9 +149,6 @@ nnoremap Q @q
 
 " open FZF fuzzy file finder
 nnoremap <C-p> :Files<CR>
-
-" open FZF fuzzy file finder
-nnoremap F :call FormatCode()<CR>
 
 " insert -----------------------------------------------------------------------
 
@@ -182,7 +182,7 @@ function! StripTrailingWhitespace()
 endfunction
 
 function! FormatCode()
-  if &filetype =~ 'typescript\|javascript'
+  if &filetype =~ 'typescript\|javascripti\|json'
     :PrettierAsync
   elseif &filetype == 'elixir'
     :MixFormat
@@ -194,15 +194,15 @@ endfunction
 "-------------------------------------------------------------------------------
 
 augroup active_window
-    autocmd!
-    autocmd BufEnter * setlocal syntax=ON
-    autocmd BufLeave * setlocal syntax=OFF
+  autocmd!
+  autocmd BufEnter * setlocal syntax=ON
+  autocmd BufLeave * setlocal syntax=OFF
 augroup END
 
 augroup line_number
-    autocmd!
-    autocmd BufEnter,InsertLeave * setlocal relativenumber
-    autocmd BufLeave,InsertEnter * setlocal norelativenumber
+  autocmd!
+  autocmd BufEnter,InsertLeave * setlocal relativenumber
+  autocmd BufLeave,InsertEnter * setlocal norelativenumber
 augroup END
 
 " FileType specific ------------------------------------------------------------
