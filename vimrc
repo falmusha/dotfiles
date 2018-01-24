@@ -189,20 +189,36 @@ function! FormatCode()
   endif
 endfunction
 
+function! EnterBuf()
+  setlocal syntax=ON
+
+  if &filetype != 'markdown'
+    setlocal relativenumber
+  endif
+endfunction
+
+function! LeaveBuf()
+  setlocal syntax=OFF
+
+  if &filetype != 'markdown'
+    setlocal norelativenumber
+  endif
+endfunction
+
 "-------------------------------------------------------------------------------
 " auto commands
 "-------------------------------------------------------------------------------
 
 augroup active_window
   autocmd!
-  autocmd BufEnter * setlocal syntax=ON
-  autocmd BufLeave * setlocal syntax=OFF
+  autocmd BufEnter * call EnterBuf()
+  autocmd BufLeave * call LeaveBuf()
 augroup END
 
 augroup line_number
   autocmd!
-  autocmd BufEnter,InsertLeave * setlocal relativenumber
-  autocmd BufLeave,InsertEnter * setlocal norelativenumber
+  autocmd BufEnter,InsertLeave * call SmartNumbers()
+  autocmd BufLeave,InsertEnter * call SmartNumbers()
 augroup END
 
 " FileType specific ------------------------------------------------------------
