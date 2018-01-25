@@ -217,8 +217,8 @@ augroup END
 
 augroup line_number
   autocmd!
-  autocmd BufEnter,InsertLeave * call SmartNumbers()
-  autocmd BufLeave,InsertEnter * call SmartNumbers()
+  autocmd InsertLeave * setlocal relativenumber
+  autocmd InsertEnter * setlocal norelativenumber
 augroup END
 
 " FileType specific ------------------------------------------------------------
