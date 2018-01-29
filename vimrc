@@ -205,6 +205,18 @@ function! LeaveBuf()
   endif
 endfunction
 
+function! EnterInsert()
+  if &filetype != 'markdown'
+    setlocal relativenumber
+  endif
+endfunction
+
+function! LeaveInsert()
+  if &filetype != 'markdown'
+    setlocal norelativenumber
+  endif
+endfunction
+
 "-------------------------------------------------------------------------------
 " auto commands
 "-------------------------------------------------------------------------------
@@ -217,8 +229,8 @@ augroup END
 
 augroup line_number
   autocmd!
-  autocmd InsertLeave * setlocal relativenumber
-  autocmd InsertEnter * setlocal norelativenumber
+  autocmd InsertLeave * call EnterInsert()
+  autocmd InsertEnter * call LeaveInsert()
 augroup END
 
 " FileType specific ------------------------------------------------------------
