@@ -20,7 +20,7 @@
     "**/.sass-cache": true
   },
   "window.nativeTabs": false,
-  "window.zoomLevel": 1,
+  "window.zoomLevel": 0,
   "workbench.colorTheme": "Ocean Dark Extended",
   "[elixir]": {
     "editor.rulers": [98]

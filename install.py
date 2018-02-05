@@ -6,22 +6,26 @@ import re
 import shutil
 import subprocess
 
-DOTFILES_DIR           = os.path.abspath('.')
-DOTFILES               = ['vimrc', 'zshrc', 'tmux.conf', 'gitconfig', 'global_ignore',
-                          'settings.json', 'keybindings.json']
-HOME                   = os.environ['HOME']
-VSCODE_SETTINGS_DST    = os.path.join(HOME, 'Library/Application Support/Code/User/settings.json')
-VSCODE_KEYBINDINGS_DST = os.path.join(HOME, 'Library/Application Support/Code/User/keybindings.json')
-NVIMRC_DST             = os.path.join(HOME, '.config/nvim/init.vim')
-VIMRC_DST              = os.path.join(HOME, '.vimrc')
-VIM_PLUG_PATH          = os.path.join(HOME, '.vim/autoload/plug.vim')
-NVIM_PLUG_PATH         = os.path.join(HOME, '.local/share/nvim/site/autoload/plug.vim')
-OHMYZSH_PATH           = os.path.join(HOME, '.oh-my-zsh')
-CLONE_OHMYZSH          = f'git clone git://github.com/robbyrussell/oh-my-zsh.git {OHMYZSH_PATH}'
+DOTFILES_DIR = os.path.abspath('.')
+DOTFILES = ['vimrc', 'ideavimrc', 'zshrc', 'tmux.conf', 'gitconfig',
+            'global_ignore', 'settings.json', 'keybindings.json']
+HOME = os.environ['HOME']
+VSCODE_SETTINGS_DST = os.path.join(
+    HOME, 'Library/Application Support/Code/User/settings.json')
+VSCODE_KEYBINDINGS_DST = os.path.join(
+    HOME, 'Library/Application Support/Code/User/keybindings.json')
+NVIMRC_DST = os.path.join(HOME, '.config/nvim/init.vim')
+VIMRC_DST = os.path.join(HOME, '.vimrc')
+VIM_PLUG_PATH = os.path.join(HOME, '.vim/autoload/plug.vim')
+NVIM_PLUG_PATH = os.path.join(HOME, '.local/share/nvim/site/autoload/plug.vim')
+OHMYZSH_PATH = os.path.join(HOME, '.oh-my-zsh')
+CLONE_OHMYZSH = f'git clone git://github.com/robbyrussell/oh-my-zsh.git {OHMYZSH_PATH}'
+
 
 def output(out, err=False):
     if not err:
         print(out)
+
 
 def run(command, dry_run):
     if dry_run:
@@ -68,6 +72,7 @@ def install_vim_plug(dry_run, use_nvim):
         cmd = 'curl -fLo %s --create-dirs ' % plug_path \
             + 'https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
         run(cmd, dry_run)
+
 
 def backup(dotfile, dry_run):
     if os.path.exists(dotfile):
@@ -134,20 +139,23 @@ def uninstall(dry_run):
     delete_dir(OHMYZSH_PATH, dry_run)
     delete_dir(os.path.join(HOME, '.vim'), dry_run)
 
+
 def parse_args():
-    parser = argparse.ArgumentParser(description='Da Dots here, you want some?')
+    parser = argparse.ArgumentParser(
+        description='Da Dots here, you want some?')
     parser.add_argument('--nope', action='store_true',
-            help='Uninstall all the Da Dots')
+                        help='Uninstall all the Da Dots')
     parser.add_argument('--dry', '-d', action='store_true',
-            help='Dry run, no side effects')
+                        help='Dry run, no side effects')
     parser.add_argument('--zsh', '-z', action='store_true',
-            help='Use zsh as the default shell with oh-my-zsh')
+                        help='Use zsh as the default shell with oh-my-zsh')
     parser.add_argument('--nvim', '-n', action='store_true',
-            help='Use Neovim instead of stock Vim')
+                        help='Use Neovim instead of stock Vim')
     parser.add_argument('--link', '-l', action='store_true',
-            help='Just symlink')
+                        help='Just symlink')
 
     return parser.parse_args()
+
 
 def main():
     args = parse_args()
@@ -170,6 +178,7 @@ def main():
 
     # Create dotfiles symlinks
     link_dotfiles(args.dry, args.nvim)
+
 
 if __name__ == '__main__':
     main()
