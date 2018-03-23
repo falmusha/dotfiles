@@ -23,7 +23,11 @@
   "window.zoomLevel": 1,
   "workbench.colorTheme": "Ocean Dark Extended",
   "[elixir]": {
-    "editor.rulers": [98]
+    "editor.rulers": [98],
+    "editor.formatOnSave": true
+  },
+  "[javascript]": {
+    "editor.formatOnSave": true
   },
   "[json]": {
     "editor.rulers": [120]
