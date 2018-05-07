@@ -16,7 +16,7 @@ source $ZSH/oh-my-zsh.sh
 alias g="git"
 alias gl="git l"
 alias gs="git s"
-alias mr="cd ~/Dropbox/School/Research/git"
+alias mr="cd ~/iCloud/School/Research/repo"
 
 # ENV Vars
 export EDITOR='nvim'
