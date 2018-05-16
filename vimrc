@@ -43,13 +43,14 @@ if s:plugged
   Plug 'junegunn/fzf.vim'
   Plug 'junegunn/goyo.vim'
   Plug 'junegunn/limelight.vim'
-  Plug 'leafgarland/typescript-vim'
   Plug 'mhinz/vim-mix-format'
   Plug 'prettier/vim-prettier', { 'do': 'npm install' }
+  Plug 'sheerun/vim-polyglot'
   Plug 'slashmili/alchemist.vim'
   Plug 'tpope/vim-commentary'
   Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-surround'
+  Plug 'tpope/vim-vinegar'
   Plug 'w0rp/ale'
 
   call plug#end()
