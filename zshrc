@@ -36,6 +36,10 @@ export FZF_DEFAULT_OPTS=$(cat <<EOF
 EOF
 )
 
+# NVM
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
 # Machine specific zsh profile
 source $HOME/.zshrc.local
 

@@ -43,8 +43,8 @@ if s:plugged
   Plug 'junegunn/fzf.vim'
   Plug 'junegunn/goyo.vim'
   Plug 'junegunn/limelight.vim'
-  Plug 'mhinz/vim-mix-format'
   Plug 'prettier/vim-prettier', { 'do': 'npm install' }
+  Plug 'sbdchd/neoformat'
   Plug 'sheerun/vim-polyglot'
   Plug 'slashmili/alchemist.vim'
   Plug 'tpope/vim-commentary'
@@ -151,6 +151,9 @@ nnoremap Q @q
 " open FZF fuzzy file finder
 nnoremap <C-p> :Files<CR>
 
+" format current buffer using Neoformat
+nnoremap <leader>f :Neoformat<CR>
+
 " insert -----------------------------------------------------------------------
 
 " delete line when CTRL+d and enter insert mode at end of prev line
@@ -185,14 +188,6 @@ function! StripTrailingWhitespace()
     %s/\s\+$//e
     normal 'yz<CR>
     normal `z
-  endif
-endfunction
-
-function! FormatCode()
-  if &filetype =~ 'typescript\|javascripti\|json'
-    :PrettierAsync
-  elseif &filetype == 'elixir'
-    :MixFormat
   endif
 endfunction
 
