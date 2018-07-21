@@ -9,10 +9,10 @@ def from_home(path)
 end
 
 
-class Installer < Struct.new(:dry, :uninstall, :use_zsh, :use_nvim, :link)
+class Installer < Struct.new(:dry, :uninstall, :use_fish, :use_nvim, :link)
 
-  DOTFILES = ['vimrc', 'ideavimrc', 'zshrc', 'tmux.conf', 'gitconfig',
-              'global_ignore', 'settings.json', 'keybindings.json']
+  DOTFILES = ['vimrc', 'ideavimrc', 'tmux.conf', 'gitconfig', 'global_ignore',
+              'settings.json', 'keybindings.json']
   DOTFILES_DIR = '.'
   VSCODE_SETTINGS_DST = from_home('Library/Application Support/Code/User/settings.json')
   VSCODE_KEYBINDINGS_DST = from_home('Library/Application Support/Code/User/keybindings.json')
@@ -20,10 +20,8 @@ class Installer < Struct.new(:dry, :uninstall, :use_zsh, :use_nvim, :link)
   VIMRC_DST = from_home('.vimrc')
   VIM_PLUG_PATH = from_home('.vim/autoload/plug.vim')
   NVIM_PLUG_PATH = from_home('.local/share/nvim/site/autoload/plug.vim')
-  ZSH_FUNCTIONS = "/usr/local/share/zsh/site-functions"
-  PURE_ZSH_URL = "https://raw.githubusercontent.com/sindresorhus/pure/master/pure.zsh"
-  ASYNC_ZSH_URL = "https://raw.githubusercontent.com/sindresorhus/pure/master/async.zsh"
-
+  FISH_SHELL_CONFIG_DIR = from_home(".config/fish")
+  FISH_SHELL_CONFIG = "config.fish"
 
   def run()
     if uninstall
@@ -39,7 +37,7 @@ class Installer < Struct.new(:dry, :uninstall, :use_zsh, :use_nvim, :link)
 
   def run_install()
     link_dotfiles if link
-    install_pure_zsh if use_zsh
+    install_fish_shell if use_fish
   end
 
 
@@ -59,32 +57,12 @@ class Installer < Struct.new(:dry, :uninstall, :use_zsh, :use_nvim, :link)
     end
   end
 
-  def install_pure_zsh()
-    if Dir.exist?(ZSH_FUNCTIONS)
-      log("Installing pure.zsh and async.zsh to #{ZSH_FUNCTIONS}")
-    else
-      log("Cannot install pure.zsh and async.zsh. #{ZSH_FUNCTIONS} doesn't exist")
-      return
-    end
-
-    pure_dst = Pathname.new(ZSH_FUNCTIONS).join("prompt_pure_setup").to_path
-    async_dst = Pathname.new(ZSH_FUNCTIONS).join("async").to_path
-
-    if File.exist?(pure_dst)
-      log("pure.zsh already installed")
-    else
-      log("Downloading #{PURE_ZSH_URL} to #{pure_dst}")
-      system("curl -o #{pure_dst} #{PURE_ZSH_URL}") unless dry
-    end
-
-    if File.exist?(async_dst)
-      log("async.zsh already installed")
-    else
-      log("Downloading #{ASYNC_ZSH_URL} to #{async_dst}")
-      system("curl -o  #{async_dst} #{ASYNC_ZSH_URL}") unless dry
-    end
+  def install_fish_shell
+    FileUtils.mkdir_p(FISH_SHELL_CONFIG_DIR)
+    dst = Pathname.new(FISH_SHELL_CONFIG_DIR).expand_path.join(FISH_SHELL_CONFIG)
+    backup_path(dst)
+    symlink(FISH_SHELL_CONFIG, dst)
   end
-
 
   # helpers
   # ----------------------------------------------------------------------------
@@ -130,8 +108,8 @@ opt_parser = OptionParser.new do |opts|
     installer.dry = true
   end
 
-  opts.on("-z", "--use-zsh", "Use zsh as the default shell with pure") do
-    installer.use_zsh = true
+  opts.on("-f", "--use-fish", "Use fish as the default shell with pure") do
+    installer.use_fish = true
   end
 
   opts.on("-n", "--use-nvim", "Install dotfiles for NeoVim") do
