@@ -43,6 +43,7 @@ if s:plugged
   Plug 'junegunn/fzf.vim'
   Plug 'junegunn/goyo.vim'
   Plug 'junegunn/limelight.vim'
+  Plug 'mhartington/oceanic-next'
   Plug 'prettier/vim-prettier', { 'do': 'npm install' }
   Plug 'sbdchd/neoformat'
   Plug 'sheerun/vim-polyglot'
@@ -63,8 +64,7 @@ endif
 syntax manual " manual syntax highlighting (only enable in active buffers)
 filetype plugin on " enable file type detection
 
-let base16colorspace = 256 | colorscheme base16-ocean
-
+colorscheme Tomorrow-Night
 "-------------------------------------------------------------------------------
 " options
 "-------------------------------------------------------------------------------
@@ -172,7 +172,7 @@ inoremap <LEFT> <NOP>
 inoremap <RIGHT> <NOP>
 
 " terminal ---------------------------------------------------------------------
-"
+
 if has('nvim')
   tnoremap jj <C-\><C-n>
 endif
