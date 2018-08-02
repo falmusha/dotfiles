@@ -124,10 +124,10 @@ nnoremap <leader>lb :b#<CR>
 nnoremap <leader>s :call StripTrailingWhitespace()<CR><Paste>
 
 " start rgrep find command
-nnoremap <leader>f :Rg<SPACE>
+nnoremap <leader>g :Rg<SPACE>
 
-" open FZF fuzzy file finder
-nnoremap F :call FormatCode()<CR>
+" rgrep on current word
+nnoremap <leader>G :execute 'Rg ' expand('<cword>')<CR>
 
 " quick fuzzy-ish edit
 nnoremap <leader>e :edit **/
@@ -153,6 +153,9 @@ nnoremap <C-p> :Files<CR>
 
 " format current buffer using Neoformat
 nnoremap <leader>f :Neoformat<CR>
+
+" enable spelling
+nnoremap <C-s> :setlocal spell! spelllang=en_ca<CR>
 
 " insert -----------------------------------------------------------------------
 
