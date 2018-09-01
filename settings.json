@@ -20,7 +20,7 @@
     "**/.sass-cache": true
   },
   "window.nativeTabs": false,
-  "window.zoomLevel": 1,
+  "window.zoomLevel": 2,
   "workbench.colorTheme": "Tomorrow",
   "[elixir]": {
     "editor.rulers": [98],
@@ -86,5 +86,12 @@
   "ruby.lint": {
     "rubocop": true
   },
-  "editor.acceptSuggestionOnEnter": "off"
+  "editor.acceptSuggestionOnEnter": "off",
+  "vim.disableExtension": false,
+  "workbench.colorCustomizations": {
+    "statusBar.background": "#005f5f",
+    "statusBar.noFolderBackground": "#005f5f",
+    "statusBar.debuggingBackground": "#005f5f"
+  },
+  "elixirLS.suggestSpecs": false
 }

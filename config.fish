@@ -5,6 +5,11 @@ alias gl="git l"
 alias gs="git s"
 alias mr="cd ~/iCloud/School/Research/repo"
 
+# CLI: Improved
+# ------------------------------------------------------------------------------
+alias cat="bat"
+alias ping="prettyping --nolegend"
+alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
 
 # ENV Vars
 # ------------------------------------------------------------------------------
