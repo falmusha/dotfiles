@@ -2,7 +2,7 @@
 	user = falmusha
 [user]
 	name = Fahad Almusharraf
-	email = ifahad7@gmail.com
+	email = git@whatmail.org
 [push]
 	default = matching
 	followTags = true

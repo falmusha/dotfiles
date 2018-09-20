@@ -18,6 +18,9 @@ set -x EDITOR nvim
 set -x RACK_ENV development
 set -x ERL_AFLAGS "-kernel shell_history enabled"
 
+# remove greeting message
+set fish_greeting ""
+
 # FZF
 # ------------------------------------------------------------------------------
 set -x FZF_DEFAULT_COMMAND "rg --files --hidden --follow --glob \"!.git/*\""
@@ -35,6 +38,16 @@ function shell_perf
   for i in (seq 1 10)
     /usr/bin/time $SHELL -i -c exit
   end
+end
+
+# Python
+# ------------------------------------------------------------------------------
+if command --search python3 >/dev/null do
+  set -x PATH $PATH (python3 -m site --user-base)/bin
+end
+
+if command --search python2 >/dev/null do
+  set -x PATH $PATH (python2 -m site --user-base)/bin
 end
 
 # Machine specific zsh profile

@@ -157,6 +157,10 @@ nnoremap <leader>f :Neoformat<CR>
 " enable spelling
 nnoremap <C-s> :setlocal spell! spelllang=en_ca<CR>
 
+" increasing/decreasing numbers
+nnoremap + <C-a>
+nnoremap _ <C-x>
+
 " insert -----------------------------------------------------------------------
 
 " delete line when CTRL+d and enter insert mode at end of prev line
