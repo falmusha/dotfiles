@@ -4,7 +4,7 @@ require "optparse"
 require "fileutils"
 require "pathname"
 
-def from_home(path)
+def home(path)
   return Pathname.new("~").expand_path.join(path).to_path
 end
 
@@ -14,13 +14,13 @@ class Installer < Struct.new(:dry, :uninstall, :use_fish, :use_nvim, :link)
   DOTFILES = ['vimrc', 'ideavimrc', 'tmux.conf', 'gitconfig', 'global_ignore',
               'settings.json', 'keybindings.json']
   DOTFILES_DIR = '.'
-  VSCODE_SETTINGS_DST = from_home('Library/Application Support/Code/User/settings.json')
-  VSCODE_KEYBINDINGS_DST = from_home('Library/Application Support/Code/User/keybindings.json')
-  NVIMRC_DST = from_home('.config/nvim/init.vim')
-  VIMRC_DST = from_home('.vimrc')
-  VIM_PLUG_PATH = from_home('.vim/autoload/plug.vim')
-  NVIM_PLUG_PATH = from_home('.local/share/nvim/site/autoload/plug.vim')
-  FISH_SHELL_CONFIG_DIR = from_home(".config/fish")
+  VSCODE_SETTINGS_DST = home('Library/Application Support/Code/User/settings.json')
+  VSCODE_KEYBINDINGS_DST = home('Library/Application Support/Code/User/keybindings.json')
+  NVIMRC_DST = home('.config/nvim/init.vim')
+  VIMRC_DST = home('.vimrc')
+  VIM_PLUG_PATH = home('.vim/autoload/plug.vim')
+  NVIM_PLUG_PATH = home('.local/share/nvim/site/autoload/plug.vim')
+  FISH_SHELL_CONFIG_DIR = home(".config/fish")
   FISH_SHELL_CONFIG = "config.fish"
 
   def run()
@@ -48,7 +48,7 @@ class Installer < Struct.new(:dry, :uninstall, :use_fish, :use_nvim, :link)
       when "vimrc" then use_nvim ? NVIMRC_DST : VIMRC_DST
       when "settings.json" then VSCODE_SETTINGS_DST
       when "keybindings.json" then VSCODE_KEYBINDINGS_DST
-      else from_home(".#{dotfile}")
+      else home(".#{dotfile}")
       end
 
       backup_path(dst)
