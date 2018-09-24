@@ -9,10 +9,10 @@ def home(path)
 end
 
 
-class Installer < Struct.new(:dry, :uninstall, :use_fish, :use_nvim, :link)
+class Installer < Struct.new(:dry, :uninstall, :use_fish, :use_nvim, :link, :override_links)
 
   DOTFILES = ['vimrc', 'ideavimrc', 'tmux.conf', 'gitconfig', 'global_ignore',
-              'settings.json', 'keybindings.json']
+              'settings.json', 'keybindings.json', 'init.lua', 'config.fish']
   DOTFILES_DIR = '.'
   VSCODE_SETTINGS_DST = home('Library/Application Support/Code/User/settings.json')
   VSCODE_KEYBINDINGS_DST = home('Library/Application Support/Code/User/keybindings.json')
@@ -20,8 +20,8 @@ class Installer < Struct.new(:dry, :uninstall, :use_fish, :use_nvim, :link)
   VIMRC_DST = home('.vimrc')
   VIM_PLUG_PATH = home('.vim/autoload/plug.vim')
   NVIM_PLUG_PATH = home('.local/share/nvim/site/autoload/plug.vim')
-  FISH_SHELL_CONFIG_DIR = home(".config/fish")
-  FISH_SHELL_CONFIG = "config.fish"
+  FISH_SHELL_CONFIG_DIR = home('.config/fish')
+  HAMMERSPOON_DIR = home(".hammerspoon")
 
   def run()
     if uninstall
@@ -48,20 +48,19 @@ class Installer < Struct.new(:dry, :uninstall, :use_fish, :use_nvim, :link)
       when "vimrc" then use_nvim ? NVIMRC_DST : VIMRC_DST
       when "settings.json" then VSCODE_SETTINGS_DST
       when "keybindings.json" then VSCODE_KEYBINDINGS_DST
+      when "config.fish" then Pathname.new(FISH_SHELL_CONFIG_DIR).join("config.fish").to_s
+      when "init.lua" then Pathname.new(HAMMERSPOON_DIR).join("init.lua").to_s
       else home(".#{dotfile}")
       end
 
-      backup_path(dst)
-      delete_path(dst)
-      symlink(src, dst)
-    end
-  end
+      should_symlink = !File.exist?(dst) || (File.exist?(dst) && override_links)
 
-  def install_fish_shell
-    FileUtils.mkdir_p(FISH_SHELL_CONFIG_DIR)
-    dst = Pathname.new(FISH_SHELL_CONFIG_DIR).expand_path.join(FISH_SHELL_CONFIG)
-    backup_path(dst)
-    symlink(FISH_SHELL_CONFIG, dst)
+      if should_symlink
+        backup_path(dst)
+        delete_path(dst)
+        symlink(src, dst)
+      end
+    end
   end
 
   # helpers
@@ -99,7 +98,7 @@ class Installer < Struct.new(:dry, :uninstall, :use_fish, :use_nvim, :link)
 
 end
 
-installer = Installer.new(false, false, false, false, false)
+installer = Installer.new(false, false, false, false, false, false)
 
 opt_parser = OptionParser.new do |opts|
   opts.banner = "Usage: install.rb [options]"
@@ -118,6 +117,10 @@ opt_parser = OptionParser.new do |opts|
 
   opts.on("-l", "--link-dotfiles", "Symlink dotfiles") do
     installer.link = true
+  end
+
+  opts.on("-ol", "--override-links", "Backup symlinked dotfiles and replace them") do
+    installer.override_links = true
   end
 
   opts.on("--uninstall", "Uninstall all the Da Dots") do
