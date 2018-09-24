@@ -1,17 +1,18 @@
 --------------------------------------------------------------------------------
--- Caffeine
+-- Spoons
 --------------------------------------------------------------------------------
 
-function caffeineClicked()
-  displayIdleStatus = hs.caffeinate.toggle("displayIdle")
+-- Load spoons
+hs.loadSpoon("ReloadConfiguration")
+hs.loadSpoon("Caffeine")
 
-  if displayIdleStatus then
-    caffeine:setTitle("🌝")
-  else
-    caffeine:setTitle("🌚")
-  end
-end
+-- Start spoons
+spoon.ReloadConfiguration:start()
+spoon.Caffeine:start()
 
-caffeine = hs.menubar.new()
-caffeine:setClickCallback(caffeineClicked)
-caffeineClicked()
+--------------------------------------------------------------------------------
+-- MAIN
+--------------------------------------------------------------------------------
+
+-- Send reloaded notification
+hs.notify.new({title="Hammerspoon", informativeText="Loaded!!"}):send()
