@@ -261,7 +261,7 @@ augroup END
 "-------------------------------------------------------------------------------
 
 " fzf.vim ----------------------------------------------------------------------
-
+"-------------------------------------------------------------------------------
 let g:fzf_layout = { 'down': '~20%' }
 
 " customize fzf colors to match color scheme
@@ -295,10 +295,26 @@ command! -bang -nargs=* Rg
 command! -bang -nargs=? -complete=dir Files
   \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
 
-" limelight.vim ----------------------------------------------------------------
 
+" limelight.vim ----------------------------------------------------------------
+"-------------------------------------------------------------------------------
 autocmd! User GoyoEnter Limelight
 autocmd! User GoyoLeave Limelight!
+
+
+" ale --------------------------------------------------------------------------
+"-------------------------------------------------------------------------------
+let g:ale_linters = {
+\ 'elixir': []
+\}
+
+
+" alchemist.vim ----------------------------------------------------------------
+"-------------------------------------------------------------------------------
+let g:alchemist_tag_map = '<C-]>'
+let g:alchemist_tag_stack_map = '<C-[>'
+let g:alchemist#elixir_erlang_src = resolve(system("asdf which elixir") . "/../../lib")
+
 
 " source local machine specific vimrc
 if !empty(glob('~/.vimrc.local'))
