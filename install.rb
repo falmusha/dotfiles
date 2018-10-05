@@ -37,7 +37,6 @@ class Installer < Struct.new(:dry, :uninstall, :use_fish, :use_nvim, :link, :ove
 
   def run_install()
     link_dotfiles if link
-    install_fish_shell if use_fish
   end
 
 
@@ -89,6 +88,7 @@ class Installer < Struct.new(:dry, :uninstall, :use_fish, :use_nvim, :link, :ove
 
   def symlink(src, dst)
     log("Symlinking: #{src} -> #{dst}")
+    FileUtils.mkdir_p(File.dirname(dst)) unless dry
     FileUtils.ln(src, dst) unless dry
   end
 
