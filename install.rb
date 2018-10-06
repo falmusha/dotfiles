@@ -1,17 +1,20 @@
 #!/usr/bin/env ruby
 
-require "optparse"
 require "fileutils"
+require "optparse"
 require "pathname"
+require "mkmf"
+
 
 def home(path)
   return Pathname.new("~").expand_path.join(path).to_path
 end
 
 
-class Installer < Struct.new(:dry, :uninstall, :use_fish, :use_nvim, :link, :override_links)
+class Installer < Struct.new(:dry, :uninstall, :use_fish, :use_nvim, :link, :override_links, :brew, :asdf)
 
   DOTFILES_DIR = File.expand_path(File.dirname(__FILE__))
+  BREWFILE = File.join(File.expand_path(File.dirname(__FILE__)), "Brewfile")
   DOTFILES = ["vimrc", "ideavimrc", "tmux.conf", "gitconfig", "global_ignore",
               "settings.json", "keybindings.json", "init.lua", "config.fish"]
 
@@ -25,7 +28,7 @@ class Installer < Struct.new(:dry, :uninstall, :use_fish, :use_nvim, :link, :ove
 
   def run_uninstall()
     log("Uninstalling .......")
-    log("")
+    log("-" * 80)
 
     dots = DOTFILES + ["vimrc.local", "fish.local"]
     dots.each do |dotfile|
@@ -34,15 +37,47 @@ class Installer < Struct.new(:dry, :uninstall, :use_fish, :use_nvim, :link, :ove
   end
 
   def run_install()
-    log("Installing .......")
-    log("")
-    link_dotfiles if link
+    link_dotfiles() if link
+    install_homebrew() if brew
+    install_asdf_plugins() if asdf
   end
 
+  def install_asdf_plugins()
+    log("")
+    log("asdf plugins", "++ ")
+    log("-" * 80)
+    system("asdf plugin-add erlang") unless dry
+    system("asdf plugin-add elixir") unless dry
+    system("asdf plugin-add ruby") unless dry
+  end
 
-  def link_dotfiles
+  def install_homebrew()
+    log("")
+    log("Homebrew", "++ ")
+    log("-" * 80)
+    homebrew = find_executable("brew")
+    if homebrew.nil?
+      install_script = "https://raw.githubusercontent.com/Homebrew/install/master/install"
+      system("/usr/bin/ruby -e \"$(curl -fsSL #{install_script})\"") unless dry
+    else
+      log("Homebrew installed at #{homebrew}", "-- ")
+    end
+    brew_bundle()
+  end
+
+  def brew_bundle()
+    log("")
+    log("Homebrew packages", "++ ")
+    log("-" * 80)
+    system("brew bundle install --file #{BREWFILE}") unless dry
+  end
+
+  def link_dotfiles()
+    log("")
+    log("Linking dotfiles", "++ ")
+    log("-" * 80)
     DOTFILES.each do |dotfile|
-      log(dotfile)
+      log(dotfile, "++ ")
       src = Pathname.new(DOTFILES_DIR).expand_path.join(dotfile).to_path
       dst = dotfile_dst(dotfile)
 
@@ -56,16 +91,16 @@ class Installer < Struct.new(:dry, :uninstall, :use_fish, :use_nvim, :link, :ove
     end
   end
 
-  def install_vim_plug
+  def install_vim_plug()
     vim_plug_path = if use_nvim
                       home(".local/share/nvim/site/autoload/plug.vim")
                     else
                       home(".vim/autoload/plug.vim")
                     end
     if File.exist?(vim_plug_path)
-      log("vim-plug exists at #{vim_plug_path}", 1)
+      log("vim-plug exists at #{vim_plug_path}", "-- ")
     else
-      log("Installing vim-plug at #{vim_plug_path}", 1)
+      log("Installing vim-plug at #{vim_plug_path}", "-- ")
       plug_script = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
       system("curl -fLo #{vim_plug_path} --create-dirs #{plug_script}") unless dry
     end
@@ -109,7 +144,8 @@ class Installer < Struct.new(:dry, :uninstall, :use_fish, :use_nvim, :link, :ove
       src = pathname.to_path
       dst = "#{src}.backup"
 
-      log("Backing up: #{src} --> #{dst}", 1)
+      log("Backing up: #{src} --> #{dst}", "-- ")
+      FileUtils.rm(dst) unless dry
       FileUtils.mv(src, dst) unless dry
     end
   end
@@ -119,24 +155,23 @@ class Installer < Struct.new(:dry, :uninstall, :use_fish, :use_nvim, :link, :ove
     if pathname.exist?
       path = pathname.to_path
 
-      log("Deleting: #{path}", 1)
+      log("Deleting: #{path}", "-- ")
       FileUtils.rm_r(path) unless dry
     end
   end
 
   def symlink(src, dst)
-    log("Symlinking: #{src} --> #{dst}", 1)
+    log("Symlinking: #{src} --> #{dst}", "-- ")
     FileUtils.ln(src, dst) unless dry
   end
 
-  def log(str, level = 0)
-    spacing  = "    " * level
-    puts "- #{spacing}#{str}"
+  def log(str, leading = "")
+    puts "#{leading}#{str}"
   end
 
 end
 
-installer = Installer.new(false, false, false, false, false, false)
+installer = Installer.new(false, false, false, false, false, false, false)
 
 opt_parser = OptionParser.new do |opts|
   opts.banner = "Usage: install.rb [options]"
@@ -163,6 +198,14 @@ opt_parser = OptionParser.new do |opts|
 
   opts.on("--uninstall", "Uninstall all the Da Dots") do
     installer.uninstall = true
+  end
+
+  opts.on("--brew", "Install homebrew and its bundle") do
+    installer.brew = true
+  end
+
+  opts.on("--asdf", "Install asdf plugins") do
+    installer.asdf = true
   end
 
   opts.on("-h", "--help", "Print help") do

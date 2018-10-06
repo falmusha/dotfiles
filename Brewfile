@@ -1,3 +1,4 @@
+brew "asdf"
 brew "bat"
 brew "elixir"
 brew "fish"

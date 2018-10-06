@@ -13,7 +13,7 @@ alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
 
 # ENV Vars
 # ------------------------------------------------------------------------------
-set -x PATH $HOME/.bin $HOME/.cargo/bin $HOME/.rvm/bin $PATH
+set -x PATH $HOME/.bin $HOME/.cargo/bin $PATH
 set -x EDITOR nvim
 set -x RACK_ENV development
 set -x ERL_AFLAGS "-kernel shell_history enabled"
