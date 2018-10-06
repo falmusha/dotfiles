@@ -11,17 +11,9 @@ end
 
 class Installer < Struct.new(:dry, :uninstall, :use_fish, :use_nvim, :link, :override_links)
 
-  DOTFILES = ['vimrc', 'ideavimrc', 'tmux.conf', 'gitconfig', 'global_ignore',
-              'settings.json', 'keybindings.json', 'init.lua', 'config.fish']
-  DOTFILES_DIR = '.'
-  VSCODE_SETTINGS_DST = home('Library/Application Support/Code/User/settings.json')
-  VSCODE_KEYBINDINGS_DST = home('Library/Application Support/Code/User/keybindings.json')
-  NVIMRC_DST = home('.config/nvim/init.vim')
-  VIMRC_DST = home('.vimrc')
-  VIM_PLUG_PATH = home('.vim/autoload/plug.vim')
-  NVIM_PLUG_PATH = home('.local/share/nvim/site/autoload/plug.vim')
-  FISH_SHELL_CONFIG_DIR = home('.config/fish')
-  HAMMERSPOON_DIR = home(".hammerspoon")
+  DOTFILES_DIR = File.expand_path(File.dirname(__FILE__))
+  DOTFILES = ["vimrc", "ideavimrc", "tmux.conf", "gitconfig", "global_ignore",
+              "settings.json", "keybindings.json", "init.lua", "config.fish"]
 
   def run()
     if uninstall
@@ -32,38 +24,84 @@ class Installer < Struct.new(:dry, :uninstall, :use_fish, :use_nvim, :link, :ove
   end
 
   def run_uninstall()
-    puts "uninstall"
+    log("Uninstalling .......")
+    log("")
+
+    dots = DOTFILES + ["vimrc.local", "fish.local"]
+    dots.each do |dotfile|
+      delete_path(dotfile_dst(dotfile))
+    end
   end
 
   def run_install()
+    log("Installing .......")
+    log("")
     link_dotfiles if link
   end
 
 
   def link_dotfiles
     DOTFILES.each do |dotfile|
+      log(dotfile)
       src = Pathname.new(DOTFILES_DIR).expand_path.join(dotfile).to_path
-      dst = case dotfile
-      when "vimrc" then use_nvim ? NVIMRC_DST : VIMRC_DST
-      when "settings.json" then VSCODE_SETTINGS_DST
-      when "keybindings.json" then VSCODE_KEYBINDINGS_DST
-      when "config.fish" then Pathname.new(FISH_SHELL_CONFIG_DIR).join("config.fish").to_s
-      when "init.lua" then Pathname.new(HAMMERSPOON_DIR).join("init.lua").to_s
-      else home(".#{dotfile}")
-      end
+      dst = dotfile_dst(dotfile)
 
       should_symlink = !File.exist?(dst) || (File.exist?(dst) && override_links)
 
       if should_symlink
-        backup_path(dst)
-        delete_path(dst)
+        pre_link(dotfile)
         symlink(src, dst)
+        post_link(dotfile)
       end
+    end
+  end
+
+  def install_vim_plug
+    vim_plug_path = if use_nvim
+                      home(".local/share/nvim/site/autoload/plug.vim")
+                    else
+                      home(".vim/autoload/plug.vim")
+                    end
+    if File.exist?(vim_plug_path)
+      log("vim-plug exists at #{vim_plug_path}", 1)
+    else
+      log("Installing vim-plug at #{vim_plug_path}", 1)
+      plug_script = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+      system("curl -fLo #{vim_plug_path} --create-dirs #{plug_script}") unless dry
     end
   end
 
   # helpers
   # ----------------------------------------------------------------------------
+
+  def dotfile_dst(dotfile)
+    case dotfile
+    when "vimrc" then use_nvim ? home(".config/nvim/init.vim") : home(".vimrc")
+    when "settings.json" then home("Library/Application Support/Code/User/settings.json")
+    when "keybindings.json" then home("Library/Application Support/Code/User/keybindings.json")
+    when "config.fish" then home(".config/fish/config.fish")
+    when "init.lua" then home(".hammerspoon/init.lua")
+    else home(".#{dotfile}")
+    end
+  end
+
+  def pre_link(dotfile)
+    dst = dotfile_dst(dotfile)
+    backup_path(dst)
+    delete_path(dst)
+    FileUtils.mkdir_p(File.dirname(dst)) unless dry
+  end
+
+  def post_link(dotfile)
+    if dotfile ==  "vimrc"
+      install_vim_plug
+      FileUtils.touch(home(".vimrc.local"))
+    end
+
+    if dotfile ==  "config.fish"
+      FileUtils.touch(home(".fish.local"))
+    end
+  end
 
   def backup_path(dotfile)
     pathname = Pathname.new(dotfile).expand_path
@@ -71,7 +109,7 @@ class Installer < Struct.new(:dry, :uninstall, :use_fish, :use_nvim, :link, :ove
       src = pathname.to_path
       dst = "#{src}.backup"
 
-      log("Backing up #{src} to #{dst}")
+      log("Backing up: #{src} --> #{dst}", 1)
       FileUtils.mv(src, dst) unless dry
     end
   end
@@ -81,19 +119,19 @@ class Installer < Struct.new(:dry, :uninstall, :use_fish, :use_nvim, :link, :ove
     if pathname.exist?
       path = pathname.to_path
 
-      log("Deleting #{path}")
+      log("Deleting: #{path}", 1)
       FileUtils.rm_r(path) unless dry
     end
   end
 
   def symlink(src, dst)
-    log("Symlinking: #{src} -> #{dst}")
-    FileUtils.mkdir_p(File.dirname(dst)) unless dry
+    log("Symlinking: #{src} --> #{dst}", 1)
     FileUtils.ln(src, dst) unless dry
   end
 
-  def log(str)
-    puts "-- #{str}"
+  def log(str, level = 0)
+    spacing  = "    " * level
+    puts "- #{spacing}#{str}"
   end
 
 end
@@ -119,7 +157,7 @@ opt_parser = OptionParser.new do |opts|
     installer.link = true
   end
 
-  opts.on("-ol", "--override-links", "Backup symlinked dotfiles and replace them") do
+  opts.on("--override-links", "Backup symlinked dotfiles and replace them") do
     installer.override_links = true
   end
 

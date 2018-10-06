@@ -50,6 +50,6 @@ if command --search python2 >/dev/null do
   set -x PATH $PATH (python2 -m site --user-base)/bin
 end
 
-# Machine specific zsh profile
+# Machine specific fish profile
 # ------------------------------------------------------------------------------
 source $HOME/.fish.local
