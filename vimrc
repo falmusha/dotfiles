@@ -29,10 +29,18 @@ endif
 " plugins
 "-------------------------------------------------------------------------------
 
-let s:plugged = !empty(glob('~/.vim/plugged'))
+if has('nvim')
+  let vim_plug = '~/.local/share/nvim/site/autoload/plug.vim'
+  let vim_plugins_dir = '~/.local/share/nvim/plugged'
+else
+  let vim_plug = '~/.vim/autoload/plug.vim'
+  let vim_plugins_dir = '~/.vim/plugged'
+endif
+
+let s:plugged = filereadable(glob(vim_plug))
 
 if s:plugged
-  call plug#begin('~/.vim/plugged')
+  call plug#begin(vim_plugins_dir)
 
   Plug 'airblade/vim-gitgutter'
   Plug 'chriskempson/base16-vim'
@@ -317,6 +325,6 @@ let g:alchemist#elixir_erlang_src = resolve(system("asdf which elixir") . "/../.
 
 
 " source local machine specific vimrc
-if !empty(glob('~/.vimrc.local'))
+if filereadable(glob('~/.vimrc.local'))
   source ~/.vimrc.local
 endif

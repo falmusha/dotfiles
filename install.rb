@@ -30,10 +30,15 @@ class Installer < Struct.new(:dry, :uninstall, :use_fish, :use_nvim, :link, :ove
     log("Uninstalling .......")
     log("-" * 80)
 
-    dots = DOTFILES + ["vimrc.local", "fish.local"]
-    dots.each do |dotfile|
+    DOTFILES.each do |dotfile|
       delete_path(dotfile_dst(dotfile))
     end
+
+    delete_path(home(".vimrc.local"))
+    delete_path(home(".fish.local"))
+    delete_path(home(".config/nvim/init.vim"))
+    delete_path(home(".local/share/nvim/site/autoload/plug.vim"))
+    delete_path(home(".vim/autoload/plug.vim"))
   end
 
   def run_install()
@@ -128,12 +133,12 @@ class Installer < Struct.new(:dry, :uninstall, :use_fish, :use_nvim, :link, :ove
   end
 
   def post_link(dotfile)
-    if dotfile ==  "vimrc"
+    if dotfile == "vimrc"
       install_vim_plug
       FileUtils.touch(home(".vimrc.local"))
     end
 
-    if dotfile ==  "config.fish"
+    if dotfile == "config.fish"
       FileUtils.touch(home(".fish.local"))
     end
   end
