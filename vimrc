@@ -43,6 +43,7 @@ if s:plugged
   call plug#begin(vim_plugins_dir)
 
   Plug 'airblade/vim-gitgutter'
+  Plug 'blueyed/vim-diminactive'
   Plug 'chriskempson/base16-vim'
   Plug 'christoomey/vim-tmux-navigator'
   Plug 'elixir-editors/vim-elixir'
@@ -56,11 +57,13 @@ if s:plugged
   Plug 'sbdchd/neoformat'
   Plug 'sheerun/vim-polyglot'
   Plug 'slashmili/alchemist.vim'
+  Plug 'tmux-plugins/vim-tmux-focus-events'
   Plug 'tpope/vim-commentary'
   Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-vinegar'
   Plug 'w0rp/ale'
+  Plug 'wellle/tmux-complete.vim'
 
   call plug#end()
 endif
@@ -69,10 +72,14 @@ endif
 " Looks
 "-------------------------------------------------------------------------------
 
-syntax manual " manual syntax highlighting (only enable in active buffers)
+syntax on
+
 filetype plugin on " enable file type detection
 
-colorscheme Tomorrow-Night
+if s:plugged
+  colorscheme Tomorrow-Night
+endif
+
 "-------------------------------------------------------------------------------
 " options
 "-------------------------------------------------------------------------------
@@ -90,6 +97,7 @@ set textwidth=80
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.class,*DS_Store* " general
 set wildignore+=*bower_components/**,*node_modules/**,*build/**,*dist/** " JS
 set wildignore+=*deps/**,*_build/** " elixir
+set autoread " automatically read files when changed
 
 "-------------------------------------------------------------------------------
 " key mappings
@@ -169,6 +177,9 @@ nnoremap <C-s> :setlocal spell! spelllang=en_ca<CR>
 nnoremap + <C-a>
 nnoremap _ <C-x>
 
+" focus mode
+nnoremap <leader>F :call FocusMode()<CR>
+
 " insert -----------------------------------------------------------------------
 
 " delete line when CTRL+d and enter insert mode at end of prev line
@@ -207,16 +218,12 @@ function! StripTrailingWhitespace()
 endfunction
 
 function! EnterBuf()
-  setlocal syntax=ON
-
   if &filetype != 'markdown'
     setlocal relativenumber
   endif
 endfunction
 
 function! LeaveBuf()
-  setlocal syntax=OFF
-
   if &filetype != 'markdown'
     setlocal norelativenumber
   endif
@@ -232,6 +239,12 @@ function! LeaveInsert()
   if &filetype != 'markdown'
     setlocal norelativenumber
   endif
+endfunction
+
+function! FocusMode()
+  setlocal textwidth=120
+  setlocal spell spelllang=en_ca
+  :Goyo 121
 endfunction
 
 "-------------------------------------------------------------------------------
@@ -255,13 +268,6 @@ augroup END
 augroup filetype_elixir
   autocmd!
   autocmd FileType elixir,eelixir setlocal textwidth=98
-augroup END
-
-augroup filetype_markdown
-  autocmd!
-  autocmd FileType markdown setlocal textwidth=120
-  autocmd FileType markdown setlocal spell spelllang=en_ca
-  autocmd FileType markdown :Goyo 121
 augroup END
 
 "-------------------------------------------------------------------------------
@@ -309,7 +315,6 @@ command! -bang -nargs=? -complete=dir Files
 autocmd! User GoyoEnter Limelight
 autocmd! User GoyoLeave Limelight!
 
-
 " ale --------------------------------------------------------------------------
 "-------------------------------------------------------------------------------
 let g:ale_linters = {
@@ -323,6 +328,9 @@ let g:alchemist_tag_map = '<C-]>'
 let g:alchemist_tag_stack_map = '<C-[>'
 let g:alchemist#elixir_erlang_src = resolve(system("asdf which elixir") . "/../../lib")
 
+" vim-diminactive --------------------------------------------------------------
+"-------------------------------------------------------------------------------
+let g:diminactive_enable_focus = 1
 
 " source local machine specific vimrc
 if filereadable(glob('~/.vimrc.local'))
