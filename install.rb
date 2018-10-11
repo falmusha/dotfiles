@@ -34,8 +34,6 @@ class Installer < Struct.new(:dry, :uninstall, :use_fish, :use_nvim, :link, :ove
       delete_path(dotfile_dst(dotfile))
     end
 
-    delete_path(home(".vimrc.local"))
-    delete_path(home(".fish.local"))
     delete_path(home(".config/nvim/init.vim"))
     delete_path(home(".local/share/nvim/site/autoload/plug.vim"))
     delete_path(home(".vim/autoload/plug.vim"))
