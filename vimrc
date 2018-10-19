@@ -43,6 +43,7 @@ if s:plugged
   call plug#begin(vim_plugins_dir)
 
   Plug 'airblade/vim-gitgutter'
+  Plug 'ambv/black'
   Plug 'blueyed/vim-diminactive'
   Plug 'chriskempson/base16-vim'
   Plug 'christoomey/vim-tmux-navigator'
@@ -270,6 +271,11 @@ augroup filetype_elixir
   autocmd FileType elixir,eelixir setlocal textwidth=98
 augroup END
 
+augroup filetype_python
+  autocmd!
+  autocmd FileType python setlocal textwidth=88
+augroup END
+
 "-------------------------------------------------------------------------------
 " plugins customization
 "-------------------------------------------------------------------------------
@@ -318,7 +324,8 @@ autocmd! User GoyoLeave Limelight!
 " ale --------------------------------------------------------------------------
 "-------------------------------------------------------------------------------
 let g:ale_linters = {
-\ 'elixir': []
+\ 'elixir': [],
+\ 'python': []
 \}
 
 
@@ -331,6 +338,10 @@ let g:alchemist#elixir_erlang_src = resolve(system("asdf which elixir") . "/../.
 " vim-diminactive --------------------------------------------------------------
 "-------------------------------------------------------------------------------
 let g:diminactive_enable_focus = 1
+
+" neoformat --------------------------------------------------------------------
+"-------------------------------------------------------------------------------
+let g:neoformat_enabled_python = ['black']
 
 " source local machine specific vimrc
 if filereadable(glob('~/.vimrc.local'))
