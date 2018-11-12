@@ -13,7 +13,14 @@ alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
 
 # ENV Vars
 # ------------------------------------------------------------------------------
-set -x PATH $HOME/.bin $HOME/.cargo/bin $PATH
+if test -e $HOME/.cargo/bin
+  set -x PATH $HOME/.cargo/bin $PATH
+end
+
+if test -e $HOME/.bin
+  set -x PATH $HOME/.bin $PATH
+end
+
 set -x EDITOR nvim
 set -x RACK_ENV development
 set -x ERL_AFLAGS "-kernel shell_history enabled"
@@ -43,11 +50,15 @@ end
 # Python
 # ------------------------------------------------------------------------------
 if command --search python3 >/dev/null do
-  set -x PATH $PATH (python3 -m site --user-base)/bin
+  if test -e (python3 -m site --user-base)/bin
+    set -x PATH $PATH (python3 -m site --user-base)/bin
+  end
 end
 
 if command --search python2 >/dev/null do
-  set -x PATH $PATH (python2 -m site --user-base)/bin
+  if test -e (python2 -m site --user-base)/bin
+    set -x PATH $PATH (python2 -m site --user-base)/bin
+  end
 end
 
 # asdf
