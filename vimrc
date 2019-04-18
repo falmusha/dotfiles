@@ -55,6 +55,7 @@ if s:plugged
   Plug 'junegunn/limelight.vim'
   Plug 'mhartington/oceanic-next'
   Plug 'prettier/vim-prettier', { 'do': 'npm install' }
+  Plug 'rhysd/vim-grammarous'
   Plug 'sbdchd/neoformat'
   Plug 'sheerun/vim-polyglot'
   Plug 'slashmili/alchemist.vim'
@@ -324,7 +325,6 @@ autocmd! User GoyoLeave Limelight!
 " ale --------------------------------------------------------------------------
 "-------------------------------------------------------------------------------
 let g:ale_linters = {
-\ 'elixir': [],
 \ 'python': []
 \}
 

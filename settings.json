@@ -57,7 +57,7 @@
     {"before": ["j", "j"], "after": ["<Esc>"]}
   ],
   "vim.leader": "<Space>",
-  "vim.neovimPath": "nvim",
+  "vim.neovimPath": "/usr/local/bin/nvim",
   "vim.otherModesKeyBindingsNonRecursive": [
     {
       "before": ["<C-n>"],
@@ -93,5 +93,6 @@
     "statusBar.debuggingBackground": "#005f5f"
   },
   "elixirLS.suggestSpecs": false,
-  "telemetry.enableTelemetry": false
+  "telemetry.enableTelemetry": false,
+  "typescript.updateImportsOnFileMove.enabled": "always"
 }

@@ -61,9 +61,7 @@ if command --search python2 >/dev/null do
   end
 end
 
-# asdf
-source /usr/local/opt/asdf/asdf.fish
-
 # Machine specific fish profile
 # ------------------------------------------------------------------------------
 source $HOME/.fish.local
+rvm default
