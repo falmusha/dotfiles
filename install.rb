@@ -16,7 +16,8 @@ class Installer < Struct.new(:dry, :uninstall, :use_fish, :use_nvim, :link, :ove
   DOTFILES_DIR = File.expand_path(File.dirname(__FILE__))
   BREWFILE = File.join(File.expand_path(File.dirname(__FILE__)), "Brewfile")
   DOTFILES = ["vimrc", "ideavimrc", "tmux.conf", "gitconfig", "global_ignore",
-              "settings.json", "keybindings.json", "init.lua", "config.fish"]
+              "settings.json", "keybindings.json", "init.lua", "config.fish",
+              "alacritty.yml"]
 
   def run()
     if uninstall
@@ -119,6 +120,7 @@ class Installer < Struct.new(:dry, :uninstall, :use_fish, :use_nvim, :link, :ove
     when "keybindings.json" then home("Library/Application Support/Code/User/keybindings.json")
     when "config.fish" then home(".config/fish/config.fish")
     when "init.lua" then home(".hammerspoon/init.lua")
+    when "alacritty.yml" then home(".config/alacritty/alacritty.yml")
     else home(".#{dotfile}")
     end
   end
