@@ -64,4 +64,3 @@ end
 # Machine specific fish profile
 # ------------------------------------------------------------------------------
 source $HOME/.fish.local
-rvm default

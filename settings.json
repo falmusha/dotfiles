@@ -94,5 +94,6 @@
   },
   "elixirLS.suggestSpecs": false,
   "telemetry.enableTelemetry": false,
-  "typescript.updateImportsOnFileMove.enabled": "always"
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "liveshare.featureSet": "stable"
 }

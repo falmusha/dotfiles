@@ -43,7 +43,6 @@ if s:plugged
   call plug#begin(vim_plugins_dir)
 
   Plug 'airblade/vim-gitgutter'
-  Plug 'ambv/black'
   Plug 'blueyed/vim-diminactive'
   Plug 'chriskempson/base16-vim'
   Plug 'christoomey/vim-tmux-navigator'
@@ -64,6 +63,7 @@ if s:plugged
   Plug 'tpope/vim-fugitive'
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-vinegar'
+  Plug 'tweekmonster/startuptime.vim', { 'on':  'StartupTime' }
   Plug 'w0rp/ale'
   Plug 'wellle/tmux-complete.vim'
 
@@ -79,7 +79,7 @@ syntax on
 filetype plugin on " enable file type detection
 
 if s:plugged
-  colorscheme Tomorrow-Night
+  colorscheme Tomorrow
 endif
 
 "-------------------------------------------------------------------------------
@@ -219,30 +219,6 @@ function! StripTrailingWhitespace()
   endif
 endfunction
 
-function! EnterBuf()
-  if &filetype != 'markdown'
-    setlocal relativenumber
-  endif
-endfunction
-
-function! LeaveBuf()
-  if &filetype != 'markdown'
-    setlocal norelativenumber
-  endif
-endfunction
-
-function! EnterInsert()
-  if &filetype != 'markdown'
-    setlocal relativenumber
-  endif
-endfunction
-
-function! LeaveInsert()
-  if &filetype != 'markdown'
-    setlocal norelativenumber
-  endif
-endfunction
-
 function! FocusMode()
   setlocal textwidth=120
   setlocal spell spelllang=en_ca
@@ -252,18 +228,6 @@ endfunction
 "-------------------------------------------------------------------------------
 " auto commands
 "-------------------------------------------------------------------------------
-
-augroup active_window
-  autocmd!
-  autocmd BufEnter * call EnterBuf()
-  autocmd BufLeave * call LeaveBuf()
-augroup END
-
-augroup line_number
-  autocmd!
-  autocmd InsertLeave * call EnterInsert()
-  autocmd InsertEnter * call LeaveInsert()
-augroup END
 
 " FileType specific ------------------------------------------------------------
 
@@ -333,11 +297,11 @@ let g:ale_linters = {
 "-------------------------------------------------------------------------------
 let g:alchemist_tag_map = '<C-]>'
 let g:alchemist_tag_stack_map = '<C-[>'
-let g:alchemist#elixir_erlang_src = resolve(system("asdf which elixir") . "/../../lib")
 
 " vim-diminactive --------------------------------------------------------------
 "-------------------------------------------------------------------------------
 let g:diminactive_enable_focus = 1
+let g:diminactive_use_syntax = 1
 
 " neoformat --------------------------------------------------------------------
 "-------------------------------------------------------------------------------
