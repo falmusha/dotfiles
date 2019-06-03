@@ -1,9 +1,11 @@
 # Command aliases
 # ------------------------------------------------------------------------------
-alias g="git"
+alias l="ls -la"
 alias gl="git l"
 alias gs="git s"
 alias mr="cd ~/iCloud/School/Research/repo"
+alias t="tmux"
+alias tl="tmux ls"
 
 # CLI: Improved
 # ------------------------------------------------------------------------------
