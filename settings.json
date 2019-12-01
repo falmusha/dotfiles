@@ -19,14 +19,14 @@
     "**/.sass-cache": true
   },
   "window.nativeTabs": false,
-  "window.zoomLevel": 0,
-  "workbench.colorTheme": "Tomorrow",
+  "window.zoomLevel": 1,
   "[elixir]": {
     "editor.rulers": [98],
     "editor.formatOnSave": true
   },
   "[javascript]": {
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[json]": {
     "editor.rulers": [120]
@@ -95,5 +95,7 @@
   "elixirLS.suggestSpecs": false,
   "telemetry.enableTelemetry": false,
   "typescript.updateImportsOnFileMove.enabled": "always",
-  "liveshare.featureSet": "stable"
+  "liveshare.featureSet": "stable",
+  "files.autoSave": "afterDelay",
+  "workbench.colorTheme": "Tomorrow"
 }
