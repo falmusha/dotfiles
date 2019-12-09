@@ -75,4 +75,3 @@ end
 # Machine specific fish profile
 # ------------------------------------------------------------------------------
 source $HOME/.fish.local
-set -g fish_user_paths "/usr/local/opt/qt/bin" $fish_user_paths
