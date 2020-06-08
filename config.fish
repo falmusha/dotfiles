@@ -13,8 +13,11 @@ alias cat="bat"
 alias ping="prettyping --nolegend"
 alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
 
-# ENV Vars
+
+# $PATH
 # ------------------------------------------------------------------------------
+set -x PATH $PATH /opt/local/bin/
+
 if test -e $HOME/.cargo/bin
     set -x PATH $HOME/.cargo/bin $PATH
 end
@@ -22,6 +25,9 @@ end
 if test -e $HOME/.bin
     set -x PATH $HOME/.bin $PATH
 end
+
+# ENV Vars
+# ------------------------------------------------------------------------------
 
 set -x EDITOR nvim
 set -x RACK_ENV development

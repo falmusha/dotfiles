@@ -37,7 +37,7 @@ class Installer < Struct.new(:dry, :uninstall, :use_fish, :use_nvim, :link, :ove
   BREWFILE = File.join(File.expand_path(File.dirname(__FILE__)), "Brewfile")
   MAC_DOTFILES = ["vimrc", "ideavimrc", "tmux.conf", "gitconfig", "global_ignore",
                   "settings.json", "keybindings.json", "init.lua", "config.fish",
-                  "alacritty.yml"]
+                  "alacritty.yml", "kitty.conf"]
   LINUX_DOTFILES = ["vimrc", "ideavimrc", "tmux.conf", "gitconfig", "global_ignore",
                     "alacritty.yml", "bashrc"]
 

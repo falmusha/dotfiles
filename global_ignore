@@ -1,3 +1,9 @@
+# asdf versions
+.tool-versions
+
+# redis
+dump.rdb
+
 # General
 .DS_Store
 .AppleDouble

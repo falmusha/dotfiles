@@ -23,7 +23,9 @@ if !has('nvim')
   set tabpagemax=50
   set tags=./tags;,tags
   set wildmenu
+  set termguicolors
 endif
+
 
 "-------------------------------------------------------------------------------
 " plugins
@@ -52,9 +54,7 @@ if s:plugged
   Plug 'junegunn/fzf.vim'
   Plug 'junegunn/goyo.vim'
   Plug 'junegunn/limelight.vim'
-  Plug 'mhartington/oceanic-next'
   Plug 'prettier/vim-prettier', { 'do': 'npm install' }
-  Plug 'rhysd/vim-grammarous'
   Plug 'sbdchd/neoformat'
   Plug 'sheerun/vim-polyglot'
   Plug 'slashmili/alchemist.vim'
@@ -79,7 +79,7 @@ syntax on
 filetype plugin on " enable file type detection
 
 if s:plugged
-  colorscheme Tomorrow
+  colorscheme Tomorrow-Night
 endif
 
 "-------------------------------------------------------------------------------

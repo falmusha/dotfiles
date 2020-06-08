@@ -19,7 +19,7 @@
     "**/.sass-cache": true
   },
   "window.nativeTabs": false,
-  "window.zoomLevel": 1,
+  "window.zoomLevel": 0,
   "[elixir]": {
     "editor.rulers": [98],
     "editor.formatOnSave": true
@@ -43,10 +43,12 @@
     "editor.tabSize": 4
   },
   "[typescript]": {
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[typescriptreact]": {
-    "editor.formatOnSave": true
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   // ---------------------------------------------------------------------------
   // Vim plugin
@@ -97,5 +99,9 @@
   "typescript.updateImportsOnFileMove.enabled": "always",
   "liveshare.featureSet": "stable",
   "files.autoSave": "afterDelay",
-  "workbench.colorTheme": "Tomorrow"
+  "workbench.colorTheme": "Tomorrow",
+  "latex-workshop.view.pdf.viewer": "tab",
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "javascript.updateImportsOnFileMove.enabled": "always"
 }
