@@ -5,19 +5,41 @@ require "optparse"
 require "pathname"
 require "mkmf"
 
+module OS
+  def OS.windows?
+    (/cygwin|mswin|mingw|bccwin|wince|emx/ =~ RUBY_PLATFORM) != nil
+  end
+
+  def OS.mac?
+   (/darwin/ =~ RUBY_PLATFORM) != nil
+  end
+
+  def OS.unix?
+    !OS.windows?
+  end
+
+  def OS.linux?
+    OS.unix? and not OS.mac?
+  end
+
+  def OS.jruby?
+    RUBY_ENGINE == 'jruby'
+  end
+end
 
 def home(path)
   return Pathname.new("~").expand_path.join(path).to_path
 end
 
-
 class Installer < Struct.new(:dry, :uninstall, :use_fish, :use_nvim, :link, :override_links, :brew, :asdf)
 
   DOTFILES_DIR = File.expand_path(File.dirname(__FILE__))
   BREWFILE = File.join(File.expand_path(File.dirname(__FILE__)), "Brewfile")
-  DOTFILES = ["vimrc", "ideavimrc", "tmux.conf", "gitconfig", "global_ignore",
-              "settings.json", "keybindings.json", "init.lua", "config.fish",
-              "alacritty.yml"]
+  MAC_DOTFILES = ["vimrc", "ideavimrc", "tmux.conf", "gitconfig", "global_ignore",
+                  "settings.json", "keybindings.json", "init.lua", "config.fish",
+                  "alacritty.yml"]
+  LINUX_DOTFILES = ["vimrc", "ideavimrc", "tmux.conf", "gitconfig", "global_ignore",
+                    "alacritty.yml", "bashrc"]
 
   def run()
     if uninstall
@@ -31,7 +53,7 @@ class Installer < Struct.new(:dry, :uninstall, :use_fish, :use_nvim, :link, :ove
     log("Uninstalling .......")
     log("-" * 80)
 
-    DOTFILES.each do |dotfile|
+    get_dotfiles.each do |dotfile|
       delete_path(dotfile_dst(dotfile))
     end
 
@@ -42,8 +64,16 @@ class Installer < Struct.new(:dry, :uninstall, :use_fish, :use_nvim, :link, :ove
 
   def run_install()
     link_dotfiles() if link
-    install_homebrew() if brew
+    install_homebrew() if brew and OS.mac?
     install_asdf_plugins() if asdf
+  end
+
+  def get_dotfiles()
+    if OS.mac?
+      MAC_DOTFILES
+    else
+      LINUX_DOTFILES
+    end
   end
 
   def install_asdf_plugins()
@@ -80,7 +110,7 @@ class Installer < Struct.new(:dry, :uninstall, :use_fish, :use_nvim, :link, :ove
     log("")
     log("Linking dotfiles", "++ ")
     log("-" * 80)
-    DOTFILES.each do |dotfile|
+    get_dotfiles.each do |dotfile|
       log(dotfile, "++ ")
       src = Pathname.new(DOTFILES_DIR).expand_path.join(dotfile).to_path
       dst = dotfile_dst(dotfile)
@@ -150,7 +180,9 @@ class Installer < Struct.new(:dry, :uninstall, :use_fish, :use_nvim, :link, :ove
       dst = "#{src}.backup"
 
       log("Backing up: #{src} --> #{dst}", "-- ")
-      FileUtils.rm(dst) unless dry
+      if Pathname.new(dst).exist?
+        FileUtils.rm(dst) unless dry
+      end
       FileUtils.mv(src, dst) unless dry
     end
   end
