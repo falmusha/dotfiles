@@ -7,6 +7,10 @@ alias mr="cd ~/iCloud/School/Research/repo"
 alias t="tmux"
 alias tl="tmux ls"
 
+# ENV Vars
+# ------------------------------------------------------------------------------
+PATH=$PATH:$HOME/.local/bin
+
 # ~/.bashrc: executed by bash(1) for non-login shells.
 # see /usr/share/doc/bash/examples/startup-files (in the package bash-doc)
 # for examples
