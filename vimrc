@@ -64,7 +64,7 @@ if s:plugged
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-vinegar'
   Plug 'tweekmonster/startuptime.vim', { 'on':  'StartupTime' }
-  Plug 'w0rp/ale'
+  Plug 'dense-analysis/ale'
   Plug 'wellle/tmux-complete.vim'
 
   call plug#end()
