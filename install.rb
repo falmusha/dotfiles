@@ -27,114 +27,114 @@ module OS
   end
 end
 
-def home(path)
-  return Pathname.new("~").expand_path.join(path).to_path
-end
+DOTFILES_DIR = File.expand_path(File.dirname(__FILE__))
+DOTFILES = {
+  "bashrc": "~/.bashrc",
+  "config.fish": "~/.config/fish/config.fish",
+  "tmux.conf": "~/.tmux.conf",
+  "vimrc": ["~/.vimrc", "~/.config/nvim/init.vim"],
+  "ideavimrc": "~/.ideavimrc",
+  "gitconfig": "~/.gitconfig",
+  "global_ignore": "~/.global_ignore",
+  "settings.json": {mac: "~/Library/Application Support/Code/User/settings.json"},
+  "keybindings.json": {mac: "~/Library/Application Support/Code/User/keybindings.json"},
+  "init.lua": {mac: "~/.hammerspoon/init.lua"},
+  "alacritty.yml": "~/.config/alacritty/alacritty.yml",
+  "kitty.conf": "~/.config/kitty/kitty.conf"
+}
+BREWFILE = File.expand_path("Brewfile", DOTFILES_DIR)
 
-class Installer < Struct.new(:dry, :uninstall, :use_fish, :use_nvim, :link, :override_links, :brew, :asdf)
-
-  DOTFILES_DIR = File.expand_path(File.dirname(__FILE__))
-  BREWFILE = File.join(File.expand_path(File.dirname(__FILE__)), "Brewfile")
-  MAC_DOTFILES = ["vimrc", "ideavimrc", "tmux.conf", "gitconfig", "global_ignore",
-                  "settings.json", "keybindings.json", "init.lua", "config.fish",
-                  "alacritty.yml", "kitty.conf"]
-  LINUX_DOTFILES = ["vimrc", "ideavimrc", "tmux.conf", "gitconfig", "global_ignore",
-                    "alacritty.yml", "bashrc"]
-
-  def run()
+class Installer < Struct.new(:dry, :uninstall, :use_nvim, :link, :override_links, :brew)
+  def run
     if uninstall
-      run_uninstall()
+      run_uninstall
     else
-      run_install()
+      run_install
     end
   end
 
-  def run_uninstall()
-    log("Uninstalling .......")
-    log("-" * 80)
+  def run_uninstall
+    log "Uninstalling ......."
+    log "-" * 80
 
     get_dotfiles.each do |dotfile|
-      delete_path(dotfile_dst(dotfile))
+      delete_path dotfile[1]
     end
 
-    delete_path(home(".config/nvim/init.vim"))
-    delete_path(home(".local/share/nvim/site/autoload/plug.vim"))
-    delete_path(home(".vim/autoload/plug.vim"))
+    # remove vim-plug
+    delete_path File.expand_path("~/.local/share/nvim/site/autoload/plug.vim")
+    delete_path File.expand_path("~/.vim/autoload/plug.vim")
   end
 
-  def run_install()
-    link_dotfiles() if link
-    install_homebrew() if brew and OS.mac?
-    install_asdf_plugins() if asdf
+  def run_install
+    link_dotfiles if link
+    install_homebrew if brew and OS.mac?
   end
 
-  def get_dotfiles()
-    if OS.mac?
-      MAC_DOTFILES
-    else
-      LINUX_DOTFILES
+  def get_dotfiles
+    os = OS.mac? ? :mac : :links
+    symlinks = []
+
+    DOTFILES.each do |src, dst|
+      target = dst.is_a?(Hash) ? dst[os] : dst
+      if target.is_a? Array
+        target.each { |t| symlinks << [src.to_s, t.to_s] }
+      else
+        symlinks << [src.to_s, target.to_s]
+      end
+    end
+
+    symlinks.map do |s|
+      [File.expand_path(s[0], DOTFILES_DIR), File.expand_path(s[1])]
     end
   end
 
-  def install_asdf_plugins()
-    log("")
-    log("asdf plugins", "++ ")
-    log("-" * 80)
-    system("asdf plugin-add erlang") unless dry
-    system("asdf plugin-add elixir") unless dry
-    system("asdf plugin-add ruby") unless dry
-  end
-
-  def install_homebrew()
-    log("")
-    log("Homebrew", "++ ")
-    log("-" * 80)
-    homebrew = find_executable("brew")
+  def install_homebrew
+    log "Homebrew", "+++ "
+    log "-" * 80
+    homebrew = find_executable "brew"
     if homebrew.nil?
       install_script = "https://raw.githubusercontent.com/Homebrew/install/master/install"
       system("/usr/bin/ruby -e \"$(curl -fsSL #{install_script})\"") unless dry
     else
-      log("Homebrew installed at #{homebrew}", "-- ")
+      log "Homebrew installed at #{homebrew}", "--- "
     end
-    brew_bundle()
+    brew_bundle
   end
 
-  def brew_bundle()
-    log("")
-    log("Homebrew packages", "++ ")
-    log("-" * 80)
+  def brew_bundle
+    log "Homebrew packages", "+++ "
+    log "-" * 80
     system("brew bundle install --file #{BREWFILE}") unless dry
   end
 
-  def link_dotfiles()
-    log("")
-    log("Linking dotfiles", "++ ")
-    log("-" * 80)
+  def link_dotfiles
+    log "Linking dotfiles", "++ "
+    log "-" * 80
     get_dotfiles.each do |dotfile|
-      log(dotfile, "++ ")
-      src = Pathname.new(DOTFILES_DIR).expand_path.join(dotfile).to_path
-      dst = dotfile_dst(dotfile)
+      src = dotfile[0]
+      dst = dotfile[1]
 
       should_symlink = !File.exist?(dst) || (File.exist?(dst) && override_links)
 
       if should_symlink
-        pre_link(dotfile)
-        symlink(src, dst)
-        post_link(dotfile)
+        pre_link dst
+        symlink src, dst
+        post_link dst
       end
     end
   end
 
-  def install_vim_plug()
+  def install_vim_plug
     vim_plug_path = if use_nvim
-                      home(".local/share/nvim/site/autoload/plug.vim")
+                      File.expand_path "~/.local/share/nvim/site/autoload/plug.vim"
                     else
-                      home(".vim/autoload/plug.vim")
+                      File.expand_path "~/.vim/autoload/plug.vim"
                     end
-    if File.exist?(vim_plug_path)
-      log("vim-plug exists at #{vim_plug_path}", "-- ")
+    if File.exist? vim_plug_path
+      log "installing: vim-plug exists at #{vim_plug_path}", "*** "
     else
-      log("Installing vim-plug at #{vim_plug_path}", "-- ")
+      log "installing: vim-plug at #{vim_plug_path}", "--- "
       plug_script = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
       system("curl -fLo #{vim_plug_path} --create-dirs #{plug_script}") unless dry
     end
@@ -143,63 +143,44 @@ class Installer < Struct.new(:dry, :uninstall, :use_fish, :use_nvim, :link, :ove
   # helpers
   # ----------------------------------------------------------------------------
 
-  def dotfile_dst(dotfile)
-    case dotfile
-    when "vimrc" then use_nvim ? home(".config/nvim/init.vim") : home(".vimrc")
-    when "settings.json" then home("Library/Application Support/Code/User/settings.json")
-    when "keybindings.json" then home("Library/Application Support/Code/User/keybindings.json")
-    when "config.fish" then home(".config/fish/config.fish")
-    when "init.lua" then home(".hammerspoon/init.lua")
-    when "alacritty.yml" then home(".config/alacritty/alacritty.yml")
-    else home(".#{dotfile}")
-    end
-  end
-
-  def pre_link(dotfile)
-    dst = dotfile_dst(dotfile)
-    backup_path(dst)
-    delete_path(dst)
-    FileUtils.mkdir_p(File.dirname(dst)) unless dry
+  def pre_link(dst)
+    backup_path dst
+    delete_path dst
+    FileUtils.mkdir_p File.dirname(dst) unless dry
   end
 
   def post_link(dotfile)
-    if dotfile == "vimrc"
+    case File.basename dotfile
+    when ".vimrc"
       install_vim_plug
-      FileUtils.touch(home(".vimrc.local"))
-    end
-
-    if dotfile == "config.fish"
-      FileUtils.touch(home(".fish.local"))
+      FileUtils.touch File.expand_path("~/.vimrc.local")
+    when "config.fish"
+      FileUtils.touch File.expand_path("~/.fish.local")
     end
   end
 
-  def backup_path(dotfile)
-    pathname = Pathname.new(dotfile).expand_path
-    if pathname.exist?
-      src = pathname.to_path
-      dst = "#{src}.backup"
+  def backup_path(dst)
+    return unless File.exist? dst
 
-      log("Backing up: #{src} --> #{dst}", "-- ")
-      if Pathname.new(dst).exist?
-        FileUtils.rm(dst) unless dry
-      end
-      FileUtils.mv(src, dst) unless dry
+    backup = "#{dst}.backup"
+    log "backing-up: #{dst} --> #{backup}", "--- "
+    if File.exist? backup
+      log "backing-up: removing old backup #{backup}", "--- "
+      FileUtils.rm backup unless dry
     end
+    FileUtils.mv dst, backup unless dry
   end
 
-  def delete_path(dotfile)
-    pathname = Pathname.new(dotfile).expand_path
-    if pathname.exist?
-      path = pathname.to_path
+  def delete_path(dst)
+    return unless File.exist? dst
 
-      log("Deleting: #{path}", "-- ")
-      FileUtils.rm_r(path) unless dry
-    end
+    log "  deleting: #{dst}", "--- "
+    FileUtils.rm_r dst unless dry
   end
 
   def symlink(src, dst)
-    log("Symlinking: #{src} --> #{dst}", "-- ")
-    FileUtils.ln(src, dst) unless dry
+    log "symlinking: #{src} --> #{dst}", "--- "
+    FileUtils.ln_s src, dst unless dry
   end
 
   def log(str, leading = "")
@@ -208,17 +189,13 @@ class Installer < Struct.new(:dry, :uninstall, :use_fish, :use_nvim, :link, :ove
 
 end
 
-installer = Installer.new(false, false, false, false, false, false, false)
+installer = Installer.new(false, false, false, false, false, false)
 
 opt_parser = OptionParser.new do |opts|
   opts.banner = "Usage: install.rb [options]"
 
   opts.on("-d", "--dry-run", "Dry run, no side effects") do
     installer.dry = true
-  end
-
-  opts.on("-f", "--use-fish", "Use fish as the default shell with pure") do
-    installer.use_fish = true
   end
 
   opts.on("-n", "--use-nvim", "Install dotfiles for NeoVim") do
@@ -241,10 +218,6 @@ opt_parser = OptionParser.new do |opts|
     installer.brew = true
   end
 
-  opts.on("--asdf", "Install asdf plugins") do
-    installer.asdf = true
-  end
-
   opts.on("-h", "--help", "Print help") do
     puts opts
     exit
@@ -253,4 +226,4 @@ end
 
 opt_parser.parse!(ARGV.empty? ? ["-h"] : ARGV)
 
-installer.run()
+installer.run
