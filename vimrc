@@ -54,6 +54,7 @@ if s:plugged
   Plug 'junegunn/goyo.vim'
   Plug 'junegunn/limelight.vim'
   Plug 'junegunn/seoul256.vim'
+  Plug 'mhartington/oceanic-next'
   Plug 'prettier/vim-prettier', { 'do': 'npm install' }
   Plug 'sbdchd/neoformat'
   Plug 'sheerun/vim-polyglot'
@@ -69,18 +70,20 @@ if s:plugged
   call plug#end()
 endif
 
-let base16colorspace=256
 "-------------------------------------------------------------------------------
 " Looks
 "-------------------------------------------------------------------------------
+
+if (has("termguicolors"))
+ set termguicolors
+endif
 
 syntax on
 
 filetype plugin on " enable file type detection
 
 if s:plugged
-  set background=dark
-  colorscheme seoul256-light
+  colorscheme OceanicNext
 endif
 
 "-------------------------------------------------------------------------------
