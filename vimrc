@@ -46,14 +46,14 @@ if s:plugged
 
   Plug 'airblade/vim-gitgutter'
   Plug 'blueyed/vim-diminactive'
-  Plug 'chriskempson/base16-vim'
   Plug 'christoomey/vim-tmux-navigator'
+  Plug 'dense-analysis/ale'
   Plug 'elixir-editors/vim-elixir'
-  Plug 'flazz/vim-colorschemes'
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/fzf.vim'
   Plug 'junegunn/goyo.vim'
   Plug 'junegunn/limelight.vim'
+  Plug 'junegunn/seoul256.vim'
   Plug 'prettier/vim-prettier', { 'do': 'npm install' }
   Plug 'sbdchd/neoformat'
   Plug 'sheerun/vim-polyglot'
@@ -64,12 +64,12 @@ if s:plugged
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-vinegar'
   Plug 'tweekmonster/startuptime.vim', { 'on':  'StartupTime' }
-  Plug 'dense-analysis/ale'
   Plug 'wellle/tmux-complete.vim'
 
   call plug#end()
 endif
 
+let base16colorspace=256
 "-------------------------------------------------------------------------------
 " Looks
 "-------------------------------------------------------------------------------
@@ -79,7 +79,8 @@ syntax on
 filetype plugin on " enable file type detection
 
 if s:plugged
-  colorscheme Tomorrow-Night
+  set background=dark
+  colorscheme seoul256-light
 endif
 
 "-------------------------------------------------------------------------------
