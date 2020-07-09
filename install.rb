@@ -42,9 +42,14 @@ DOTFILES = {
   "alacritty.yml": "~/.config/alacritty/alacritty.yml",
   "kitty.conf": "~/.config/kitty/kitty.conf"
 }
+VIM_PLUG_SCRIPT = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
+VIM_PLUG_PATHS = [
+  File.expand_path("~/.local/share/nvim/site/autoload/plug.vim"),
+  File.expand_path("~/.vim/autoload/plug.vim")
+]
 BREWFILE = File.expand_path("Brewfile", DOTFILES_DIR)
 
-class Installer < Struct.new(:dry, :uninstall, :use_nvim, :link, :override_links, :brew)
+class Installer < Struct.new(:dry, :uninstall, :link, :override_links, :brew)
   def run
     if uninstall
       run_uninstall
@@ -62,8 +67,9 @@ class Installer < Struct.new(:dry, :uninstall, :use_nvim, :link, :override_links
     end
 
     # remove vim-plug
-    delete_path File.expand_path("~/.local/share/nvim/site/autoload/plug.vim")
-    delete_path File.expand_path("~/.vim/autoload/plug.vim")
+    VIM_PLUG_PATHS.each do |vim_plug_path|
+      delete_path vim_plug_path
+    end
   end
 
   def run_install
@@ -77,6 +83,7 @@ class Installer < Struct.new(:dry, :uninstall, :use_nvim, :link, :override_links
 
     DOTFILES.each do |src, dst|
       target = dst.is_a?(Hash) ? dst[os] : dst
+      next if target.nil?
       if target.is_a? Array
         target.each { |t| symlinks << [src.to_s, t.to_s] }
       else
@@ -126,17 +133,13 @@ class Installer < Struct.new(:dry, :uninstall, :use_nvim, :link, :override_links
   end
 
   def install_vim_plug
-    vim_plug_path = if use_nvim
-                      File.expand_path "~/.local/share/nvim/site/autoload/plug.vim"
-                    else
-                      File.expand_path "~/.vim/autoload/plug.vim"
-                    end
-    if File.exist? vim_plug_path
-      log "installing: vim-plug exists at #{vim_plug_path}", "*** "
-    else
-      log "installing: vim-plug at #{vim_plug_path}", "--- "
-      plug_script = "https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim"
-      system("curl -fLo #{vim_plug_path} --create-dirs #{plug_script}") unless dry
+    VIM_PLUG_PATHS.each do |vim_plug_path|
+      if File.exist? vim_plug_path
+        log "installing: vim-plug exists at #{vim_plug_path}", "*** "
+      else
+        log "installing: vim-plug at #{vim_plug_path}", "--- "
+        system("curl -fLo #{vim_plug_path} --create-dirs #{VIM_PLUG_SCRIPT}") unless dry
+      end
     end
   end
 
@@ -189,17 +192,13 @@ class Installer < Struct.new(:dry, :uninstall, :use_nvim, :link, :override_links
 
 end
 
-installer = Installer.new(false, false, false, false, false, false)
+installer = Installer.new(false, false, false, false, false)
 
 opt_parser = OptionParser.new do |opts|
   opts.banner = "Usage: install.rb [options]"
 
   opts.on("-d", "--dry-run", "Dry run, no side effects") do
     installer.dry = true
-  end
-
-  opts.on("-n", "--use-nvim", "Install dotfiles for NeoVim") do
-    installer.use_nvim = true
   end
 
   opts.on("-l", "--link-dotfiles", "Symlink dotfiles") do
