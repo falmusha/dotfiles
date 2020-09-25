@@ -104,6 +104,7 @@ set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.class,*DS_Store* " general
 set wildignore+=*bower_components/**,*node_modules/**,*build/**,*dist/** " JS
 set wildignore+=*deps/**,*_build/** " elixir
 set autoread " automatically read files when changed
+set mouse=a
 
 "-------------------------------------------------------------------------------
 " key mappings
@@ -238,6 +239,11 @@ endfunction
 augroup filetype_elixir
   autocmd!
   autocmd FileType elixir,eelixir setlocal textwidth=98
+augroup END
+
+augroup filetype_ruby
+  autocmd!
+  autocmd FileType ruby,eruby setlocal textwidth=98
 augroup END
 
 augroup filetype_python
