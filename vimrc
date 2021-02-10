@@ -44,6 +44,7 @@ let s:plugged = filereadable(glob(vim_plug))
 if s:plugged
   call plug#begin(vim_plugins_dir)
 
+  Plug 'chriskempson/base16-vim'
   Plug 'airblade/vim-gitgutter'
   Plug 'blueyed/vim-diminactive'
   Plug 'christoomey/vim-tmux-navigator'
@@ -53,8 +54,6 @@ if s:plugged
   Plug 'junegunn/fzf.vim'
   Plug 'junegunn/goyo.vim'
   Plug 'junegunn/limelight.vim'
-  Plug 'junegunn/seoul256.vim'
-  Plug 'mhartington/oceanic-next'
   Plug 'prettier/vim-prettier', { 'do': 'npm install' }
   Plug 'sbdchd/neoformat'
   Plug 'sheerun/vim-polyglot'
@@ -83,7 +82,7 @@ syntax on
 filetype plugin on " enable file type detection
 
 if s:plugged
-  colorscheme OceanicNext
+  colorscheme base16-oceanicnext
 endif
 
 "-------------------------------------------------------------------------------
@@ -251,9 +250,18 @@ augroup filetype_python
   autocmd FileType python setlocal textwidth=88
 augroup END
 
+augroup filetype_markdown
+  autocmd!
+  autocmd FileType markdown setlocal textwidth=120
+augroup END
+
 "-------------------------------------------------------------------------------
 " plugins customization
 "-------------------------------------------------------------------------------
+
+" base16-vim -------------------------------------------------------------------
+"-------------------------------------------------------------------------------
+let base16colorspace=256 " Access colors present in 256 colorspace
 
 " fzf.vim ----------------------------------------------------------------------
 "-------------------------------------------------------------------------------
@@ -301,7 +309,6 @@ autocmd! User GoyoLeave Limelight!
 let g:ale_linters = {
 \ 'python': []
 \}
-
 
 " alchemist.vim ----------------------------------------------------------------
 "-------------------------------------------------------------------------------
