@@ -82,7 +82,7 @@ syntax on
 filetype plugin on " enable file type detection
 
 if s:plugged
-  colorscheme base16-oceanicnext
+  colorscheme base16-tomorrow-night
 endif
 
 "-------------------------------------------------------------------------------
@@ -124,17 +124,17 @@ nnoremap <C-l> <C-w>l
 nnoremap j gj
 nnoremap k gk
 
-" increase height by 5 columns
-nnoremap <silent> <DOWN> :resize -2 <CR>
+" increase height by 1 columns
+nnoremap <silent> <DOWN> :resize -1 <CR>
 
-" decrease height by 5 columns
-nnoremap <silent> <UP> :resize +2 <CR>
+" decrease height by 1 columns
+nnoremap <silent> <UP> :resize +1 <CR>
 
-" increase width by 5 columns
-nnoremap <silent> <RIGHT> :vertical resize +5 <CR>
+" increase width by 1 columns
+nnoremap <silent> <RIGHT> :vertical resize +1 <CR>
 
-" decrease width by 5 columns
-nnoremap <silent> <LEFT>  :vertical resize -5 <CR>
+" decrease width by 1 columns
+nnoremap <silent> <LEFT>  :vertical resize -1 <CR>
 
 " repeat last commnad
 nnoremap <leader>lc @:
