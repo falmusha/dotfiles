@@ -19,7 +19,7 @@
     "**/.sass-cache": true
   },
   "window.nativeTabs": false,
-  "window.zoomLevel": 0,
+  "window.zoomLevel": 1,
   "[elixir]": {
     "editor.rulers": [98],
     "editor.formatOnSave": true
@@ -103,5 +103,11 @@
   "latex-workshop.view.pdf.viewer": "tab",
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "javascript.updateImportsOnFileMove.enabled": "always"
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "workbench.editorAssociations": [
+    {
+      "viewType": "jupyter-notebook",
+      "filenamePattern": "*.ipynb"
+    }
+  ]
 }
