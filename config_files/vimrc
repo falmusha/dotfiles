@@ -177,7 +177,7 @@ nnoremap <C-p> :Files<CR>
 nnoremap <leader>f :Neoformat<CR>
 
 " enable spelling
-nnoremap <C-s> :setlocal spell! spelllang=en_ca<CR>
+nnoremap <C-s> :setlocal spell! spelllang=en_us<CR>
 
 " increasing/decreasing numbers
 nnoremap + <C-a>

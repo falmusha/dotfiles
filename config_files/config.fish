@@ -3,7 +3,6 @@
 alias l="ls -la"
 alias gl="git l"
 alias gs="git s"
-alias mr="cd ~/iCloud/School/Research/repo"
 alias t="tmux"
 alias tl="tmux ls"
 
@@ -52,29 +51,6 @@ function shell_perf
     for i in (seq 1 10)
         /usr/bin/time $SHELL -i -c exit
     end
-end
-
-# Python
-# ------------------------------------------------------------------------------
-if command --search python3 >/dev/null do
-    if test -e (python3 -m site --user-base)/bin
-        set -x PATH $PATH (python3 -m site --user-base)/bin
-    end
-end
-
-if command --search python2 >/dev/null do
-    if test -e (python2 -m site --user-base)/bin
-        set -x PATH $PATH (python2 -m site --user-base)/bin
-    end
-end
-
-function pip_install
-    set package_name $argv[1]
-    set requirements_file $argv[2]
-    if test -e $requirements_file
-        set requirements_file './requirements.txt'
-    end
-    pip install $package_name && pip freeze | grep -i $package_name >>$requirements_file
 end
 
 # Machine specific fish profile
