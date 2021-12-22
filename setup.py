@@ -14,19 +14,19 @@ PLATFORM = platform.system()
 DOTFILE_DIR = Path(__file__).parent
 LINKS = {
     "bin": "~/.bin",
-    "config_files/Brewfile": {"Darwin": "~/.Brewfile"},
-    "config_files/alacritty.yml": "~/.config/alacritty/alacritty.yml",
-    "config_files/bashrc": "~/.bashrc",
-    "config_files/config.fish": "~/.config/fish/config.fish",
-    "config_files/gitconfig": "~/.gitconfig",
-    "config_files/global_ignore": "~/.global_ignore",
-    "config_files/ideavimrc": "~/.ideavimrc",
-    "config_files/init.lua": {"Darwin": "~/.hammerspoon/init.lua"},
-    "config_files/keybindings.json": "~/.vscode/keybindings.json",
-    "config_files/kitty.conf": "~/.config/kitty/kitty.conf",
-    "config_files/settings.json": "~/.vscode/settings.json",
-    "config_files/tmux.conf": "~/.tmux.conf",
-    "config_files/vimrc": ["~/.vimrc", "~/.config/nvim/init.vim"],
+    "config/Brewfile": {"Darwin": "~/.Brewfile"},
+    "config/alacritty.yml": "~/.config/alacritty/alacritty.yml",
+    "config/bashrc": "~/.bashrc",
+    "config/config.fish": "~/.config/fish/config.fish",
+    "config/gitconfig": "~/.gitconfig",
+    "config/global_ignore": "~/.global_ignore",
+    "config/ideavimrc": "~/.ideavimrc",
+    "config/init.lua": {"Darwin": "~/.hammerspoon/init.lua"},
+    "config/keybindings.json": "~/.vscode/keybindings.json",
+    "config/kitty.conf": "~/.config/kitty/kitty.conf",
+    "config/settings.json": "~/.vscode/settings.json",
+    "config/tmux.conf": "~/.tmux.conf",
+    "config/vimrc": ["~/.vimrc", "~/.config/nvim/init.vim"],
 }
 SPOONS = ["Caffeine", "ReloadConfiguration"]
 
