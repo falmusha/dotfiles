@@ -181,8 +181,8 @@ augroup END
 "-------------------------------------------------------------------------------
 
 if g:nvim
-  let s:vim_plug = '~/.local/share/nvim/site/autoload/plug.vim'
-  let s:vim_plugins_dir = '~/.local/share/nvim/plugged'
+  let s:vim_plug = stdpath('data') . '/site/autoload/plug.vim'
+  let s:vim_plugins_dir = stdpath('data') . '/plugged'
 else
   let s:vim_plug = '~/.vim/autoload/plug.vim'
   let s:vim_plugins_dir = '~/.vim/plugged'

@@ -14,6 +14,7 @@ PLATFORM = platform.system()
 DOTFILE_DIR = Path(__file__).parent
 LINKS = {
     "bin": "~/.bin",
+    "config/Brewfile": "~/.Brewfile",
     "config/alacritty.yml": "~/.config/alacritty/alacritty.yml",
     "config/bashrc": "~/.bashrc",
     "config/config.fish": "~/.config/fish/config.fish",
