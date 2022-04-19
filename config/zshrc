@@ -1,0 +1,29 @@
+# Command aliases
+# ------------------------------------------------------------------------------
+alias l="ls -la"
+alias gl="git l"
+alias gs="git s"
+alias t="tmux"
+alias tl="tmux ls"
+# CLI: Improved
+alias ping="prettyping --nolegend"
+alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
+
+# $PATH
+# ------------------------------------------------------------------------------
+
+if [ -d "$HOME/.cargo/bin" ]; then
+  export PATH=$PATH:$HOME/.cargo/bin
+fi
+
+if [ -d "$HOME/.bin" ]; then
+  export PATH=$PATH:$HOME/.bin
+fi
+
+if [ -d "/opt/homebrew" ]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+EDITOR=nvim
+RACK_ENV=development
+ERL_AFLAGS="-kernel shell_history enabled"

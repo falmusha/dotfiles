@@ -315,6 +315,18 @@ nnoremap <leader>G :execute 'Rg ' expand('<cword>')<cr>
 "-------------------------------------------------------------------------------
 else
 
+" nvim-treesitter ---------------------------------------------------------------
+lua << EOF
+  require('nvim-treesitter.configs').setup({
+    ensure_installed = { "vim", "lua", "ruby", "elixir" },
+    sync_install = false,
+    highlight = {
+      enable = true,
+      additional_vim_regex_highlighting = false,
+    },
+  })
+EOF
+
 " nvim-lspconfig ---------------------------------------------------------------
 lua << EOF
   local nvim_lsp = require('lspconfig')

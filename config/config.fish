@@ -24,6 +24,35 @@ if test -e $HOME/.bin
     set -x PATH $HOME/.bin $PATH
 end
 
+if test (arch) = i386
+    set HOMEBREW_PREFIX /usr/local
+else
+    set HOMEBREW_PREFIX /opt/homebrew
+end
+
+if test -e $HOMEBREW_PREFIX
+    eval ($HOMEBREW_PREFIX/bin/brew shellenv)
+end
+
+if type -q fnm
+    eval (fnm env)
+end
+
+if type -q rbenv
+    status --is-interactive; and rbenv init - fish | source
+end
+
+if type -q rvm; and test -e $HOME/.rvm/bin
+    set -x PATH $HOME/.rvm/bin $PATH
+end
+
+if test -e /Users/(whoami)/Library/Android/sdk
+    set ANDROID_HOME /Users/(whoami)/Library/Android/sdk
+    set -x PATH $PATH $ANDROID_HOME/tools
+    set -x PATH $PATH $ANDROID_HOME/tools/bin
+    set -x PATH $PATH $ANDROID_HOME/platform-tools
+end
+
 # ENV Vars
 # ------------------------------------------------------------------------------
 
@@ -41,7 +70,7 @@ set -x FZF_DEFAULT_OPTS "--bind up:preview-up,down:preview-down"
 
 function fish_prompt
     echo -e ''
-    set_color yellow
+    set_color white
     echo (prompt_pwd) (__fish_git_prompt)
     set_color white
     echo '> '
@@ -55,4 +84,6 @@ end
 
 # Machine specific fish profile
 # ------------------------------------------------------------------------------
-source $HOME/.fish.local
+if test -f $HOME/.fish.local
+    source $HOME/.fish.local
+end

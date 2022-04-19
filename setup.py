@@ -27,6 +27,7 @@ LINKS = {
     "config/settings.json": "~/.vscode/settings.json",
     "config/tmux.conf": "~/.tmux.conf",
     "config/vimrc": ["~/.vimrc", "~/.config/nvim/init.vim"],
+    "config/zshrc": "~/.zshrc",
 }
 SPOONS = ["Caffeine", "ReloadConfiguration"]
 
@@ -79,23 +80,29 @@ def _unlink():
 def _symlink(src_file, dst_file, remove=False):
     msg = f"symlinking: {src_file} --> {dst_file}"
     if remove:
-        msg += " (REMOVED!!)"
-        if dst_file.exists() and not dst_file.is_symlink():
-            backup = f"{dst_file}.backup-at-{int(time.time())}"
-            _log(f"backup: {src_file} --> {backup}")
-            if not ARGS.dry_run:
-                shutil.copyfile(src, dst)
-        elif dst_file.exists() and dst_file.is_symlink():
+        if dst_file.is_symlink() and not dst_file.exists():
             if not ARGS.dry_run:
                 dst_file.unlink(missing_ok=True)
-            _log(msg)
+            msg += " (BAD LINK, REMOVED!!)"
+        elif dst_file.is_symlink() and dst_file.exists():
+            if not ARGS.dry_run:
+                dst_file.unlink(missing_ok=True)
+            msg += " (REMOVED!!)"
+        elif dst_file.exists():
+            backup = f"{dst_file}.backup-at-{int(time.time())}"
+            msg += f" (backup: {src_file} --> {backup})"
+            if not ARGS.dry_run:
+                shutil.copyfile(src, dst)
+        else:
+          msg += " (IGNORE!! no link or file to deal with)"
+        _log(msg)
     else:
         if dst_file.exists():
             msg += " (EXISTS!!)"
         else:
             if not ARGS.dry_run:
-                dst_file.parent.mkdir(exist_ok=True)
-                dst_file.symlink_to(src_file)
+                dst_file.parent.mkdir(parents=True, exist_ok=True)
+                dst_file.symlink_to(src_file.resolve())
         _log(msg)
 
 def _install():
@@ -139,7 +146,8 @@ def _install_hammerspoon_spoons():
     _log("Installing Hammerspoon spoons", subheader=True)
     base_url = "https://raw.githubusercontent.com/Hammerspoon/Spoons/master/Spoons"
     spoons_path = Path("~/.hammerspoon/Spoons/").expanduser()
-    spoons_path.mkdir(exist_ok=True)
+    if not ARGS.dry_run:
+      spoons_path.mkdir(parents=True, exist_ok=True)
     for spoon in SPOONS:
         msg = f"Spoon {spoon}"
         spoon_dir = f"{spoon}.spoon"
