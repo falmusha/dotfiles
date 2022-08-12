@@ -1,4 +1,4 @@
-# Command aliases
+# command aliases
 # ------------------------------------------------------------------------------
 alias l="ls -la"
 alias gl="git l"
@@ -8,22 +8,12 @@ alias tl="tmux ls"
 
 # CLI: Improved
 # ------------------------------------------------------------------------------
+alias python="python3"
 alias ping="prettyping --nolegend"
 alias du="ncdu --color dark -rr -x --exclude .git --exclude node_modules"
 
-
-# $PATH
+# Homebrew config
 # ------------------------------------------------------------------------------
-set -x PATH $PATH /opt/local/bin/
-
-if test -e $HOME/.cargo/bin
-    set -x PATH $HOME/.cargo/bin $PATH
-end
-
-if test -e $HOME/.bin
-    set -x PATH $HOME/.bin $PATH
-end
-
 if test (arch) = i386
     set HOMEBREW_PREFIX /usr/local
 else
@@ -34,23 +24,43 @@ if test -e $HOMEBREW_PREFIX
     eval ($HOMEBREW_PREFIX/bin/brew shellenv)
 end
 
+# $PATH
+# ------------------------------------------------------------------------------
+if test -e /Users/(whoami)/Library/Android/sdk
+    set ANDROID_HOME /Users/(whoami)/Library/Android/sdk
+    fish_add_path $ANDROID_HOME/tools $ANDROID_HOME/tools/bin \
+        $ANDROID_HOME/platform-tools
+end
+
+if test -e $HOME/.cargo/bin
+    fish_add_path $HOME/.cargo/bin
+end
+
 if type -q fnm
     eval (fnm env)
+end
+
+if type -q pyenv
+    set PYENV_ROOT $HOME/.pyenv
+    fish_add_path $PYENV_ROOT/bin $PYENV_ROOT/shims
+    pyenv init - | source
+end
+
+if type -q rvm; and test -e $HOME/.rvm/bin
+    fish_add_path $HOME/.rvm/bin
 end
 
 if type -q rbenv
     status --is-interactive; and rbenv init - fish | source
 end
 
-if type -q rvm; and test -e $HOME/.rvm/bin
-    set -x PATH $HOME/.rvm/bin $PATH
+if type -q pnpm
+    set -x PNPM_HOME "$HOME/.pnpm"
+    fish_add_path $PNPM_HOME
 end
 
-if test -e /Users/(whoami)/Library/Android/sdk
-    set ANDROID_HOME /Users/(whoami)/Library/Android/sdk
-    set -x PATH $PATH $ANDROID_HOME/tools
-    set -x PATH $PATH $ANDROID_HOME/tools/bin
-    set -x PATH $PATH $ANDROID_HOME/platform-tools
+if test -e $HOME/.bin
+    fish_add_path $HOME/.bin
 end
 
 # ENV Vars
@@ -76,6 +86,8 @@ function fish_prompt
     echo '> '
 end
 
+# helper functions
+# ------------------------------------------------------------------------------
 function shell_perf
     for i in (seq 1 10)
         /usr/bin/time $SHELL -i -c exit

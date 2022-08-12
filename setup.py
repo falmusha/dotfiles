@@ -9,7 +9,6 @@ from pathlib import Path
 from distutils.spawn import find_executable
 from urllib.request import urlretrieve
 
-
 PLATFORM = platform.system()
 DOTFILE_DIR = Path(__file__).parent
 LINKS = {
@@ -18,6 +17,7 @@ LINKS = {
     "config/alacritty.yml": "~/.config/alacritty/alacritty.yml",
     "config/bashrc": "~/.bashrc",
     "config/config.fish": "~/.config/fish/config.fish",
+    "config/fish_plugins": "~/.config/fish/fish_plugins",
     "config/gitconfig": "~/.gitconfig",
     "config/global_ignore": "~/.global_ignore",
     "config/ideavimrc": "~/.ideavimrc",

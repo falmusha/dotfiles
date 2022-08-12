@@ -31,12 +31,11 @@ set number relativenumber " show line numbers
 set shiftwidth=2 | set tabstop=2 " 1 tab = 2 spaces
 set splitbelow " open new split panes to bottom
 set splitright " open new split panes to right
-set statusline=[%n]%f%m%r%w%=[%{fugitive#head()}]%y[%p%%][%l\/%L,%v]
+set statusline=[%n]%f%m%r%w%=[%{FugitiveHead()}]%y[%p%%][%l\/%L,%v]
 set textwidth=80
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.class,*DS_Store* " general
 set wildignore+=*bower_components/**,*node_modules/**,*build/**,*dist/** " JS
 set wildignore+=*deps/**,*_build/** " elixir
-
 "-------------------------------------------------------------------------------
 " key mappings
 "-------------------------------------------------------------------------------
@@ -108,14 +107,8 @@ nnoremap <leader>F :call FocusMode()<cr>
 
 " insert -----------------------------------------------------------------------
 
-" delete line when CTRL+d and enter insert mode at end of prev line
-inoremap <C-d> <esc>ddA
-
-" disable ESC in insert mode
-inoremap <esc> <nop>
-
 " leave insert mode
-inoremap jj <esc>
+inoremap <C-[> <esc>
 
 " disable arrow keys in insert mode
 inoremap <up> <nop>
@@ -203,8 +196,6 @@ end
 call plug#begin(s:vim_plugins_dir)
 
 Plug 'airblade/vim-gitgutter'
-Plug 'blueyed/vim-diminactive'
-Plug 'chriskempson/base16-vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'dense-analysis/ale'
 Plug 'elixir-editors/vim-elixir'
@@ -215,6 +206,7 @@ Plug 'sbdchd/neoformat'
 Plug 'slashmili/alchemist.vim'
 Plug 'tmux-plugins/vim-tmux-focus-events'
 Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-vinegar'
@@ -223,21 +215,22 @@ Plug 'wellle/tmux-complete.vim'
 
 if !g:nvim
   " vim specific plugins
+  Plug 'chriskempson/base16-vim'
   Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
   Plug 'junegunn/fzf.vim'
 else
   " neovim specific plugins
+  Plug 'mhartington/oceanic-next'
   Plug 'neovim/nvim-lspconfig'
   Plug 'nvim-lua/plenary.nvim'
   Plug 'nvim-telescope/telescope.nvim'
   Plug 'nvim-treesitter/nvim-treesitter', { 'do': ':TSUpdate' }
+  Plug 'shaunsingh/nord.nvim'
+  Plug 'sunjon/shade.nvim'
+  Plug 'windwp/nvim-autopairs'
 endif
 
 call plug#end()
-
-" base16-vim -------------------------------------------------------------------
-let base16colorspace=256 " Access colors present in 256 colorspace
-colorscheme base16-default-dark
 
 " limelight.vim ----------------------------------------------------------------
 autocmd! User GoyoEnter Limelight
@@ -252,10 +245,6 @@ let g:ale_linters = {
 let g:alchemist_tag_map = '<C-]>'
 let g:alchemist_tag_stack_map = '<C-[>'
 
-" vim-diminactive --------------------------------------------------------------
-let g:diminactive_enable_focus = 1
-let g:diminactive_use_syntax = 1
-
 " neoformat --------------------------------------------------------------------
 let g:neoformat_enabled_python = ['black']
 
@@ -266,6 +255,10 @@ nnoremap <leader>f <cmd>Neoformat<cr>
 " vim plugins customization
 "-------------------------------------------------------------------------------
 if !g:nvim
+
+" base16-vim -------------------------------------------------------------------
+let base16colorspace=256 " Access colors present in 256 colorspace
+colorscheme base16-tomorrow-night
 
 " fzf.vim ----------------------------------------------------------------------
 let g:fzf_layout = { 'down': '~20%' }
@@ -315,10 +308,14 @@ nnoremap <leader>G :execute 'Rg ' expand('<cword>')<cr>
 "-------------------------------------------------------------------------------
 else
 
+colorscheme OceanicNext
+
+set laststatus=3 " only show status line on active window (global status line)
+
 " nvim-treesitter ---------------------------------------------------------------
 lua << EOF
   require('nvim-treesitter.configs').setup({
-    ensure_installed = { "vim", "lua", "ruby", "elixir" },
+    ensure_installed = { "vim", "fish", "lua", "ruby", "elixir" },
     sync_install = false,
     highlight = {
       enable = true,
@@ -368,7 +365,6 @@ require('telescope').setup({
   }
 })
 EOF
-
 " open Telescope fuzzy file finder
 nnoremap <c-p> <cmd>Telescope find_files<cr>
 
@@ -377,6 +373,21 @@ nnoremap <leader>g <cmd>Telescope live_grep<cr>
 
 " grep string under cursor
 nnoremap <leader>G <cmd>Telescope grep_string<cr>
+
+" Shade.nvim -------------------------------------------------------------------
+lua << EOF
+require('shade').setup({
+  overlay_opacity = 50,
+  opacity_step = 1,
+})
+EOF
+
+" nvim-autopairs ---------------------------------------------------------------
+lua << EOF
+require('nvim-autopairs').setup({
+  disable_filetype = { "TelescopePrompt" , "vim" },
+})
+EOF
 
 endif " end vim/neovim custom plugin customization
 
