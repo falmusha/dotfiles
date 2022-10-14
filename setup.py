@@ -92,7 +92,7 @@ def _symlink(src_file, dst_file, remove=False):
             backup = f"{dst_file}.backup-at-{int(time.time())}"
             msg += f" (backup: {src_file} --> {backup})"
             if not ARGS.dry_run:
-                shutil.copyfile(src, dst)
+                shutil.copyfile(src_file, dst_file)
         else:
           msg += " (IGNORE!! no link or file to deal with)"
         _log(msg)
