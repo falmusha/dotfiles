@@ -1,0 +1,164 @@
+"-------------------------------------------------------------------------------
+"--------------------------[ vanilla customization ]----------------------------
+"-------------------------------------------------------------------------------
+
+" looks ------------------------------------------------------------------------
+
+syntax on
+set termguicolors
+colorscheme shine
+filetype plugin on " enable file type detection
+
+" options ----------------------------------------------------------------------
+
+set autoread " automatically read files when changed
+set colorcolumn=+1 " highlight lines over that 1 column after 'textwidth'
+set expandtab " spaces instead of tabs
+set list listchars=tab:»·,precedes:-,trail:·,nbsp:+
+set mouse=a
+set noswapfile " remove swap files
+set number relativenumber " show line numbers
+set shiftwidth=2 | set tabstop=2 " 1 tab = 2 spaces
+set splitbelow " open new split panes to bottom
+set splitright " open new split panes to right
+set textwidth=80
+set signcolumn=yes " always show sign column to avoid plugins toggling on/off
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.class,*DS_Store* " general
+set wildignore+=*bower_components/**,*node_modules/**,*build/**,*dist/** " JS
+set wildignore+=*deps/**,*_build/** " elixir
+
+"-------------------------------------------------------------------------------
+" key mappings
+"-------------------------------------------------------------------------------
+
+let mapleader = " "
+let maplocalleader = ","
+
+" normal -----------------------------------------------------------------------
+
+" move between splits with CTRL + hjkl
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
+
+" move up and down a wrapped line
+nnoremap j gj
+nnoremap k gk
+
+" increase height by 1 columns
+nnoremap <silent> <down> :resize -1<cr>
+
+" decrease height by 1 columns
+nnoremap <silent> <up> :resize +1<cr>
+
+" increase width by 1 columns
+nnoremap <silent> <right> :vertical resize +1<cr>
+
+" decrease width by 1 columns
+nnoremap <silent> <left>  :vertical resize -1<cr>
+
+" repeat last commnad
+nnoremap <leader>lc @:
+
+" got to last buffer
+nnoremap <leader>lb :b#<cr>
+
+" remove trailing white spaces
+nnoremap <leader>s :call StripTrailingWhitespace()<cr>
+
+" quick fuzzy-ish edit
+nnoremap <leader>e :edit **/
+
+" disable highlights after search
+nnoremap <leader>q :nohlsearch<cr>
+
+" open vimrc file to edit it
+nnoremap <leader>ev :vsplit $MYVIMRC<cr>
+
+" reload vimrc file
+nnoremap <leader>sv :source $MYVIMRC<cr>
+
+" use - and | for horizontal or vertical splits
+nnoremap \| :vsplit<cr>
+nnoremap - :split<cr>
+
+" qq to record, Q to replay
+nnoremap Q @q
+
+" enable spelling
+nnoremap <C-s> :setlocal spell! spelllang=en_us<cr>
+
+" increasing/decreasing numbers
+nnoremap + <C-a>
+nnoremap _ <C-x>
+
+" insert -----------------------------------------------------------------------
+
+" leave insert mode
+inoremap <C-[> <esc>
+
+" disable arrow keys in insert mode
+inoremap <up> <nop>
+inoremap <down> <nop>
+inoremap <left> <nop>
+inoremap <right> <nop>
+
+"-------------------------------------------------------------------------------
+" helper functions
+"-------------------------------------------------------------------------------
+
+function! StripTrailingWhitespace()
+  if !&binary && &filetype != 'diff'
+    normal mz
+    normal Hmy
+    %s/\s\+$//e
+    normal 'yz<cr>
+    normal `z
+  endif
+endfunction
+
+function! s:sourceLocalConfigs()
+  " source local machine specific vimrc
+  if filereadable(glob('~/.vimrc.local'))
+    source ~/.vimrc.local
+  endif
+endfunction
+
+"-------------------------------------------------------------------------------
+" auto commands
+"-------------------------------------------------------------------------------
+autocmd InsertEnter,InsertLeave * set cul!
+
+" FileType specific ------------------------------------------------------------
+
+augroup filetype_elixir
+  autocmd!
+  autocmd FileType elixir,eelixir setlocal textwidth=98
+augroup END
+
+augroup filetype_ruby
+  autocmd!
+  autocmd FileType ruby,eruby setlocal textwidth=98
+augroup END
+
+augroup filetype_python
+  autocmd!
+  autocmd FileType python setlocal textwidth=88
+augroup END
+
+augroup filetype_markdown
+  autocmd!
+  autocmd FileType markdown setlocal textwidth=120
+augroup END
+
+augroup filetype_markdown
+  autocmd!
+  autocmd FileType julia setlocal textwidth=92
+augroup END
+
+"-------------------------------------------------------------------------------
+"----------------------------[ local customization ]----------------------------
+"-------------------------------------------------------------------------------
+
+call s:sourceLocalConfigs()

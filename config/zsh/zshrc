@@ -27,3 +27,5 @@ fi
 EDITOR=nvim
 RACK_ENV=development
 ERL_AFLAGS="-kernel shell_history enabled"
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
