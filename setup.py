@@ -1,29 +1,57 @@
 #!/usr/bin/env python3
 
 import argparse
+import json
 import os
 import platform
 import shutil
 import subprocess
+import sys
 import time
-import tomllib
 import zipfile
 from distutils.spawn import find_executable
 from pathlib import Path
 from tempfile import NamedTemporaryFile
 from urllib.request import urlopen
 
+try:
+    import tomllib
+
+    TOML_AVAILABLE = True
+except ModuleNotFoundError:
+    TOML_AVAILABLE = False
+
 PLATFORM = platform.system()
 CONFIGS_TOML = Path(__file__).parent / "config.toml"
+CONFIGS_JSON = Path(__file__).parent / "config.json"
 CONFIGS = dict()
 CONFIGS_DIR = CONFIGS_TOML.parent
 
+
+def load_config():
+    global CONFIGS
+
+    if TOML_AVAILABLE:
+        with open(CONFIGS_TOML, "rb") as f:
+            CONFIGS = tomllib.load(f)
+    else:
+        with open(CONFIGS_JSON, "rb") as f:
+            CONFIGS = json.load(f)
+
+
 def setup():
     global CONFIGS, CONFIGS_DIR
-   
-    with open(CONFIGS_TOML, "rb") as f:
-        CONFIGS = tomllib.load(f)
-   
+
+    load_config()
+
+    if ARGS.generate_json_config:
+        if TOML_AVAILABLE == True:
+            with open(CONFIGS_JSON, "w+") as f:
+                json.dump(CONFIGS, f)
+            sys.exit(0)
+        else:
+            sys.exit("!!ERROR!! Cannot generate JSON when tomllib is not available")
+
     CONFIGS_DIR = CONFIGS["configs_dir"]
 
     if ARGS.remove_files:
@@ -142,7 +170,7 @@ def download_files():
         log(f"Downloading {url}")
         if ARGS.dry_run:
             continue
-        
+
         with urlopen(url) as response, NamedTemporaryFile(
             suffix=".zip", delete=False
         ) as tmp_fp:
@@ -202,6 +230,7 @@ if __name__ == "__main__":
     parser.add_argument("--remove-files", action="store_true")
     parser.add_argument("--install", action="store_true")
     parser.add_argument("--dry-run", action="store_true")
+    parser.add_argument("--generate-json-config", action="store_true")
 
     ARGS = parser.parse_args()
 
