@@ -7,6 +7,7 @@ vim.o.autoread = true
 vim.o.mouse = 'a'
 
 -- show line numbers
+vim.o.number = true
 vim.o.relativenumber = true
 
 -- spaces instead of tabs
