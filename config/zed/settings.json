@@ -1,0 +1,8 @@
+{
+  "autosave": "on_focus_change",
+  "format_on_save": "on",
+  "vim_mode": true,
+  "vim": {
+    "use_system_clipboard": "never"
+  }
+}

@@ -1,21 +1,23 @@
 require('nvim-treesitter.configs').setup {
-	ensure_installed = {
-		'cpp',
-		'elixir',
-		'fish',
-		'go',
-		'lua',
-		'python',
-		'ruby',
-		'rust',
-		'tsx',
-		'typescript',
-		'vim',
-		'vimdoc',
-	},
-	auto_install = false,
-	highlight = { enable = true },
-	indent = { enable = true }
+  ensure_installed = {
+    'cpp',
+    'elixir',
+    'eex',
+    'heex',
+    'fish',
+    'go',
+    'lua',
+    'python',
+    'ruby',
+    'rust',
+    'tsx',
+    'typescript',
+    'vim',
+    'vimdoc',
+  },
+  auto_install = false,
+  highlight = { enable = true },
+  indent = { enable = true }
 }
 
 -- Diagnostic keymaps

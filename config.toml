@@ -17,6 +17,8 @@ kitty."kitty.conf" = "$HOME/.config/kitty/kitty.conf"
 intellij.ideavimrc = "$HOME/.ideavimrc"
 vscode."keybindings.json" = "$HOME/.vscode/keybindings.json"
 vscode."settings.json" = "$HOME/.vscode/settings.json" 
+zed."settings.json" = "$HOME/.config/zed/settings.json"
+zed."keymap.json" = "$HOME/.config/zed/keymap.json"
 bin = "$HOME/.bin"
 
 [symlinks.Darwin]
