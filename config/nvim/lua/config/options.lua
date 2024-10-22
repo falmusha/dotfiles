@@ -1,7 +1,7 @@
 -- automatically read files when changed
 vim.o.autoread = true
 -- remove swap files
--- vim.o.noswapfile = true
+vim.o.swapfile = false
 
 -- vim.o.list listchars=tab:»·,precedes:-,trail:·,nbsp:+
 vim.o.mouse = 'a'
