@@ -7,7 +7,28 @@
 // custom settings, run the `open default settings` command
 // from the command palette or from `Zed` application menu.
 {
-    "theme": "One Light",
+    "agent": {
+        "always_allow_tool_actions": true,
+        "model_parameters": [],
+        "default_model": {
+            "provider": "anthropic",
+            "model": "claude-sonnet-4-latest"
+        },
+        "version": "2"
+    },
+    "context_servers": {
+        "pho-mcp": {
+            "command": {
+                "path": "mcp-proxy",
+                "args": [
+                    "http://localhost:4000/tidewave/mcp"
+                ],
+                "env": null
+            },
+            "settings": {}
+        }
+    },
+    "theme": "Ayu Light",
     "buffer_font_size": 15,
     "vim_mode": true
 }
