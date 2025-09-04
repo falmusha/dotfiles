@@ -9,7 +9,6 @@ import subprocess
 import sys
 import time
 import zipfile
-from distutils.spawn import find_executable
 from pathlib import Path
 from tempfile import NamedTemporaryFile
 from urllib.request import urlopen
@@ -26,7 +25,10 @@ CONFIGS_TOML = Path(__file__).parent / "config.toml"
 CONFIGS_JSON = Path(__file__).parent / "config.json"
 CONFIGS = dict()
 CONFIGS_DIR = CONFIGS_TOML.parent
+import shutil
 
+def find_executable(cmd):
+    return shutil.which(cmd) or None
 
 def load_config():
     global CONFIGS
@@ -141,7 +143,7 @@ def symlink(src_file, dst_file, remove=False):
         else:
             if not ARGS.dry_run:
                 dst_file.parent.mkdir(parents=True, exist_ok=True)
-                dst_file.symlink_to(src_file.resolve())
+                dst_file.symlink_to(src_file.resolve(), target_is_directory=src_file.is_dir())
         log(msg)
 
 
