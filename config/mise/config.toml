@@ -1,0 +1,8 @@
+# Global mise config, linked to ~/.config/mise/config.toml
+
+[settings]
+idiomatic_version_file_enable_tools = ["python"]
+
+# Replaces pyenv / fnm / rbenv
+[tools]
+python = "3.13"

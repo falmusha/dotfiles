@@ -1,0 +1,51 @@
+[dotfiles]
+"~/.bashrc"                   = { source = "config/bash/bashrc", mode = "symlink" }
+"~/.zshrc"                    = { source = "config/zsh/zshrc", mode = "symlink" }
+"~/.config/fish/config.fish"  = { source = "config/fish/config.fish", mode = "symlink" }
+"~/.config/fish/fish_plugins" = { source = "config/fish/fish_plugins", mode = "symlink" }
+"~/.gitconfig"                = { source = "config/git/gitconfig", mode = "symlink" }
+"~/.global_ignore"            = { source = "config/git/global_ignore", mode = "symlink" }
+"~/.config/nvim"              = { source = "config/nvim", mode = "symlink" }
+"~/.vimrc"                    = { source = "config/vim/vimrc", mode = "symlink" }
+"~/.tmux.conf"                = { source = "config/tmux/tmux.conf", mode = "symlink" }
+"~/.config/zed/settings.json" = { source = "config/zed/settings.json", mode = "symlink" }
+"~/.config/zed/keymap.json"   = { source = "config/zed/keymap.json", mode = "symlink" }
+"~/.config/mise/config.toml"  = { source = "config/mise/config.toml", mode = "symlink" }
+"~/.bin"                      = { source = "config/bin", mode = "symlink" }
+
+[dotfiles."vscode/settings.json"]
+source = "config/vscode/settings.json"
+mode = "symlink"
+variants = [
+  { os = "macos", target = "~/Library/Application Support/Code/User/settings.json" },
+  { os = "linux", target = "~/.config/Code/User/settings.json" },
+]
+
+[dotfiles."vscode/keybindings.json"]
+source = "config/vscode/keybindings.json"
+mode = "symlink"
+variants = [
+  { os = "macos", target = "~/Library/Application Support/Code/User/keybindings.json" },
+  { os = "linux", target = "~/.config/Code/User/keybindings.json" },
+]
+
+[bootstrap.packages]
+"brew:fd" = "latest"
+"brew:fish" = "latest"
+"brew:fisher" = "latest"
+"brew:fzf" = "latest"
+"brew:git" = "latest"
+"brew:htop" = "latest"
+"brew:jq" = "latest"
+"brew:ncdu" = "latest"
+"brew:neovim" = "latest"
+"brew:tmux" = "latest"
+"brew:tree" = "latest"
+"brew:vim" = "latest"
+"brew:wget" = "latest"
+
+"brew-cask:beekeeper-studio" = { os = "macos" }
+"brew-cask:brave-browser" = { os = "macos" }
+"brew-cask:stats" = { os = "macos" }
+"brew-cask:sublime-merge" = { os = "macos" }
+"brew-cask:sublime-text" = { os = "macos" }

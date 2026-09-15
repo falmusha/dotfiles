@@ -36,22 +36,8 @@ if test -e $HOME/.cargo/bin
     fish_add_path $HOME/.cargo/bin
 end
 
-if type -q fnm
-    eval (fnm env)
-end
-
-if type -q pyenv
-    set PYENV_ROOT $HOME/.pyenv
-    fish_add_path $PYENV_ROOT/bin $PYENV_ROOT/shims
-    pyenv init - | source
-end
-
-if type -q rvm; and test -e $HOME/.rvm/bin
-    fish_add_path $HOME/.rvm/bin
-end
-
-if type -q rbenv
-    status --is-interactive; and rbenv init - fish | source
+if type -q mise
+    mise activate fish | source
 end
 
 if type -q pnpm

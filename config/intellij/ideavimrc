@@ -1,6 +1,0 @@
-let mapleader = ' '
-
-inoremap jj <Esc>
-
-set visualbell
-set noerrorbells

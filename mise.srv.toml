@@ -1,0 +1,7 @@
+# Dotfiles
+# ------------------------------------------------------------------------------
+[dotfiles]
+"~/.bashrc"                   = { source = "config/bash/bashrc", mode = "symlink" }
+"~/.vimrc"                    = { source = "config/vim/vimrc", mode = "symlink" }
+"~/.tmux.conf"                = { source = "config/tmux/tmux.conf", mode = "symlink" }
+"~/.config/mise/config.toml"  = { source = "config/mise/config.toml", mode = "symlink" }
