@@ -10,6 +10,7 @@
 "~/.tmux.conf"                = { source = "config/tmux/tmux.conf", mode = "symlink" }
 "~/.config/zed/settings.json" = { source = "config/zed/settings.json", mode = "symlink" }
 "~/.config/zed/keymap.json"   = { source = "config/zed/keymap.json", mode = "symlink" }
+"~/.config/ghostty/config"    = { source = "config/ghostty/config", mode = "symlink" }
 "~/.config/mise/config.toml"  = { source = "config/mise/config.toml", mode = "symlink" }
 "~/.bin"                      = { source = "config/bin", mode = "symlink" }
 
